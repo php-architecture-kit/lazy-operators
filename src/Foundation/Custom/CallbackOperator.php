@@ -9,6 +9,10 @@ use PhpArchitecture\LazyOperators\Foundation\Expression;
 
 class CallbackOperator implements Expression
 {
+    public const KEY = 'callback';
+    public const UID = '53ceb583-f1d3-40c3-a8ae-7d9ffdffede2';
+    public const VERSION = '1.0';
+
     /**
      * @var Expression[]
      */

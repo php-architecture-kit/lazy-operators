@@ -8,6 +8,10 @@ use PhpArchitecture\LazyOperators\Foundation\Expression;
 
 class MultiplicationOperator implements ArithmeticOperator
 {
+    public const KEY = 'multiplication';
+    public const UID = '0ed96a9f-75dc-45bc-a9f5-5dbdb48cbd5a';
+    public const VERSION = '1.0';
+
     public function __construct(
         private readonly Expression $left,
         private readonly Expression $right,

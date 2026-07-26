@@ -8,6 +8,10 @@ use PhpArchitecture\LazyOperators\Foundation\Expression;
 
 class ModuloOperator implements ArithmeticOperator
 {
+    public const KEY = 'modulo';
+    public const UID = '64306250-dc4f-4dd4-830c-70649e9dbbd8';
+    public const VERSION = '1.0';
+
     public function __construct(
         private readonly Expression $left,
         private readonly Expression $right,

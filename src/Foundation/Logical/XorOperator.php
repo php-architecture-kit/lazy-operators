@@ -8,6 +8,10 @@ use PhpArchitecture\LazyOperators\Foundation\Expression;
 
 class XorOperator implements LogicalOperator
 {
+    public const KEY = 'xor';
+    public const UID = 'aef9302c-c283-4c1c-ab7a-0b355e9ed445';
+    public const VERSION = '1.0';
+
     public function __construct(
         private readonly Expression $left,
         private readonly Expression $right,

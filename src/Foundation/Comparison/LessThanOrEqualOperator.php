@@ -8,6 +8,10 @@ use PhpArchitecture\LazyOperators\Foundation\Expression;
 
 class LessThanOrEqualOperator implements ComparisonOperator
 {
+    public const KEY = 'less_than_or_equal';
+    public const UID = '858cf616-69a8-4410-b5ed-816e1d2ae5a4';
+    public const VERSION = '1.0';
+
     public function __construct(
         private readonly Expression $left,
         private readonly Expression $right,

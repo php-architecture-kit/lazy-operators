@@ -9,6 +9,10 @@ use PhpArchitecture\LazyOperators\Foundation\Expression;
 
 class SwitchCaseOperator implements Expression
 {
+    public const KEY = 'switch_case';
+    public const UID = '70ac9fb9-bfa7-4080-9a3d-c9182ed50529';
+    public const VERSION = '1.0';
+
     /**
      * @param CaseOfSwitchCase[] $cases
      */

@@ -8,6 +8,10 @@ use PhpArchitecture\LazyOperators\Foundation\Expression;
 
 class GreaterThanOperator implements ComparisonOperator
 {
+    public const KEY = 'greater_than';
+    public const UID = 'aa2f5486-3fe6-4d75-a98e-12eba565812a';
+    public const VERSION = '1.0';
+
     public function __construct(
         private readonly Expression $left,
         private readonly Expression $right,

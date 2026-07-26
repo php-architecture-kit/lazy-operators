@@ -8,6 +8,10 @@ use PhpArchitecture\LazyOperators\Foundation\Expression;
 
 class SpaceshipOperator implements ComparatorOperator
 {
+    public const KEY = 'spaceship';
+    public const UID = '611d67d6-5612-449a-89bc-8ece8bc39a86';
+    public const VERSION = '1.0';
+
     public function __construct(
         private readonly Expression $left,
         private readonly Expression $right,

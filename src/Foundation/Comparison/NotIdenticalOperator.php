@@ -8,6 +8,10 @@ use PhpArchitecture\LazyOperators\Foundation\Expression;
 
 class NotIdenticalOperator implements ComparisonOperator
 {
+    public const KEY = 'not_identical';
+    public const UID = '90d06e8e-fbdf-4ba7-afad-9be706714d81';
+    public const VERSION = '1.0';
+
     public function __construct(
         private readonly Expression $left,
         private readonly Expression $right,

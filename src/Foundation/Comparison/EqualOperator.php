@@ -8,6 +8,10 @@ use PhpArchitecture\LazyOperators\Foundation\Expression;
 
 class EqualOperator implements ComparisonOperator
 {
+    public const KEY = 'equal';
+    public const UID = '63928bd8-64d9-4a19-91f7-15c0927477b3';
+    public const VERSION = '1.0';
+
     public function __construct(
         private readonly Expression $left,
         private readonly Expression $right,

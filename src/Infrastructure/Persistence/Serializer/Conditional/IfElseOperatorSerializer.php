@@ -21,8 +21,13 @@ class IfElseOperatorSerializer implements ExpressionSerializer
         return IfElseOperator::VERSION;
     }
 
+    /**
+     * @return array{uid: string, key: string, class: string, version: string, args: array<mixed>}
+     */
     public function serialize(Expression $expression, ExpressionSerializerRegistry $registry): array
     {
+        assert($expression instanceof IfElseOperator);
+
         return [
             'uid' => IfElseOperator::UID,
             'key' => IfElseOperator::KEY,
@@ -36,6 +41,9 @@ class IfElseOperatorSerializer implements ExpressionSerializer
         ];
     }
 
+    /**
+     * @param array{uid: string, key: string, class: string, version: string, args: array<mixed>} $data
+     */
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new IfElseOperator(

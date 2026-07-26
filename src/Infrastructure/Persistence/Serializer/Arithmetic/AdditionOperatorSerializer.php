@@ -21,8 +21,13 @@ class AdditionOperatorSerializer implements ExpressionSerializer
         return AdditionOperator::VERSION;
     }
 
+    /**
+     * @return array{uid: string, key: string, class: string, version: string, args: array<mixed>}
+     */
     public function serialize(Expression $expression, ExpressionSerializerRegistry $registry): array
     {
+        assert($expression instanceof AdditionOperator);
+
         return [
             'uid' => AdditionOperator::UID,
             'key' => AdditionOperator::KEY,
@@ -35,6 +40,9 @@ class AdditionOperatorSerializer implements ExpressionSerializer
         ];
     }
 
+    /**
+     * @param array{uid: string, key: string, class: string, version: string, args: array<mixed>} $data
+     */
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new AdditionOperator(

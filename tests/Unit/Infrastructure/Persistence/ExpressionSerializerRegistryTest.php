@@ -125,6 +125,9 @@ final class ExpressionSerializerRegistryTest extends TestCase
         $expression = new CallbackOperator(static fn (): int => 1);
 
         $this->expectException(UnpersistableCallbackException::class);
+        $this->expectExceptionMessage(
+            'This closure was never registered via CallbackRegistry::register() and cannot be persisted.',
+        );
 
         ExpressionSerializers::default()->serialize($expression);
     }
@@ -132,6 +135,7 @@ final class ExpressionSerializerRegistryTest extends TestCase
     public function testValueSerializationThrowsForNonJsonSafePayload(): void
     {
         $this->expectException(UnpersistableValueException::class);
+        $this->expectExceptionMessage('Value wraps a "stdClass", which is not JSON-safe and cannot be persisted.');
 
         ExpressionSerializers::default()->serialize(new Value(new stdClass()));
     }
@@ -139,6 +143,7 @@ final class ExpressionSerializerRegistryTest extends TestCase
     public function testDeserializeThrowsForUnknownUid(): void
     {
         $this->expectException(UnknownExpressionUidException::class);
+        $this->expectExceptionMessage('No serializer registered for Expression uid "not-a-registered-uid".');
 
         ExpressionSerializers::default()->deserialize([
             'uid' => 'not-a-registered-uid',
@@ -156,6 +161,11 @@ final class ExpressionSerializerRegistryTest extends TestCase
         $serialized['version'] = '999.0';
 
         $this->expectException(IncompatibleExpressionVersionException::class);
+        $this->expectExceptionMessage(sprintf(
+            'Stored version "999.0" for Expression uid "%s" is incompatible with the currently registered version "%s".',
+            Value::UID,
+            Value::VERSION,
+        ));
 
         $registry->deserialize($serialized);
     }
@@ -170,6 +180,7 @@ final class ExpressionSerializerRegistryTest extends TestCase
         };
 
         $this->expectException(UnsupportedExpressionException::class);
+        $this->expectExceptionMessage(sprintf('No serializer registered for Expression class "%s".', $expression::class));
 
         ExpressionSerializers::default()->serialize($expression);
     }

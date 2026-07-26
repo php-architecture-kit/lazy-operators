@@ -21,8 +21,13 @@ class ModuloOperatorSerializer implements ExpressionSerializer
         return ModuloOperator::VERSION;
     }
 
+    /**
+     * @return array{uid: string, key: string, class: string, version: string, args: array<mixed>}
+     */
     public function serialize(Expression $expression, ExpressionSerializerRegistry $registry): array
     {
+        assert($expression instanceof ModuloOperator);
+
         return [
             'uid' => ModuloOperator::UID,
             'key' => ModuloOperator::KEY,
@@ -35,6 +40,9 @@ class ModuloOperatorSerializer implements ExpressionSerializer
         ];
     }
 
+    /**
+     * @param array{uid: string, key: string, class: string, version: string, args: array<mixed>} $data
+     */
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new ModuloOperator(

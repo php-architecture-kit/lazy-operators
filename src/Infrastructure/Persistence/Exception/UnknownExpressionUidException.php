@@ -6,10 +6,10 @@ namespace PhpArchitecture\LazyOperators\Infrastructure\Persistence\Exception;
 
 use RuntimeException;
 
-class UnknownExpressionUidException extends RuntimeException
+final class UnknownExpressionUidException extends RuntimeException implements LazyOperatorsPersistenceException
 {
-    public function __construct(string $uid)
+    public static function create(string $uid): self
     {
-        parent::__construct(sprintf('No serializer registered for Expression uid "%s".', $uid));
+        return new self(sprintf('No serializer registered for Expression uid "%s".', $uid));
     }
 }

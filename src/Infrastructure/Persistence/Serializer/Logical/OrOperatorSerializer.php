@@ -21,8 +21,13 @@ class OrOperatorSerializer implements ExpressionSerializer
         return OrOperator::VERSION;
     }
 
+    /**
+     * @return array{uid: string, key: string, class: string, version: string, args: array<mixed>}
+     */
     public function serialize(Expression $expression, ExpressionSerializerRegistry $registry): array
     {
+        assert($expression instanceof OrOperator);
+
         return [
             'uid' => OrOperator::UID,
             'key' => OrOperator::KEY,
@@ -35,6 +40,9 @@ class OrOperatorSerializer implements ExpressionSerializer
         ];
     }
 
+    /**
+     * @param array{uid: string, key: string, class: string, version: string, args: array<mixed>} $data
+     */
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new OrOperator(

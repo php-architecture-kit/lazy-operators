@@ -21,8 +21,13 @@ class CallbackOperatorSerializer implements ExpressionSerializer
         return CallbackOperator::VERSION;
     }
 
+    /**
+     * @return array{uid: string, key: string, class: string, version: string, args: array<mixed>}
+     */
     public function serialize(Expression $expression, ExpressionSerializerRegistry $registry): array
     {
+        assert($expression instanceof CallbackOperator);
+
         return [
             'uid' => CallbackOperator::UID,
             'key' => CallbackOperator::KEY,
@@ -38,12 +43,15 @@ class CallbackOperatorSerializer implements ExpressionSerializer
         ];
     }
 
+    /**
+     * @param array{uid: string, key: string, class: string, version: string, args: array<mixed>} $data
+     */
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new CallbackOperator(
             $registry->callbacks()->resolve($data['args']['callback']),
             ...array_map(
-                static fn (array $argument) => $registry->deserialize($argument),
+                static fn (mixed $argument) => $registry->deserialize($argument),
                 $data['args']['arguments'],
             ),
         );

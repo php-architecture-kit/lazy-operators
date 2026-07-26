@@ -21,8 +21,13 @@ class NotEqualOperatorSerializer implements ExpressionSerializer
         return NotEqualOperator::VERSION;
     }
 
+    /**
+     * @return array{uid: string, key: string, class: string, version: string, args: array<mixed>}
+     */
     public function serialize(Expression $expression, ExpressionSerializerRegistry $registry): array
     {
+        assert($expression instanceof NotEqualOperator);
+
         return [
             'uid' => NotEqualOperator::UID,
             'key' => NotEqualOperator::KEY,
@@ -35,6 +40,9 @@ class NotEqualOperatorSerializer implements ExpressionSerializer
         ];
     }
 
+    /**
+     * @param array{uid: string, key: string, class: string, version: string, args: array<mixed>} $data
+     */
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new NotEqualOperator(

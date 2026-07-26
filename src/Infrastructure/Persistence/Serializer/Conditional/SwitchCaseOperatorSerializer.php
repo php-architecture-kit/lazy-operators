@@ -27,8 +27,13 @@ class SwitchCaseOperatorSerializer implements ExpressionSerializer
         return SwitchCaseOperator::VERSION;
     }
 
+    /**
+     * @return array{uid: string, key: string, class: string, version: string, args: array<mixed>}
+     */
     public function serialize(Expression $expression, ExpressionSerializerRegistry $registry): array
     {
+        assert($expression instanceof SwitchCaseOperator);
+
         return [
             'uid' => SwitchCaseOperator::UID,
             'key' => SwitchCaseOperator::KEY,
@@ -45,12 +50,15 @@ class SwitchCaseOperatorSerializer implements ExpressionSerializer
         ];
     }
 
+    /**
+     * @param array{uid: string, key: string, class: string, version: string, args: array<mixed>} $data
+     */
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new SwitchCaseOperator(
             $registry->deserialize($data['args']['subject']),
             array_map(
-                fn (array $case) => $this->cases->deserialize($case, $registry),
+                fn (mixed $case) => $this->cases->deserialize($case, $registry),
                 $data['args']['cases'],
             ),
             $data['args']['default'] === null ? null : $registry->deserialize($data['args']['default']),

@@ -21,8 +21,13 @@ class GreaterThanOperatorSerializer implements ExpressionSerializer
         return GreaterThanOperator::VERSION;
     }
 
+    /**
+     * @return array{uid: string, key: string, class: string, version: string, args: array<mixed>}
+     */
     public function serialize(Expression $expression, ExpressionSerializerRegistry $registry): array
     {
+        assert($expression instanceof GreaterThanOperator);
+
         return [
             'uid' => GreaterThanOperator::UID,
             'key' => GreaterThanOperator::KEY,
@@ -35,6 +40,9 @@ class GreaterThanOperatorSerializer implements ExpressionSerializer
         ];
     }
 
+    /**
+     * @param array{uid: string, key: string, class: string, version: string, args: array<mixed>} $data
+     */
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new GreaterThanOperator(

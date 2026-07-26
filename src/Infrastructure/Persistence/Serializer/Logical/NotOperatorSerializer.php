@@ -21,8 +21,13 @@ class NotOperatorSerializer implements ExpressionSerializer
         return NotOperator::VERSION;
     }
 
+    /**
+     * @return array{uid: string, key: string, class: string, version: string, args: array<mixed>}
+     */
     public function serialize(Expression $expression, ExpressionSerializerRegistry $registry): array
     {
+        assert($expression instanceof NotOperator);
+
         return [
             'uid' => NotOperator::UID,
             'key' => NotOperator::KEY,
@@ -34,6 +39,9 @@ class NotOperatorSerializer implements ExpressionSerializer
         ];
     }
 
+    /**
+     * @param array{uid: string, key: string, class: string, version: string, args: array<mixed>} $data
+     */
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new NotOperator($registry->deserialize($data['args'][0]));

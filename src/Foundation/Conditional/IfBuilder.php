@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Foundation\Conditional;
 
-use LogicException;
+use PhpArchitecture\LazyOperators\Foundation\Conditional\Exception\IncompleteIfBuilderException;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\PipelineConfig;
 use PhpArchitecture\LazyOperators\Foundation\Support\DecoratesNodes;
@@ -43,7 +43,7 @@ class IfBuilder
     public function build(): Expression
     {
         if ($this->then === null || $this->else === null) {
-            throw new LogicException('IfBuilder requires both then() and else() to be set before build().');
+            throw IncompleteIfBuilderException::create($this->then === null, $this->else === null);
         }
 
         return self::decorate(new IfElseOperator($this->condition, $this->then, $this->else), $this->config);

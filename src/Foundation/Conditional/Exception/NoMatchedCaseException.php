@@ -6,10 +6,14 @@ namespace PhpArchitecture\LazyOperators\Foundation\Conditional\Exception;
 
 use RuntimeException;
 
-class NoMatchedCaseException extends RuntimeException
+final class NoMatchedCaseException extends RuntimeException implements LazyOperatorsConditionalException
 {
-    public function __construct()
+    public static function create(mixed $conditionValue): self
     {
-        parent::__construct('No matched case');
+        return new self(sprintf(
+            'No case matched value of type %s (%s).',
+            get_debug_type($conditionValue),
+            var_export($conditionValue, true),
+        ));
     }
 }

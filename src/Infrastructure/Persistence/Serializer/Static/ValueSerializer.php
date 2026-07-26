@@ -22,8 +22,13 @@ class ValueSerializer implements ExpressionSerializer
         return Value::VERSION;
     }
 
+    /**
+     * @return array{uid: string, key: string, class: string, version: string, args: array<mixed>}
+     */
     public function serialize(Expression $expression, ExpressionSerializerRegistry $registry): array
     {
+        assert($expression instanceof Value);
+
         $this->assertJsonSafe($expression->value);
 
         return [
@@ -35,6 +40,9 @@ class ValueSerializer implements ExpressionSerializer
         ];
     }
 
+    /**
+     * @param array{uid: string, key: string, class: string, version: string, args: array<mixed>} $data
+     */
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new Value($data['args'][0]);
@@ -45,7 +53,7 @@ class ValueSerializer implements ExpressionSerializer
         match (true) {
             $value === null, is_bool($value), is_int($value), is_float($value), is_string($value) => null,
             is_array($value) => array_walk($value, fn (mixed $item) => $this->assertJsonSafe($item)),
-            default => throw new UnpersistableValueException($value),
+            default => throw UnpersistableValueException::create($value),
         };
     }
 }

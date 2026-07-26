@@ -13,12 +13,12 @@ interface ExpressionSerializer
     public function expressionVersion(): string;
 
     /**
-     * @return array{uid: string, key: string, class: string, version: string, args: array}
+     * @return array{uid: string, key: string, class: string, version: string, args: array<mixed>}
      */
     public function serialize(Expression $expression, ExpressionSerializerRegistry $registry): array;
 
     /**
-     * @param array{uid: string, key: string, class: string, version: string, args: array} $data
+     * @param array{uid: string, key: string, class: string, version: string, args: array<mixed>} $data
      */
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression;
 }

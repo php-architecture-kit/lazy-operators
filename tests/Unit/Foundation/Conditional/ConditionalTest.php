@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Conditional;
 
-use LogicException;
 use PhpArchitecture\LazyOperators\Foundation\Conditional\Conditional;
+use PhpArchitecture\LazyOperators\Foundation\Conditional\Exception\IncompleteIfBuilderException;
 use PhpArchitecture\LazyOperators\Foundation\Conditional\Exception\NoMatchedCaseException;
 use PhpArchitecture\LazyOperators\Foundation\Conditional\IfElseOperator;
 use PhpArchitecture\LazyOperators\Foundation\Conditional\SwitchCaseOperator;
@@ -36,14 +36,14 @@ final class ConditionalTest extends TestCase
 
     public function testIfBuildThrowsWhenThenIsMissing(): void
     {
-        $this->expectException(LogicException::class);
+        $this->expectException(IncompleteIfBuilderException::class);
 
         Conditional::if(true)->else('no')->build();
     }
 
     public function testIfBuildThrowsWhenElseIsMissing(): void
     {
-        $this->expectException(LogicException::class);
+        $this->expectException(IncompleteIfBuilderException::class);
 
         Conditional::if(true)->then('yes')->build();
     }

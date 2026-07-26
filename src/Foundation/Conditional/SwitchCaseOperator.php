@@ -33,6 +33,6 @@ class SwitchCaseOperator implements Expression
 
         return $this->default
             ? ($this->default)()
-            : throw new NoMatchedCaseException();
+            : throw NoMatchedCaseException::create($conditionValue);
     }
 }

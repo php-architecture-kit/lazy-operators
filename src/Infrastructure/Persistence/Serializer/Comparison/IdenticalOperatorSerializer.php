@@ -21,8 +21,13 @@ class IdenticalOperatorSerializer implements ExpressionSerializer
         return IdenticalOperator::VERSION;
     }
 
+    /**
+     * @return array{uid: string, key: string, class: string, version: string, args: array<mixed>}
+     */
     public function serialize(Expression $expression, ExpressionSerializerRegistry $registry): array
     {
+        assert($expression instanceof IdenticalOperator);
+
         return [
             'uid' => IdenticalOperator::UID,
             'key' => IdenticalOperator::KEY,
@@ -35,6 +40,9 @@ class IdenticalOperatorSerializer implements ExpressionSerializer
         ];
     }
 
+    /**
+     * @param array{uid: string, key: string, class: string, version: string, args: array<mixed>} $data
+     */
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new IdenticalOperator(

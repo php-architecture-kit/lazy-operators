@@ -21,8 +21,13 @@ class DivisionOperatorSerializer implements ExpressionSerializer
         return DivisionOperator::VERSION;
     }
 
+    /**
+     * @return array{uid: string, key: string, class: string, version: string, args: array<mixed>}
+     */
     public function serialize(Expression $expression, ExpressionSerializerRegistry $registry): array
     {
+        assert($expression instanceof DivisionOperator);
+
         return [
             'uid' => DivisionOperator::UID,
             'key' => DivisionOperator::KEY,
@@ -35,6 +40,9 @@ class DivisionOperatorSerializer implements ExpressionSerializer
         ];
     }
 
+    /**
+     * @param array{uid: string, key: string, class: string, version: string, args: array<mixed>} $data
+     */
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new DivisionOperator(

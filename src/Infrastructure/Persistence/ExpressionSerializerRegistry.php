@@ -26,6 +26,9 @@ final class ExpressionSerializerRegistry
         return $this->callbacks;
     }
 
+    /**
+     * @return array{uid: string, key: string, class: string, version: string, args: array<mixed>}
+     */
     public function serialize(Expression $expression): array
     {
         while ($expression instanceof Decorator) {
@@ -38,15 +41,18 @@ final class ExpressionSerializerRegistry
             }
         }
 
-        throw new UnsupportedExpressionException($expression::class);
+        throw UnsupportedExpressionException::create($expression::class);
     }
 
+    /**
+     * @param array{uid: string, key: string, class: string, version: string, args: array<mixed>} $data
+     */
     public function deserialize(array $data): Expression
     {
-        $serializer = $this->serializers[$data['uid']] ?? throw new UnknownExpressionUidException($data['uid']);
+        $serializer = $this->serializers[$data['uid']] ?? throw UnknownExpressionUidException::create($data['uid']);
 
         if ($data['version'] !== $serializer->expressionVersion()) {
-            throw new IncompatibleExpressionVersionException($data['uid'], $data['version'], $serializer->expressionVersion());
+            throw IncompatibleExpressionVersionException::create($data['uid'], $data['version'], $serializer->expressionVersion());
         }
 
         return $serializer->deserialize($data, $this);

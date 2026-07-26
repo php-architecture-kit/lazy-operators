@@ -6,11 +6,11 @@ namespace PhpArchitecture\LazyOperators\Infrastructure\Persistence\Exception;
 
 use RuntimeException;
 
-class UnpersistableValueException extends RuntimeException
+final class UnpersistableValueException extends RuntimeException implements LazyOperatorsPersistenceException
 {
-    public function __construct(mixed $value)
+    public static function create(mixed $value): self
     {
-        parent::__construct(sprintf(
+        return new self(sprintf(
             'Value wraps a "%s", which is not JSON-safe and cannot be persisted.',
             get_debug_type($value),
         ));

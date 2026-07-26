@@ -6,10 +6,10 @@ namespace PhpArchitecture\LazyOperators\Infrastructure\Persistence\Exception;
 
 use RuntimeException;
 
-class UnsupportedExpressionException extends RuntimeException
+final class UnsupportedExpressionException extends RuntimeException implements LazyOperatorsPersistenceException
 {
-    public function __construct(string $class)
+    public static function create(string $class): self
     {
-        parent::__construct(sprintf('No serializer registered for Expression class "%s".', $class));
+        return new self(sprintf('No serializer registered for Expression class "%s".', $class));
     }
 }

@@ -10,7 +10,7 @@ use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerialize
 class CaseOfSwitchCaseSerializer
 {
     /**
-     * @return array{condition: array, value: array}
+     * @return array{condition: array{uid: string, key: string, class: string, version: string, args: array<mixed>}, value: array{uid: string, key: string, class: string, version: string, args: array<mixed>}}
      */
     public function serialize(CaseOfSwitchCase $case, ExpressionSerializerRegistry $registry): array
     {
@@ -21,7 +21,7 @@ class CaseOfSwitchCaseSerializer
     }
 
     /**
-     * @param array{condition: array, value: array} $data
+     * @param array{condition: array{uid: string, key: string, class: string, version: string, args: array<mixed>}, value: array{uid: string, key: string, class: string, version: string, args: array<mixed>}} $data
      */
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): CaseOfSwitchCase
     {

@@ -6,11 +6,11 @@ namespace PhpArchitecture\LazyOperators\Infrastructure\Persistence\Exception;
 
 use RuntimeException;
 
-class IncompatibleExpressionVersionException extends RuntimeException
+final class IncompatibleExpressionVersionException extends RuntimeException implements LazyOperatorsPersistenceException
 {
-    public function __construct(string $uid, string $storedVersion, string $currentVersion)
+    public static function create(string $uid, string $storedVersion, string $currentVersion): self
     {
-        parent::__construct(sprintf(
+        return new self(sprintf(
             'Stored version "%s" for Expression uid "%s" is incompatible with the currently registered version "%s".',
             $storedVersion,
             $uid,

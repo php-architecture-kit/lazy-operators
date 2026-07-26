@@ -21,8 +21,13 @@ class EqualOperatorSerializer implements ExpressionSerializer
         return EqualOperator::VERSION;
     }
 
+    /**
+     * @return array{uid: string, key: string, class: string, version: string, args: array<mixed>}
+     */
     public function serialize(Expression $expression, ExpressionSerializerRegistry $registry): array
     {
+        assert($expression instanceof EqualOperator);
+
         return [
             'uid' => EqualOperator::UID,
             'key' => EqualOperator::KEY,
@@ -35,6 +40,9 @@ class EqualOperatorSerializer implements ExpressionSerializer
         ];
     }
 
+    /**
+     * @param array{uid: string, key: string, class: string, version: string, args: array<mixed>} $data
+     */
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new EqualOperator(

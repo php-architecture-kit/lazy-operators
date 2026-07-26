@@ -7,7 +7,7 @@ namespace PhpArchitecture\LazyOperators\Foundation;
 class PipelineConfig
 {
     public function __construct(
-        public readonly ?Expression $decorator = null,
+        public readonly ?Decorator $decorator = null,
     ) {
     }
 }

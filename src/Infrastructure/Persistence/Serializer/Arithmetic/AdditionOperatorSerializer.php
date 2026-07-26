@@ -1,0 +1,45 @@
+<?php
+
+declare(strict_types=1);
+
+namespace PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Arithmetic;
+
+use PhpArchitecture\LazyOperators\Foundation\Arithmetic\AdditionOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializerRegistry;
+
+class AdditionOperatorSerializer implements ExpressionSerializer
+{
+    public function supports(Expression $expression): bool
+    {
+        return $expression instanceof AdditionOperator;
+    }
+
+    public function expressionVersion(): string
+    {
+        return AdditionOperator::VERSION;
+    }
+
+    public function serialize(Expression $expression, ExpressionSerializerRegistry $registry): array
+    {
+        return [
+            'uid' => AdditionOperator::UID,
+            'key' => AdditionOperator::KEY,
+            'class' => AdditionOperator::class,
+            'version' => AdditionOperator::VERSION,
+            'args' => [
+                $registry->serialize($expression->left),
+                $registry->serialize($expression->right),
+            ],
+        ];
+    }
+
+    public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
+    {
+        return new AdditionOperator(
+            $registry->deserialize($data['args'][0]),
+            $registry->deserialize($data['args'][1]),
+        );
+    }
+}

@@ -13,7 +13,7 @@ class Value implements Expression
     public const VERSION = '1.0';
 
     public function __construct(
-        private readonly mixed $value,
+        public readonly mixed $value,
     ) {
     }
     

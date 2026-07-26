@@ -13,7 +13,7 @@ class NotOperator implements LogicalOperator
     public const VERSION = '1.0';
 
     public function __construct(
-        private readonly Expression $expression,
+        public readonly Expression $expression,
     ) {
     }
     

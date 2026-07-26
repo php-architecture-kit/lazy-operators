@@ -13,9 +13,9 @@ class IfElseOperator implements Expression
     public const VERSION = '1.0';
 
     public function __construct(
-        private readonly Expression $condition,
-        private readonly Expression $then,
-        private readonly Expression $else,
+        public readonly Expression $condition,
+        public readonly Expression $then,
+        public readonly Expression $else,
     ) {}
 
     public function __invoke(): mixed

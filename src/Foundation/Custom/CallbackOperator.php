@@ -16,10 +16,10 @@ class CallbackOperator implements Expression
     /**
      * @var Expression[]
      */
-    private readonly array $arguments;
+    public readonly array $arguments;
 
     public function __construct(
-        private readonly Closure $callback,
+        public readonly Closure $callback,
         Expression ...$arguments,
     ) {
         $this->arguments = $arguments;

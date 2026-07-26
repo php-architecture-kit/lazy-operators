@@ -17,9 +17,9 @@ class SwitchCaseOperator implements Expression
      * @param CaseOfSwitchCase[] $cases
      */
     public function __construct(
-        private readonly Expression $condition,
-        private readonly array $cases,
-        private readonly ?Expression $default = null,
+        public readonly Expression $condition,
+        public readonly array $cases,
+        public readonly ?Expression $default = null,
     ) {}
 
     public function __invoke(): mixed

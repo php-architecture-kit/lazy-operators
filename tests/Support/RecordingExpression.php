@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Tests\Support;
 
+use PhpArchitecture\LazyOperators\Foundation\Decorator;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 
-final class RecordingExpression implements Expression
+final class RecordingExpression implements Decorator
 {
     /** @var array<int, mixed> */
     public static array $log = [];
@@ -22,6 +23,11 @@ final class RecordingExpression implements Expression
         self::$log[] = $result;
 
         return $result;
+    }
+
+    public function unwrap(): Expression
+    {
+        return $this->inner;
     }
 
     public static function reset(): void

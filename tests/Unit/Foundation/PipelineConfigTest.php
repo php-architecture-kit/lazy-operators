@@ -30,6 +30,13 @@ final class PipelineConfigTest extends TestCase
         self::assertSame($decorator, (new PipelineConfig($decorator))->decorator);
     }
 
+    public function testDecoratedNodeUnwrapsBackToTheOriginalInner(): void
+    {
+        $inner = new Value(5);
+
+        self::assertSame($inner, (new RecordingExpression($inner))->unwrap());
+    }
+
     public function testArithmeticDecoratesEveryNodeInEvaluationOrder(): void
     {
         $config = new PipelineConfig(new RecordingExpression(new Value(0)));

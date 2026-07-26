@@ -13,8 +13,8 @@ class DivisionOperator implements ArithmeticOperator
     public const VERSION = '1.0';
 
     public function __construct(
-        private readonly Expression $left,
-        private readonly Expression $right,
+        public readonly Expression $left,
+        public readonly Expression $right,
     ) {}
 
     public function __invoke(): float|int

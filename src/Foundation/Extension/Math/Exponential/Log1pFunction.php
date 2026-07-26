@@ -1,0 +1,37 @@
+<?php
+
+declare(strict_types=1);
+
+namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential;
+
+use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+
+class Log1pFunction implements Expression
+{
+    use GuardsNativeFunction;
+
+    public const KEY = 'math_log1p';
+    public const UID = '413b7bbc-a2f3-49f3-aa8c-94e036f6961b';
+    public const VERSION = '1.0';
+    private const NATIVE_FUNCTION = 'log1p';
+
+    public function __construct(
+        public readonly Expression $value,
+    ) {
+        self::guardAvailable(self::NATIVE_FUNCTION);
+    }
+
+    public function __invoke(): float
+    {
+        $value = ($this->value)();
+        assert(is_int($value) || is_float($value));
+
+        return log1p($value);
+    }
+
+    public static function formula(): string
+    {
+        return 'f(value) = log(1 + value)';
+    }
+}

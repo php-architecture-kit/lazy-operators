@@ -1,0 +1,40 @@
+{
+    "name": "php-architecture-kit/lazy-operators",
+    "description": "Lazy, composable expression operators (arithmetic, comparison, logical, conditional) for building deferred data-transformation flows in PHP.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Patryk Baszak",
+            "email": "patryk.baszak@gmail.com",
+            "homepage": "https://patrykbaszak.com/"
+        }
+    ],
+    "keywords": ["lazy-operators", "expressions", "framework-agnostic"],
+    "homepage": "https://github.com/php-architecture-kit/lazy-operators",
+    "support": {
+        "issues": "https://github.com/php-architecture-kit/lazy-operators/issues",
+        "source": "https://github.com/php-architecture-kit/lazy-operators"
+    },
+    "require": {
+        "php": "^8.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "PhpArchitecture\\LazyOperators\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PhpArchitecture\\LazyOperators\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

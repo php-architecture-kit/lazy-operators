@@ -1,0 +1,35 @@
+<?php
+
+declare(strict_types=1);
+
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Logical;
+
+use PhpArchitecture\LazyOperators\Foundation\Logical\AndOperator;
+use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PHPUnit\Framework\TestCase;
+
+final class AndOperatorTest extends TestCase
+{
+    public function testTrueAndTrueReturnsTrue(): void
+    {
+        $operator = new AndOperator(new SpyExpression(true), new SpyExpression(true));
+
+        self::assertTrue($operator());
+    }
+
+    public function testTrueAndFalseReturnsFalse(): void
+    {
+        $operator = new AndOperator(new SpyExpression(true), new SpyExpression(false));
+
+        self::assertFalse($operator());
+    }
+
+    public function testShortCircuitsWhenLeftIsFalse(): void
+    {
+        $right = new SpyExpression(true);
+        $operator = new AndOperator(new SpyExpression(false), $right);
+
+        self::assertFalse($operator());
+        self::assertSame(0, $right->invocations);
+    }
+}

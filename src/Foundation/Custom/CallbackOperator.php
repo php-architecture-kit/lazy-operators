@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Logical;
+namespace PhpArchitecture\LazyOperators\Foundation\Custom;
 
 use Closure;
 use PhpArchitecture\LazyOperators\Foundation\Expression;

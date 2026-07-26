@@ -22,4 +22,9 @@ class XorOperator implements LogicalOperator
     {
         return ($this->left)() xor ($this->right)();
     }
+
+    public static function formula(): string
+    {
+        return 'f(left, right) = left XOR right';
+    }
 }

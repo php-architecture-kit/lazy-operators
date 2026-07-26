@@ -29,4 +29,9 @@ class CallbackOperator implements Expression
     {
         return ($this->callback)(...array_map(static fn(Expression $expr) => $expr(), $this->arguments));
     }
+
+    public static function formula(): string
+    {
+        return 'f(callback, arguments) = callback(arguments)';
+    }
 }

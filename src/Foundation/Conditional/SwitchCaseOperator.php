@@ -35,4 +35,9 @@ class SwitchCaseOperator implements Expression
             ? ($this->default)()
             : throw NoMatchedCaseException::create($conditionValue);
     }
+
+    public static function formula(): string
+    {
+        return 'f(condition, cases, default) = value of the first case in cases whose condition = condition, otherwise default';
+    }
 }

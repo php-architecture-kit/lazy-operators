@@ -21,4 +21,9 @@ class SpaceshipOperator implements ComparatorOperator
     {
         return ($this->left)() <=> ($this->right)();
     }
+
+    public static function formula(): string
+    {
+        return 'f(left, right) = sgn(left - right)';
+    }
 }

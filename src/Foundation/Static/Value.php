@@ -21,4 +21,9 @@ class Value implements Expression
     {
         return $this->value;
     }
+
+    public static function formula(): string
+    {
+        return 'f(value) = value';
+    }
 }

@@ -22,4 +22,9 @@ class NotIdenticalOperator implements ComparisonOperator
     {
         return ($this->left)() !== ($this->right)();
     }
+
+    public static function formula(): string
+    {
+        return 'f(left, right) = left is not identical to right';
+    }
 }

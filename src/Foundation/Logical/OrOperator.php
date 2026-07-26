@@ -22,4 +22,9 @@ class OrOperator implements LogicalOperator
     {
         return ($this->left)() || ($this->right)();
     }
+
+    public static function formula(): string
+    {
+        return 'f(left, right) = left OR right';
+    }
 }

@@ -22,4 +22,9 @@ class IfElseOperator implements Expression
     {
         return ($this->condition)() ? ($this->then)() : ($this->else)();
     }
+
+    public static function formula(): string
+    {
+        return 'f(condition, then, else) = IF condition THEN then ELSE else';
+    }
 }

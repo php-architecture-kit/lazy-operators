@@ -21,4 +21,9 @@ class NotOperator implements LogicalOperator
     {
         return !($this->expression)();
     }
+
+    public static function formula(): string
+    {
+        return 'f(expression) = NOT expression';
+    }
 }

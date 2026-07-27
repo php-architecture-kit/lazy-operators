@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Infrastructure\Persistence;
 
+use PhpArchitecture\LazyOperators\Foundation\Allocation\AllocationFunction;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\AdditionOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\DivisionOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\ExponentiationOperator;
@@ -75,9 +76,12 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtGetRandMaxF
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\SrandFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtSrandFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\LcgValueFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate\ProductFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate\SumFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsFiniteFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsInfiniteFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsNanFunction;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Allocation\AllocationFunctionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Arithmetic\AdditionOperatorSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Arithmetic\DivisionOperatorSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Arithmetic\ExponentiationOperatorSerializer;
@@ -153,6 +157,8 @@ use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extensio
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Math\Classification\IsFiniteFunctionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Math\Classification\IsInfiniteFunctionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Math\Classification\IsNanFunctionSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Array\Aggregate\ProductFunctionSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Array\Aggregate\SumFunctionSerializer;
 
 final class ExpressionSerializers
 {
@@ -233,6 +239,9 @@ final class ExpressionSerializers
             IsFiniteFunction::UID => new IsFiniteFunctionSerializer(),
             IsInfiniteFunction::UID => new IsInfiniteFunctionSerializer(),
             IsNanFunction::UID => new IsNanFunctionSerializer(),
+            SumFunction::UID => new SumFunctionSerializer(),
+            ProductFunction::UID => new ProductFunctionSerializer(),
+            AllocationFunction::UID => new AllocationFunctionSerializer(),
         ], $callbacks ?? new CallbackRegistry());
     }
 }

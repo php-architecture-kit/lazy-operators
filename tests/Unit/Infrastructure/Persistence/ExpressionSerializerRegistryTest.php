@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Tests\Unit\Infrastructure\Persistence;
 
+use PhpArchitecture\LazyOperators\Foundation\Allocation\AllocationFunction;
+use PhpArchitecture\LazyOperators\Foundation\Allocation\AllocationRemainderTarget;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\AdditionOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\DivisionOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\ExponentiationOperator;
@@ -24,6 +26,8 @@ use PhpArchitecture\LazyOperators\Foundation\Conditional\IfElseOperator;
 use PhpArchitecture\LazyOperators\Foundation\Conditional\SwitchCaseOperator;
 use PhpArchitecture\LazyOperators\Foundation\Custom\CallbackOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate\ProductFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate\SumFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsFiniteFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsInfiniteFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsNanFunction;
@@ -176,6 +180,15 @@ final class ExpressionSerializerRegistryTest extends TestCase
             'math_is_finite' => new IsFiniteFunction(new Value(1.5)),
             'math_is_infinite' => new IsInfiniteFunction(new Value(1.5)),
             'math_is_nan' => new IsNanFunction(new Value(1.5)),
+            'array_sum' => new SumFunction(new Value(1), new Value(2), new Value(3)),
+            'array_product' => new ProductFunction(new Value(2), new Value(3), new Value(4)),
+            'allocation' => new AllocationFunction(
+                new Value(100),
+                new Value(2),
+                AllocationRemainderTarget::First,
+                new Value(30),
+                new Value(70),
+            ),
         ];
     }
 

@@ -24,6 +24,9 @@
         "phpstan/phpstan": "*",
         "friendsofphp/php-cs-fixer": "*"
     },
+    "suggest": {
+        "ext-math": "For additional math functions (e.g. gcd, factorial) usable with the arithmetic operators."
+    },
     "autoload": {
         "psr-4": {
             "PhpArchitecture\\LazyOperators\\": "src/"

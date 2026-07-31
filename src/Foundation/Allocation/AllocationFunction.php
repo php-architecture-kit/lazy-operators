@@ -5,24 +5,29 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Foundation\Allocation;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Type\ArrayValue;
 
-class AllocationFunction implements Expression
+/**
+ * @implements ArrayValue<float>
+ */
+class AllocationFunction implements ArrayValue
 {
     public const KEY = 'allocation';
     public const UID = 'ea7ab05f-a239-43c9-b61b-d83b8a3a62a1';
     public const VERSION = '1.0';
 
     /**
-     * @var list<Expression>
+     * @var list<Expression&NumberValue>
      */
     public readonly array $shares;
 
     public function __construct(
-        public readonly Expression $amount,
-        public readonly Expression $precision,
+        public readonly Expression&NumberValue $amount,
+        public readonly Expression&NumberValue $precision,
         public readonly AllocationRemainderTarget $remainderTarget,
-        Expression $firstShare,
-        Expression ...$restShares,
+        Expression&NumberValue $firstShare,
+        Expression&NumberValue ...$restShares,
     ) {
         $this->shares = array_values([$firstShare, ...$restShares]);
     }
@@ -33,14 +38,12 @@ class AllocationFunction implements Expression
     public function __invoke(): array
     {
         $amount = ($this->amount)();
-        assert(is_int($amount) || is_float($amount));
 
         $precision = ($this->precision)();
         assert(is_int($precision));
 
-        $shareValues = array_values(array_map(static function (Expression $share): int|float {
+        $shareValues = array_values(array_map(static function (NumberValue $share): int|float {
             $value = $share();
-            assert(is_int($value) || is_float($value));
 
             return $value;
         }, $this->shares));

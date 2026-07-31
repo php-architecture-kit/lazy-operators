@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 
-class Log1pFunction implements Expression
+class Log1pFunction implements NumberValue
 {
     use GuardsNativeFunction;
 
@@ -17,7 +17,7 @@ class Log1pFunction implements Expression
     private const NATIVE_FUNCTION = 'log1p';
 
     public function __construct(
-        public readonly Expression $value,
+        public readonly NumberValue $value,
     ) {
         self::guardAvailable(self::NATIVE_FUNCTION);
     }
@@ -25,7 +25,6 @@ class Log1pFunction implements Expression
     public function __invoke(): float
     {
         $value = ($this->value)();
-        assert(is_int($value) || is_float($value));
 
         return log1p($value);
     }

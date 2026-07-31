@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Foundation\Extension\Array;
 
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate\ProductFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate\SumFunction;
@@ -37,7 +38,7 @@ class Arrays
     {
         $config = new PipelineConfig();
         $values = array_map(
-            static fn (int|float|Expression $value) => self::decorate(self::wrap($value), $config),
+            static fn (int|float|Expression $value) => self::decorateNumber(self::wrapAs(NumberValue::class, $value), $config),
             [$first, ...$rest],
         );
 

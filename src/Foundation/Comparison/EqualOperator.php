@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Foundation\Comparison;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
 
-class EqualOperator implements ComparisonOperator
+class EqualOperator implements BooleanValue
 {
     public const KEY = 'equal';
     public const UID = '63928bd8-64d9-4a19-91f7-15c0927477b3';

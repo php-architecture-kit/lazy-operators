@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Type\StringValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 
-class DecHexFunction implements Expression
+class DecHexFunction implements StringValue
 {
     use GuardsNativeFunction;
 
@@ -17,7 +18,7 @@ class DecHexFunction implements Expression
     private const NATIVE_FUNCTION = 'dechex';
 
     public function __construct(
-        public readonly Expression $value,
+        public readonly NumberValue $value,
     ) {
         self::guardAvailable(self::NATIVE_FUNCTION);
     }

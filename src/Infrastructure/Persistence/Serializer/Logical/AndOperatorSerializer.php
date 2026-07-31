@@ -9,8 +9,12 @@ use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializerRegistry;
 
+use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Support\DeserializesNarrowly;
 class AndOperatorSerializer implements ExpressionSerializer
 {
+    use DeserializesNarrowly;
+
     public function supports(Expression $expression): bool
     {
         return $expression instanceof AndOperator;
@@ -46,8 +50,8 @@ class AndOperatorSerializer implements ExpressionSerializer
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new AndOperator(
-            $registry->deserialize($data['args'][0]),
-            $registry->deserialize($data['args'][1]),
+            $this->deserializeAs($registry, $data['args'][0], BooleanValue::class),
+            $this->deserializeAs($registry, $data['args'][1], BooleanValue::class),
         );
     }
 }

@@ -9,8 +9,12 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential\PowFunct
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializerRegistry;
 
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Support\DeserializesNarrowly;
 class PowFunctionSerializer implements ExpressionSerializer
 {
+    use DeserializesNarrowly;
+
     public function supports(Expression $expression): bool
     {
         return $expression instanceof PowFunction;
@@ -46,8 +50,8 @@ class PowFunctionSerializer implements ExpressionSerializer
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new PowFunction(
-            $registry->deserialize($data['args']['base']),
-            $registry->deserialize($data['args']['exponent']),
+            $this->deserializeAs($registry, $data['args']['base'], NumberValue::class),
+            $this->deserializeAs($registry, $data['args']['exponent'], NumberValue::class),
         );
     }
 }

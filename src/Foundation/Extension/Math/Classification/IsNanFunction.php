@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 
-class IsNanFunction implements Expression
+class IsNanFunction implements BooleanValue
 {
     use GuardsNativeFunction;
 
@@ -17,7 +18,7 @@ class IsNanFunction implements Expression
     private const NATIVE_FUNCTION = 'is_nan';
 
     public function __construct(
-        public readonly Expression $value,
+        public readonly NumberValue $value,
     ) {
         self::guardAvailable(self::NATIVE_FUNCTION);
     }
@@ -25,7 +26,6 @@ class IsNanFunction implements Expression
     public function __invoke(): bool
     {
         $value = ($this->value)();
-        assert(is_int($value) || is_float($value));
 
         return is_nan($value);
     }

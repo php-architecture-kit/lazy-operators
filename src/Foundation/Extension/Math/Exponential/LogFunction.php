@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
-use PhpArchitecture\LazyOperators\Foundation\Static\Value;
+use PhpArchitecture\LazyOperators\Foundation\Static\FloatLiteral;
 
-class LogFunction implements Expression
+class LogFunction implements NumberValue
 {
     use GuardsNativeFunction;
 
@@ -16,24 +16,22 @@ class LogFunction implements Expression
     public const UID = 'e8b7bced-513f-4050-93ed-7260a150457e';
     public const VERSION = '1.0';
     private const NATIVE_FUNCTION = 'log';
-    public readonly Expression $base;
+    public readonly NumberValue $base;
 
     public function __construct(
-        public readonly Expression $value,
-        ?Expression $base = null,
+        public readonly NumberValue $value,
+        ?NumberValue $base = null,
     ) {
         self::guardAvailable(self::NATIVE_FUNCTION);
 
-        $this->base = $base ?? new Value(M_E);
+        $this->base = $base ?? new FloatLiteral(M_E);
     }
 
     public function __invoke(): float
     {
         $value = ($this->value)();
-        assert(is_int($value) || is_float($value));
 
         $base = ($this->base)();
-        assert(is_int($base) || is_float($base));
 
         return log($value, $base);
     }

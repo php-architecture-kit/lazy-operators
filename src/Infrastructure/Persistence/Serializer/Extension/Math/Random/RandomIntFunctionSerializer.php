@@ -9,8 +9,12 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\RandomIntFunc
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializerRegistry;
 
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Support\DeserializesNarrowly;
 class RandomIntFunctionSerializer implements ExpressionSerializer
 {
+    use DeserializesNarrowly;
+
     public function supports(Expression $expression): bool
     {
         return $expression instanceof RandomIntFunction;
@@ -46,8 +50,8 @@ class RandomIntFunctionSerializer implements ExpressionSerializer
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new RandomIntFunction(
-            $registry->deserialize($data['args']['min']),
-            $registry->deserialize($data['args']['max']),
+            $this->deserializeAs($registry, $data['args']['min'], NumberValue::class),
+            $this->deserializeAs($registry, $data['args']['max'], NumberValue::class),
         );
     }
 }

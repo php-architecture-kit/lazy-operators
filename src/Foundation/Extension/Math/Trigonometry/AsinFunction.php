@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 
-class AsinFunction implements Expression
+class AsinFunction implements NumberValue
 {
     use GuardsNativeFunction;
 
@@ -17,7 +17,7 @@ class AsinFunction implements Expression
     private const NATIVE_FUNCTION = 'asin';
 
     public function __construct(
-        public readonly Expression $value,
+        public readonly NumberValue $value,
     ) {
         self::guardAvailable(self::NATIVE_FUNCTION);
     }
@@ -25,7 +25,6 @@ class AsinFunction implements Expression
     public function __invoke(): float
     {
         $value = ($this->value)();
-        assert(is_int($value) || is_float($value));
 
         return asin($value);
     }

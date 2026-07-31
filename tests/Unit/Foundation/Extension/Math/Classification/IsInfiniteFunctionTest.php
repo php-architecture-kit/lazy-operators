@@ -6,13 +6,13 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Cla
 
 use PHPUnit\Framework\TestCase;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsInfiniteFunction;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class IsInfiniteFunctionTest extends TestCase
 {
     public function testComputesIsInfiniteFunction(): void
     {
-        $function = new IsInfiniteFunction(new SpyExpression(1.5));
+        $function = new IsInfiniteFunction(new NumericSpyExpression(1.5));
 
         $result = $function();
 

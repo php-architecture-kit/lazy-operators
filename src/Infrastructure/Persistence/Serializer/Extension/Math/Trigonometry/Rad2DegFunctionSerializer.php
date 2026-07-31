@@ -9,8 +9,12 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\Rad2Deg
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializerRegistry;
 
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Support\DeserializesNarrowly;
 class Rad2DegFunctionSerializer implements ExpressionSerializer
 {
+    use DeserializesNarrowly;
+
     public function supports(Expression $expression): bool
     {
         return $expression instanceof Rad2DegFunction;
@@ -44,6 +48,6 @@ class Rad2DegFunctionSerializer implements ExpressionSerializer
      */
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
-        return new Rad2DegFunction($registry->deserialize($data['args']['value']));
+        return new Rad2DegFunction($this->deserializeAs($registry, $data['args']['value'], NumberValue::class));
     }
 }

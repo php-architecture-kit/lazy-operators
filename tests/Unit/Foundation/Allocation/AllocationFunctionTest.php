@@ -6,7 +6,7 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Allocation;
 
 use PhpArchitecture\LazyOperators\Foundation\Allocation\AllocationFunction;
 use PhpArchitecture\LazyOperators\Foundation\Allocation\AllocationRemainderTarget;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 use PHPUnit\Framework\TestCase;
 
 final class AllocationFunctionTest extends TestCase
@@ -28,12 +28,12 @@ final class AllocationFunctionTest extends TestCase
     public function testSplitsEvenlyWhenThereIsNoRemainder(): void
     {
         $function = new AllocationFunction(
-            new SpyExpression(30),
-            new SpyExpression(0),
+            new NumericSpyExpression(30),
+            new NumericSpyExpression(0),
             AllocationRemainderTarget::First,
-            new SpyExpression(1),
-            new SpyExpression(1),
-            new SpyExpression(1),
+            new NumericSpyExpression(1),
+            new NumericSpyExpression(1),
+            new NumericSpyExpression(1),
         );
 
         $result = $function();
@@ -45,12 +45,12 @@ final class AllocationFunctionTest extends TestCase
     public function testFoldsTheRemainderIntoTheFirstShareByDefault(): void
     {
         $function = new AllocationFunction(
-            new SpyExpression(1),
-            new SpyExpression(2),
+            new NumericSpyExpression(1),
+            new NumericSpyExpression(2),
             AllocationRemainderTarget::First,
-            new SpyExpression(1),
-            new SpyExpression(4),
-            new SpyExpression(1),
+            new NumericSpyExpression(1),
+            new NumericSpyExpression(4),
+            new NumericSpyExpression(1),
         );
 
         $result = $function();
@@ -62,12 +62,12 @@ final class AllocationFunctionTest extends TestCase
     public function testFoldsTheRemainderIntoTheLastShareWhenRequested(): void
     {
         $function = new AllocationFunction(
-            new SpyExpression(1),
-            new SpyExpression(2),
+            new NumericSpyExpression(1),
+            new NumericSpyExpression(2),
             AllocationRemainderTarget::Last,
-            new SpyExpression(1),
-            new SpyExpression(4),
-            new SpyExpression(1),
+            new NumericSpyExpression(1),
+            new NumericSpyExpression(4),
+            new NumericSpyExpression(1),
         );
 
         $result = $function();
@@ -79,12 +79,12 @@ final class AllocationFunctionTest extends TestCase
     public function testFoldsTheRemainderIntoTheLargestShareWhenRequested(): void
     {
         $function = new AllocationFunction(
-            new SpyExpression(1),
-            new SpyExpression(2),
+            new NumericSpyExpression(1),
+            new NumericSpyExpression(2),
             AllocationRemainderTarget::Largest,
-            new SpyExpression(1),
-            new SpyExpression(4),
-            new SpyExpression(1),
+            new NumericSpyExpression(1),
+            new NumericSpyExpression(4),
+            new NumericSpyExpression(1),
         );
 
         $result = $function();
@@ -96,12 +96,12 @@ final class AllocationFunctionTest extends TestCase
     public function testFoldsTheRemainderIntoTheSmallestShareWhenRequested(): void
     {
         $function = new AllocationFunction(
-            new SpyExpression(1),
-            new SpyExpression(2),
+            new NumericSpyExpression(1),
+            new NumericSpyExpression(2),
             AllocationRemainderTarget::Smallest,
-            new SpyExpression(4),
-            new SpyExpression(1),
-            new SpyExpression(4),
+            new NumericSpyExpression(4),
+            new NumericSpyExpression(1),
+            new NumericSpyExpression(4),
         );
 
         $result = $function();
@@ -113,11 +113,11 @@ final class AllocationFunctionTest extends TestCase
     public function testAllocatesProportionallyToUnequalShares(): void
     {
         $function = new AllocationFunction(
-            new SpyExpression(100),
-            new SpyExpression(2),
+            new NumericSpyExpression(100),
+            new NumericSpyExpression(2),
             AllocationRemainderTarget::First,
-            new SpyExpression(30),
-            new SpyExpression(70),
+            new NumericSpyExpression(30),
+            new NumericSpyExpression(70),
         );
 
         $result = $function();
@@ -129,10 +129,10 @@ final class AllocationFunctionTest extends TestCase
     public function testWorksWithASingleShare(): void
     {
         $function = new AllocationFunction(
-            new SpyExpression(42.5),
-            new SpyExpression(2),
+            new NumericSpyExpression(42.5),
+            new NumericSpyExpression(2),
             AllocationRemainderTarget::First,
-            new SpyExpression(1),
+            new NumericSpyExpression(1),
         );
 
         $result = $function();
@@ -144,12 +144,12 @@ final class AllocationFunctionTest extends TestCase
     public function testRemainsLosslessForANegativeAmount(): void
     {
         $function = new AllocationFunction(
-            new SpyExpression(-10),
-            new SpyExpression(2),
+            new NumericSpyExpression(-10),
+            new NumericSpyExpression(2),
             AllocationRemainderTarget::First,
-            new SpyExpression(1),
-            new SpyExpression(1),
-            new SpyExpression(1),
+            new NumericSpyExpression(1),
+            new NumericSpyExpression(1),
+            new NumericSpyExpression(1),
         );
 
         $result = $function();
@@ -184,10 +184,10 @@ final class AllocationFunctionTest extends TestCase
 
         foreach ($cases as [$amount, $shares, $precision]) {
             foreach (AllocationRemainderTarget::cases() as $target) {
-                $shareExpressions = array_map(static fn (int|float $share) => new SpyExpression($share), $shares);
+                $shareExpressions = array_map(static fn (int|float $share) => new NumericSpyExpression($share), $shares);
                 $function = new AllocationFunction(
-                    new SpyExpression($amount),
-                    new SpyExpression($precision),
+                    new NumericSpyExpression($amount),
+                    new NumericSpyExpression($precision),
                     $target,
                     ...$shareExpressions,
                 );

@@ -6,13 +6,13 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Exp
 
 use PHPUnit\Framework\TestCase;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential\Log10Function;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class Log10FunctionTest extends TestCase
 {
     public function testComputesLog10Function(): void
     {
-        $function = new Log10Function(new SpyExpression(100.0));
+        $function = new Log10Function(new NumericSpyExpression(100.0));
 
         $result = $function();
 

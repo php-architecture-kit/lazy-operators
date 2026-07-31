@@ -6,13 +6,13 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Exp
 
 use PHPUnit\Framework\TestCase;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential\ExpFunction;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class ExpFunctionTest extends TestCase
 {
     public function testComputesExpFunction(): void
     {
-        $function = new ExpFunction(new SpyExpression(1.0));
+        $function = new ExpFunction(new NumericSpyExpression(1.0));
 
         $result = $function();
 

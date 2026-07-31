@@ -9,8 +9,12 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\Atan2Fu
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializerRegistry;
 
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Support\DeserializesNarrowly;
 class Atan2FunctionSerializer implements ExpressionSerializer
 {
+    use DeserializesNarrowly;
+
     public function supports(Expression $expression): bool
     {
         return $expression instanceof Atan2Function;
@@ -46,8 +50,8 @@ class Atan2FunctionSerializer implements ExpressionSerializer
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new Atan2Function(
-            $registry->deserialize($data['args']['y']),
-            $registry->deserialize($data['args']['x']),
+            $this->deserializeAs($registry, $data['args']['y'], NumberValue::class),
+            $this->deserializeAs($registry, $data['args']['x'], NumberValue::class),
         );
     }
 }

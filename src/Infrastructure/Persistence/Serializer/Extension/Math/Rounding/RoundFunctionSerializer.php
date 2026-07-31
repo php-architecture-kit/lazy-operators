@@ -10,8 +10,12 @@ use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerialize
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializerRegistry;
 use RoundingMode;
 
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Support\DeserializesNarrowly;
 class RoundFunctionSerializer implements ExpressionSerializer
 {
+    use DeserializesNarrowly;
+
     public function supports(Expression $expression): bool
     {
         return $expression instanceof RoundFunction;
@@ -52,8 +56,8 @@ class RoundFunctionSerializer implements ExpressionSerializer
         $mode = $data['args']['mode'];
 
         return new RoundFunction(
-            $registry->deserialize($data['args']['value']),
-            $registry->deserialize($data['args']['precision']),
+            $this->deserializeAs($registry, $data['args']['value'], NumberValue::class),
+            $this->deserializeAs($registry, $data['args']['precision'], NumberValue::class),
             $mode['type'] === 'enum'
                 ? constant(RoundingMode::class . '::' . $mode['case'])
                 : $mode['value'],

@@ -6,13 +6,13 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Con
 
 use PHPUnit\Framework\TestCase;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion\DecHexFunction;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class DecHexFunctionTest extends TestCase
 {
     public function testComputesDecHexFunction(): void
     {
-        $function = new DecHexFunction(new SpyExpression(255));
+        $function = new DecHexFunction(new NumericSpyExpression(255));
 
         self::assertSame('ff', $function());
     }

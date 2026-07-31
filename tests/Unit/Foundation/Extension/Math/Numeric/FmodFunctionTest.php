@@ -6,13 +6,13 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Num
 
 use PHPUnit\Framework\TestCase;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Numeric\FmodFunction;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class FmodFunctionTest extends TestCase
 {
     public function testComputesFmodFunction(): void
     {
-        $function = new FmodFunction(new SpyExpression(10.0), new SpyExpression(3.0));
+        $function = new FmodFunction(new NumericSpyExpression(10.0), new NumericSpyExpression(3.0));
 
         $result = $function();
 
@@ -21,7 +21,7 @@ final class FmodFunctionTest extends TestCase
 
     public function testFmodByZeroIsNanRatherThanAnException(): void
     {
-        $function = new FmodFunction(new SpyExpression(5.0), new SpyExpression(0.0));
+        $function = new FmodFunction(new NumericSpyExpression(5.0), new NumericSpyExpression(0.0));
 
         self::assertNan($function());
     }

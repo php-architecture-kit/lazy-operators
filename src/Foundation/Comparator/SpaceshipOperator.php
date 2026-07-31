@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Foundation\Comparator;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\IntegerValue;
 
-class SpaceshipOperator implements ComparatorOperator
+class SpaceshipOperator implements IntegerValue
 {
     public const KEY = 'spaceship';
     public const UID = '611d67d6-5612-449a-89bc-8ece8bc39a86';
@@ -17,7 +18,7 @@ class SpaceshipOperator implements ComparatorOperator
         public readonly Expression $right,
     ) {}
 
-    public function __invoke(): float|int
+    public function __invoke(): int
     {
         return ($this->left)() <=> ($this->right)();
     }

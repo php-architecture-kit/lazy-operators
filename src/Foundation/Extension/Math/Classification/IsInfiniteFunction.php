@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 
-class IsInfiniteFunction implements Expression
+class IsInfiniteFunction implements BooleanValue
 {
     use GuardsNativeFunction;
 
@@ -17,7 +18,7 @@ class IsInfiniteFunction implements Expression
     private const NATIVE_FUNCTION = 'is_infinite';
 
     public function __construct(
-        public readonly Expression $value,
+        public readonly NumberValue $value,
     ) {
         self::guardAvailable(self::NATIVE_FUNCTION);
     }
@@ -25,7 +26,6 @@ class IsInfiniteFunction implements Expression
     public function __invoke(): bool
     {
         $value = ($this->value)();
-        assert(is_int($value) || is_float($value));
 
         return is_infinite($value);
     }

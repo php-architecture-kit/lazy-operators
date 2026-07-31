@@ -9,8 +9,12 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Numeric\IntdivFuncti
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializerRegistry;
 
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Support\DeserializesNarrowly;
 class IntdivFunctionSerializer implements ExpressionSerializer
 {
+    use DeserializesNarrowly;
+
     public function supports(Expression $expression): bool
     {
         return $expression instanceof IntdivFunction;
@@ -46,8 +50,8 @@ class IntdivFunctionSerializer implements ExpressionSerializer
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new IntdivFunction(
-            $registry->deserialize($data['args']['dividend']),
-            $registry->deserialize($data['args']['divisor']),
+            $this->deserializeAs($registry, $data['args']['dividend'], NumberValue::class),
+            $this->deserializeAs($registry, $data['args']['divisor'], NumberValue::class),
         );
     }
 }

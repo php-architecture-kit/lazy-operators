@@ -6,11 +6,15 @@ namespace PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Co
 
 use PhpArchitecture\LazyOperators\Foundation\Conditional\IfElseOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializerRegistry;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Support\DeserializesNarrowly;
 
 class IfElseOperatorSerializer implements ExpressionSerializer
 {
+    use DeserializesNarrowly;
+
     public function supports(Expression $expression): bool
     {
         return $expression instanceof IfElseOperator;
@@ -47,7 +51,7 @@ class IfElseOperatorSerializer implements ExpressionSerializer
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new IfElseOperator(
-            $registry->deserialize($data['args'][0]),
+            $this->deserializeAs($registry, $data['args'][0], BooleanValue::class),
             $registry->deserialize($data['args'][1]),
             $registry->deserialize($data['args'][2]),
         );

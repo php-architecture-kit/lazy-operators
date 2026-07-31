@@ -9,8 +9,12 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\AsinhFu
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializerRegistry;
 
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Support\DeserializesNarrowly;
 class AsinhFunctionSerializer implements ExpressionSerializer
 {
+    use DeserializesNarrowly;
+
     public function supports(Expression $expression): bool
     {
         return $expression instanceof AsinhFunction;
@@ -44,6 +48,6 @@ class AsinhFunctionSerializer implements ExpressionSerializer
      */
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
-        return new AsinhFunction($registry->deserialize($data['args']['value']));
+        return new AsinhFunction($this->deserializeAs($registry, $data['args']['value'], NumberValue::class));
     }
 }

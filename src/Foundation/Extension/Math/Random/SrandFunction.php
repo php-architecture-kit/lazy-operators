@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random;
 
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
-use PhpArchitecture\LazyOperators\Foundation\Static\Value;
+use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
 
 class SrandFunction implements Expression
 {
@@ -16,14 +17,14 @@ class SrandFunction implements Expression
     public const UID = 'e0884733-486f-4768-a3f7-0c17461f8735';
     public const VERSION = '1.0';
     private const NATIVE_FUNCTION = 'srand';
-    public readonly Expression $seed;
+    public readonly NumberValue $seed;
 
     public function __construct(
-        ?Expression $seed = null,
+        ?NumberValue $seed = null,
     ) {
         self::guardAvailable(self::NATIVE_FUNCTION);
 
-        $this->seed = $seed ?? new Value(0);
+        $this->seed = $seed ?? new IntLiteral(0);
     }
 
     public function __invoke(): null

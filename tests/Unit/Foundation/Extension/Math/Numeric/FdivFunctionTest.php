@@ -6,13 +6,13 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Num
 
 use PHPUnit\Framework\TestCase;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Numeric\FdivFunction;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class FdivFunctionTest extends TestCase
 {
     public function testComputesFdivFunction(): void
     {
-        $function = new FdivFunction(new SpyExpression(10.0), new SpyExpression(4.0));
+        $function = new FdivFunction(new NumericSpyExpression(10.0), new NumericSpyExpression(4.0));
 
         $result = $function();
 
@@ -21,7 +21,7 @@ final class FdivFunctionTest extends TestCase
 
     public function testFdivByZeroIsInfinityRatherThanAnException(): void
     {
-        $function = new FdivFunction(new SpyExpression(1.0), new SpyExpression(0.0));
+        $function = new FdivFunction(new NumericSpyExpression(1.0), new NumericSpyExpression(0.0));
 
         self::assertInfinite($function());
     }

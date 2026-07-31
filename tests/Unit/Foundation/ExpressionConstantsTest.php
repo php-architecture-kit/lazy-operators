@@ -26,7 +26,11 @@ use PhpArchitecture\LazyOperators\Foundation\Logical\AndOperator;
 use PhpArchitecture\LazyOperators\Foundation\Logical\NotOperator;
 use PhpArchitecture\LazyOperators\Foundation\Logical\OrOperator;
 use PhpArchitecture\LazyOperators\Foundation\Logical\XorOperator;
-use PhpArchitecture\LazyOperators\Foundation\Static\Value;
+use PhpArchitecture\LazyOperators\Foundation\Static\ArrayLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Static\BoolLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Static\FloatLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Static\StringLiteral;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
@@ -60,7 +64,11 @@ final class ExpressionConstantsTest extends TestCase
         OrOperator::class,
         XorOperator::class,
         NotOperator::class,
-        Value::class,
+        IntLiteral::class,
+        FloatLiteral::class,
+        BoolLiteral::class,
+        StringLiteral::class,
+        ArrayLiteral::class,
     ];
 
     public function testEachClassDeclaresItsOwnConstants(): void

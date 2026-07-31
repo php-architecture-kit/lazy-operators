@@ -6,13 +6,13 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Exp
 
 use PHPUnit\Framework\TestCase;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential\HypotFunction;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class HypotFunctionTest extends TestCase
 {
     public function testComputesHypotFunction(): void
     {
-        $function = new HypotFunction(new SpyExpression(3.0), new SpyExpression(4.0));
+        $function = new HypotFunction(new NumericSpyExpression(3.0), new NumericSpyExpression(4.0));
 
         $result = $function();
 

@@ -6,13 +6,13 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Con
 
 use PHPUnit\Framework\TestCase;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion\DecBinFunction;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class DecBinFunctionTest extends TestCase
 {
     public function testComputesDecBinFunction(): void
     {
-        $function = new DecBinFunction(new SpyExpression(5));
+        $function = new DecBinFunction(new NumericSpyExpression(5));
 
         self::assertSame('101', $function());
     }

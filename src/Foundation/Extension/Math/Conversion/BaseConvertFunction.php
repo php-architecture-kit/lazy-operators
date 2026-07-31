@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Type\StringValue;
 
-class BaseConvertFunction implements Expression
+class BaseConvertFunction implements StringValue
 {
     use GuardsNativeFunction;
 
@@ -17,9 +18,9 @@ class BaseConvertFunction implements Expression
     private const NATIVE_FUNCTION = 'base_convert';
 
     public function __construct(
-        public readonly Expression $value,
-        public readonly Expression $fromBase,
-        public readonly Expression $toBase,
+        public readonly StringValue $value,
+        public readonly NumberValue $fromBase,
+        public readonly NumberValue $toBase,
     ) {
         self::guardAvailable(self::NATIVE_FUNCTION);
     }
@@ -27,7 +28,6 @@ class BaseConvertFunction implements Expression
     public function __invoke(): string
     {
         $value = ($this->value)();
-        assert(is_string($value));
 
         $fromBase = ($this->fromBase)();
         assert(is_int($fromBase));

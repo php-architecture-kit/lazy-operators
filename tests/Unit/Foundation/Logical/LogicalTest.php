@@ -10,7 +10,7 @@ use PhpArchitecture\LazyOperators\Foundation\Logical\Logical;
 use PhpArchitecture\LazyOperators\Foundation\Logical\NotOperator;
 use PhpArchitecture\LazyOperators\Foundation\Logical\OrOperator;
 use PhpArchitecture\LazyOperators\Foundation\Logical\XorOperator;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\BooleanSpyExpression;
 use PHPUnit\Framework\TestCase;
 
 final class LogicalTest extends TestCase
@@ -22,7 +22,7 @@ final class LogicalTest extends TestCase
 
     public function testOfAcceptsAnExpressionDirectly(): void
     {
-        self::assertTrue(Logical::of(new SpyExpression(true))->build()());
+        self::assertTrue(Logical::of(new BooleanSpyExpression(true))->build()());
     }
 
     public function testBuildReturnsAnExpressionNotLogical(): void
@@ -79,7 +79,7 @@ final class LogicalTest extends TestCase
 
     public function testOperandsAcceptExpressionInstancesDirectly(): void
     {
-        $right = new SpyExpression(false);
+        $right = new BooleanSpyExpression(false);
 
         $expr = Logical::of(true)->and($right)->build();
 

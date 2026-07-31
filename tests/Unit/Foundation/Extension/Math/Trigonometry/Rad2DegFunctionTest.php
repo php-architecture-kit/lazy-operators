@@ -6,13 +6,13 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Tri
 
 use PHPUnit\Framework\TestCase;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\Rad2DegFunction;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class Rad2DegFunctionTest extends TestCase
 {
     public function testComputesRad2DegFunction(): void
     {
-        $function = new Rad2DegFunction(new SpyExpression(3.141592653589793));
+        $function = new Rad2DegFunction(new NumericSpyExpression(3.141592653589793));
 
         $result = $function();
 

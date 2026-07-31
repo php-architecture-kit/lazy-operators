@@ -6,13 +6,13 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Exp
 
 use PHPUnit\Framework\TestCase;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential\PowFunction;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class PowFunctionTest extends TestCase
 {
     public function testComputesPowFunction(): void
     {
-        $function = new PowFunction(new SpyExpression(2), new SpyExpression(10));
+        $function = new PowFunction(new NumericSpyExpression(2), new NumericSpyExpression(10));
 
         $result = $function();
 

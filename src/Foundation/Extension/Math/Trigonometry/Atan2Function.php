@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 
-class Atan2Function implements Expression
+class Atan2Function implements NumberValue
 {
     use GuardsNativeFunction;
 
@@ -17,8 +17,8 @@ class Atan2Function implements Expression
     private const NATIVE_FUNCTION = 'atan2';
 
     public function __construct(
-        public readonly Expression $y,
-        public readonly Expression $x,
+        public readonly NumberValue $y,
+        public readonly NumberValue $x,
     ) {
         self::guardAvailable(self::NATIVE_FUNCTION);
     }
@@ -26,10 +26,8 @@ class Atan2Function implements Expression
     public function __invoke(): float
     {
         $y = ($this->y)();
-        assert(is_int($y) || is_float($y));
 
         $x = ($this->x)();
-        assert(is_int($x) || is_float($x));
 
         return atan2($y, $x);
     }

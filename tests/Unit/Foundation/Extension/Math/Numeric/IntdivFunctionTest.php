@@ -7,13 +7,13 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Num
 use DivisionByZeroError;
 use PHPUnit\Framework\TestCase;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Numeric\IntdivFunction;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class IntdivFunctionTest extends TestCase
 {
     public function testComputesIntdivFunction(): void
     {
-        $function = new IntdivFunction(new SpyExpression(10), new SpyExpression(3));
+        $function = new IntdivFunction(new NumericSpyExpression(10), new NumericSpyExpression(3));
 
         $result = $function();
 
@@ -22,7 +22,7 @@ final class IntdivFunctionTest extends TestCase
 
     public function testIntdivByZeroThrowsTheNativeDivisionByZeroError(): void
     {
-        $function = new IntdivFunction(new SpyExpression(10), new SpyExpression(0));
+        $function = new IntdivFunction(new NumericSpyExpression(10), new NumericSpyExpression(0));
 
         $this->expectException(DivisionByZeroError::class);
 

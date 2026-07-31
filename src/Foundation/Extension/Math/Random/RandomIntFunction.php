@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 
-class RandomIntFunction implements Expression
+class RandomIntFunction implements NumberValue
 {
     use GuardsNativeFunction;
 
@@ -17,8 +17,8 @@ class RandomIntFunction implements Expression
     private const NATIVE_FUNCTION = 'random_int';
 
     public function __construct(
-        public readonly Expression $min,
-        public readonly Expression $max,
+        public readonly NumberValue $min,
+        public readonly NumberValue $max,
     ) {
         self::guardAvailable(self::NATIVE_FUNCTION);
     }

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 
-class HypotFunction implements Expression
+class HypotFunction implements NumberValue
 {
     use GuardsNativeFunction;
 
@@ -17,8 +17,8 @@ class HypotFunction implements Expression
     private const NATIVE_FUNCTION = 'hypot';
 
     public function __construct(
-        public readonly Expression $x,
-        public readonly Expression $y,
+        public readonly NumberValue $x,
+        public readonly NumberValue $y,
     ) {
         self::guardAvailable(self::NATIVE_FUNCTION);
     }
@@ -26,10 +26,8 @@ class HypotFunction implements Expression
     public function __invoke(): float
     {
         $x = ($this->x)();
-        assert(is_int($x) || is_float($x));
 
         $y = ($this->y)();
-        assert(is_int($y) || is_float($y));
 
         return hypot($x, $y);
     }

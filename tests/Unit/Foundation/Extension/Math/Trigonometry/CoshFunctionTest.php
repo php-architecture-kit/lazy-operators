@@ -6,13 +6,13 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Tri
 
 use PHPUnit\Framework\TestCase;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\CoshFunction;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class CoshFunctionTest extends TestCase
 {
     public function testComputesCoshFunction(): void
     {
-        $function = new CoshFunction(new SpyExpression(1.0));
+        $function = new CoshFunction(new NumericSpyExpression(1.0));
 
         $result = $function();
 

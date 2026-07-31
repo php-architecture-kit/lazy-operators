@@ -6,13 +6,13 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Con
 
 use PHPUnit\Framework\TestCase;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion\HexDecFunction;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\StringSpyExpression;
 
 final class HexDecFunctionTest extends TestCase
 {
     public function testComputesHexDecFunction(): void
     {
-        $function = new HexDecFunction(new SpyExpression('ff'));
+        $function = new HexDecFunction(new StringSpyExpression('ff'));
 
         self::assertSame(255, $function());
     }

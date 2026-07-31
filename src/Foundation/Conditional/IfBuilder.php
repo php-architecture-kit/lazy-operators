@@ -9,6 +9,7 @@ use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\PipelineConfig;
 use PhpArchitecture\LazyOperators\Foundation\Support\DecoratesNodes;
 use PhpArchitecture\LazyOperators\Foundation\Support\WrapsRawValues;
+use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
 
 class IfBuilder
 {
@@ -16,18 +17,18 @@ class IfBuilder
     use DecoratesNodes;
 
     private function __construct(
-        private readonly Expression $condition,
+        private readonly BooleanValue $condition,
         private readonly PipelineConfig $config,
         private readonly ?Expression $then = null,
         private readonly ?Expression $else = null,
     ) {
     }
 
-    public static function of(mixed $condition, ?PipelineConfig $config = null): self
+    public static function of(bool|BooleanValue $condition, ?PipelineConfig $config = null): self
     {
         $config ??= new PipelineConfig();
 
-        return new self(self::decorate(self::wrap($condition), $config), $config);
+        return new self(self::decorateBoolean(self::wrapAs(BooleanValue::class, $condition), $config), $config);
     }
 
     public function then(mixed $value): self

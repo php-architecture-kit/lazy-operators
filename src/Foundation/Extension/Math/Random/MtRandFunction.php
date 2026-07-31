@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 
-class MtRandFunction implements Expression
+class MtRandFunction implements NumberValue
 {
     use GuardsNativeFunction;
 
@@ -17,8 +17,8 @@ class MtRandFunction implements Expression
     private const NATIVE_FUNCTION = 'mt_rand';
 
     public function __construct(
-        public readonly ?Expression $min = null,
-        public readonly ?Expression $max = null,
+        public readonly ?NumberValue $min = null,
+        public readonly ?NumberValue $max = null,
     ) {
         self::guardAvailable(self::NATIVE_FUNCTION);
     }

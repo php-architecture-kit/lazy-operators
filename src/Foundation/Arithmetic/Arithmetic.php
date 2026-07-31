@@ -8,6 +8,7 @@ use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\PipelineConfig;
 use PhpArchitecture\LazyOperators\Foundation\Support\DecoratesNodes;
 use PhpArchitecture\LazyOperators\Foundation\Support\WrapsRawValues;
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 
 class Arithmetic
 {
@@ -15,68 +16,78 @@ class Arithmetic
     use DecoratesNodes;
 
     private function __construct(
-        private readonly Expression $current,
+        private readonly Expression&NumberValue $current,
         private readonly PipelineConfig $config,
     ) {
     }
 
-    public static function of(int|float|Expression $value, ?PipelineConfig $config = null): self
+    public static function of(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): self
     {
         $config ??= new PipelineConfig();
 
-        return new self(self::decorate(self::wrap($value), $config), $config);
+        return new self(self::decorateNumeric($value, $config), $config);
     }
 
-    public function add(int|float|Expression $value): self
+    public function add(int|float|(Expression&NumberValue) $value): self
     {
         return new self(
-            self::decorate(new AdditionOperator($this->current, self::decorate(self::wrap($value), $this->config)), $this->config),
+            self::decorateOperator(new AdditionOperator($this->current, self::decorateNumeric($value, $this->config)), $this->config),
             $this->config,
         );
     }
 
-    public function subtract(int|float|Expression $value): self
+    public function subtract(int|float|(Expression&NumberValue) $value): self
     {
         return new self(
-            self::decorate(new SubtractionOperator($this->current, self::decorate(self::wrap($value), $this->config)), $this->config),
+            self::decorateOperator(new SubtractionOperator($this->current, self::decorateNumeric($value, $this->config)), $this->config),
             $this->config,
         );
     }
 
-    public function multiply(int|float|Expression $value): self
+    public function multiply(int|float|(Expression&NumberValue) $value): self
     {
         return new self(
-            self::decorate(new MultiplicationOperator($this->current, self::decorate(self::wrap($value), $this->config)), $this->config),
+            self::decorateOperator(new MultiplicationOperator($this->current, self::decorateNumeric($value, $this->config)), $this->config),
             $this->config,
         );
     }
 
-    public function divide(int|float|Expression $value): self
+    public function divide(int|float|(Expression&NumberValue) $value): self
     {
         return new self(
-            self::decorate(new DivisionOperator($this->current, self::decorate(self::wrap($value), $this->config)), $this->config),
+            self::decorateOperator(new DivisionOperator($this->current, self::decorateNumeric($value, $this->config)), $this->config),
             $this->config,
         );
     }
 
-    public function modulo(int|float|Expression $value): self
+    public function modulo(int|float|(Expression&NumberValue) $value): self
     {
         return new self(
-            self::decorate(new ModuloOperator($this->current, self::decorate(self::wrap($value), $this->config)), $this->config),
+            self::decorateOperator(new ModuloOperator($this->current, self::decorateNumeric($value, $this->config)), $this->config),
             $this->config,
         );
     }
 
-    public function power(int|float|Expression $value): self
+    public function power(int|float|(Expression&NumberValue) $value): self
     {
         return new self(
-            self::decorate(new ExponentiationOperator($this->current, self::decorate(self::wrap($value), $this->config)), $this->config),
+            self::decorateOperator(new ExponentiationOperator($this->current, self::decorateNumeric($value, $this->config)), $this->config),
             $this->config,
         );
     }
 
-    public function build(): Expression
+    public function build(): Expression&NumberValue
     {
         return $this->current;
+    }
+
+    private static function decorateNumeric(int|float|(Expression&NumberValue) $value, PipelineConfig $config): Expression&NumberValue
+    {
+        return self::decorateNumber(self::wrapAs(NumberValue::class, $value), $config);
+    }
+
+    private static function decorateOperator(Expression&NumberValue $node, PipelineConfig $config): Expression&NumberValue
+    {
+        return self::decorateNumber($node, $config);
     }
 }

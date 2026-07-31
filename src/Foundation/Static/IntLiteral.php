@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Foundation\Static;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\IntegerValue;
 
-class Value implements Expression
+class IntLiteral implements IntegerValue
 {
-    public const KEY = 'value';
-    public const UID = '53dd5ea3-cebe-4034-b6d9-1005fc20ccc3';
+    public const KEY = 'int_literal';
+    public const UID = '1d22eff7-58cc-4ee6-99e9-67d3385e4fc4';
     public const VERSION = '1.0';
 
     public function __construct(
-        public readonly mixed $value,
+        public readonly int $value,
     ) {
     }
-    
-    public function __invoke(): mixed
+
+    public function __invoke(): int
     {
         return $this->value;
     }

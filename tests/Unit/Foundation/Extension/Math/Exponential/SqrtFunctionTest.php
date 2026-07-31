@@ -6,13 +6,13 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Exp
 
 use PHPUnit\Framework\TestCase;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential\SqrtFunction;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class SqrtFunctionTest extends TestCase
 {
     public function testComputesSqrtFunction(): void
     {
-        $function = new SqrtFunction(new SpyExpression(4.0));
+        $function = new SqrtFunction(new NumericSpyExpression(4.0));
 
         $result = $function();
 
@@ -21,7 +21,7 @@ final class SqrtFunctionTest extends TestCase
 
     public function testSqrtOfANegativeNumberIsNan(): void
     {
-        $function = new SqrtFunction(new SpyExpression(-1.0));
+        $function = new SqrtFunction(new NumericSpyExpression(-1.0));
 
         self::assertNan($function());
     }

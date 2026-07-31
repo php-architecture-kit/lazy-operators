@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Logical;
+namespace PhpArchitecture\LazyOperators\Foundation\Type;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 
-interface LogicalOperator extends Expression
+interface BooleanValue extends Expression
 {
     public function __invoke(): bool;
 }

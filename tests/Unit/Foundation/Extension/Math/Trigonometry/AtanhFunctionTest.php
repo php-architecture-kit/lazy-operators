@@ -6,13 +6,13 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Tri
 
 use PHPUnit\Framework\TestCase;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\AtanhFunction;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class AtanhFunctionTest extends TestCase
 {
     public function testComputesAtanhFunction(): void
     {
-        $function = new AtanhFunction(new SpyExpression(0.5));
+        $function = new AtanhFunction(new NumericSpyExpression(0.5));
 
         $result = $function();
 

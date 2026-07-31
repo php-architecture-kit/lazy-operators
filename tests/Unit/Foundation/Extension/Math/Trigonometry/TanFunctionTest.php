@@ -6,13 +6,13 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Tri
 
 use PHPUnit\Framework\TestCase;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\TanFunction;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class TanFunctionTest extends TestCase
 {
     public function testComputesTanFunction(): void
     {
-        $function = new TanFunction(new SpyExpression(1.0));
+        $function = new TanFunction(new NumericSpyExpression(1.0));
 
         $result = $function();
 

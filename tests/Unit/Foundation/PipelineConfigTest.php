@@ -7,7 +7,7 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\Arithmetic;
 use PhpArchitecture\LazyOperators\Foundation\Conditional\Conditional;
 use PhpArchitecture\LazyOperators\Foundation\PipelineConfig;
-use PhpArchitecture\LazyOperators\Foundation\Static\Value;
+use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
 use PhpArchitecture\LazyOperators\Tests\Support\RecordingExpression;
 use PHPUnit\Framework\TestCase;
 
@@ -25,21 +25,21 @@ final class PipelineConfigTest extends TestCase
 
     public function testDecoratorHoldsTheGivenPrototype(): void
     {
-        $decorator = new RecordingExpression(new Value(0));
+        $decorator = new RecordingExpression(new IntLiteral(0));
 
         self::assertSame($decorator, (new PipelineConfig($decorator))->decorator);
     }
 
     public function testDecoratedNodeUnwrapsBackToTheOriginalInner(): void
     {
-        $inner = new Value(5);
+        $inner = new IntLiteral(5);
 
         self::assertSame($inner, (new RecordingExpression($inner))->unwrap());
     }
 
     public function testArithmeticDecoratesEveryNodeInEvaluationOrder(): void
     {
-        $config = new PipelineConfig(new RecordingExpression(new Value(0)));
+        $config = new PipelineConfig(new RecordingExpression(new IntLiteral(0)));
 
         $expr = Arithmetic::of(2, $config)->add(3)->multiply(10)->build();
 
@@ -49,7 +49,7 @@ final class PipelineConfigTest extends TestCase
 
     public function testIfDecoratesConditionTakenBranchAndTopNode(): void
     {
-        $config = new PipelineConfig(new RecordingExpression(new Value(0)));
+        $config = new PipelineConfig(new RecordingExpression(new IntLiteral(0)));
 
         $expr = Conditional::if(true, $config)->then('yes')->else('no')->build();
 
@@ -59,7 +59,7 @@ final class PipelineConfigTest extends TestCase
 
     public function testSwitchDecoratesSubjectEvaluatedCasesMatchedValueAndTopNode(): void
     {
-        $config = new PipelineConfig(new RecordingExpression(new Value(0)));
+        $config = new PipelineConfig(new RecordingExpression(new IntLiteral(0)));
 
         $expr = Conditional::switch(2, $config)
             ->case(1, 'a')

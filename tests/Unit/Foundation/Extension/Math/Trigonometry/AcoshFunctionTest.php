@@ -6,13 +6,13 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Tri
 
 use PHPUnit\Framework\TestCase;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\AcoshFunction;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class AcoshFunctionTest extends TestCase
 {
     public function testComputesAcoshFunction(): void
     {
-        $function = new AcoshFunction(new SpyExpression(2.0));
+        $function = new AcoshFunction(new NumericSpyExpression(2.0));
 
         $result = $function();
 

@@ -27,7 +27,11 @@ use PhpArchitecture\LazyOperators\Foundation\Logical\AndOperator;
 use PhpArchitecture\LazyOperators\Foundation\Logical\NotOperator;
 use PhpArchitecture\LazyOperators\Foundation\Logical\OrOperator;
 use PhpArchitecture\LazyOperators\Foundation\Logical\XorOperator;
-use PhpArchitecture\LazyOperators\Foundation\Static\Value;
+use PhpArchitecture\LazyOperators\Foundation\Static\ArrayLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Static\BoolLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Static\FloatLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Static\StringLiteral;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding\CeilFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding\FloorFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding\RoundFunction;
@@ -104,7 +108,11 @@ use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Logical\
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Logical\NotOperatorSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Logical\OrOperatorSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Logical\XorOperatorSerializer;
-use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Static\ValueSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Static\ArrayLiteralSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Static\BoolLiteralSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Static\FloatLiteralSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Static\IntLiteralSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Static\StringLiteralSerializer;
 
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Math\Rounding\CeilFunctionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Math\Rounding\FloorFunctionSerializer;
@@ -187,7 +195,11 @@ final class ExpressionSerializers
             IfElseOperator::UID => new IfElseOperatorSerializer(),
             SwitchCaseOperator::UID => new SwitchCaseOperatorSerializer(),
             CallbackOperator::UID => new CallbackOperatorSerializer(),
-            Value::UID => new ValueSerializer(),
+            IntLiteral::UID => new IntLiteralSerializer(),
+            FloatLiteral::UID => new FloatLiteralSerializer(),
+            BoolLiteral::UID => new BoolLiteralSerializer(),
+            StringLiteral::UID => new StringLiteralSerializer(),
+            ArrayLiteral::UID => new ArrayLiteralSerializer(),
             CeilFunction::UID => new CeilFunctionSerializer(),
             FloorFunction::UID => new FloorFunctionSerializer(),
             RoundFunction::UID => new RoundFunctionSerializer(),

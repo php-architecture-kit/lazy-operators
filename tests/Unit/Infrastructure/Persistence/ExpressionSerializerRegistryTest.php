@@ -83,7 +83,11 @@ use PhpArchitecture\LazyOperators\Foundation\Logical\AndOperator;
 use PhpArchitecture\LazyOperators\Foundation\Logical\NotOperator;
 use PhpArchitecture\LazyOperators\Foundation\Logical\OrOperator;
 use PhpArchitecture\LazyOperators\Foundation\Logical\XorOperator;
-use PhpArchitecture\LazyOperators\Foundation\Static\Value;
+use PhpArchitecture\LazyOperators\Foundation\Static\ArrayLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Static\BoolLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Static\FloatLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Static\StringLiteral;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\CallbackRegistry;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Exception\IncompatibleExpressionVersionException;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Exception\UnknownExpressionUidException;
@@ -103,91 +107,95 @@ final class ExpressionSerializerRegistryTest extends TestCase
     private function sampleExpressions(): array
     {
         return [
-            'addition' => new AdditionOperator(new Value(2), new Value(3)),
-            'subtraction' => new SubtractionOperator(new Value(5), new Value(2)),
-            'multiplication' => new MultiplicationOperator(new Value(4), new Value(3)),
-            'division' => new DivisionOperator(new Value(10), new Value(2)),
-            'modulo' => new ModuloOperator(new Value(10), new Value(3)),
-            'exponentiation' => new ExponentiationOperator(new Value(2), new Value(3)),
-            'equal' => new EqualOperator(new Value(1), new Value(1)),
-            'not_equal' => new NotEqualOperator(new Value(1), new Value(2)),
-            'identical' => new IdenticalOperator(new Value(1), new Value(1)),
-            'not_identical' => new NotIdenticalOperator(new Value('1'), new Value(1)),
-            'greater_than' => new GreaterThanOperator(new Value(2), new Value(1)),
-            'greater_than_or_equal' => new GreaterThanOrEqualOperator(new Value(2), new Value(2)),
-            'less_than' => new LessThanOperator(new Value(1), new Value(2)),
-            'less_than_or_equal' => new LessThanOrEqualOperator(new Value(2), new Value(2)),
-            'and' => new AndOperator(new Value(true), new Value(true)),
-            'or' => new OrOperator(new Value(false), new Value(true)),
-            'xor' => new XorOperator(new Value(true), new Value(false)),
-            'not' => new NotOperator(new Value(true)),
-            'spaceship' => new SpaceshipOperator(new Value(1), new Value(2)),
-            'value' => new Value(42),
-            'if_else' => new IfElseOperator(new Value(true), new Value('yes'), new Value('no')),
+            'addition' => new AdditionOperator(new IntLiteral(2), new IntLiteral(3)),
+            'subtraction' => new SubtractionOperator(new IntLiteral(5), new IntLiteral(2)),
+            'multiplication' => new MultiplicationOperator(new IntLiteral(4), new IntLiteral(3)),
+            'division' => new DivisionOperator(new IntLiteral(10), new IntLiteral(2)),
+            'modulo' => new ModuloOperator(new IntLiteral(10), new IntLiteral(3)),
+            'exponentiation' => new ExponentiationOperator(new IntLiteral(2), new IntLiteral(3)),
+            'equal' => new EqualOperator(new IntLiteral(1), new IntLiteral(1)),
+            'not_equal' => new NotEqualOperator(new IntLiteral(1), new IntLiteral(2)),
+            'identical' => new IdenticalOperator(new IntLiteral(1), new IntLiteral(1)),
+            'not_identical' => new NotIdenticalOperator(new StringLiteral('1'), new IntLiteral(1)),
+            'greater_than' => new GreaterThanOperator(new IntLiteral(2), new IntLiteral(1)),
+            'greater_than_or_equal' => new GreaterThanOrEqualOperator(new IntLiteral(2), new IntLiteral(2)),
+            'less_than' => new LessThanOperator(new IntLiteral(1), new IntLiteral(2)),
+            'less_than_or_equal' => new LessThanOrEqualOperator(new IntLiteral(2), new IntLiteral(2)),
+            'and' => new AndOperator(new BoolLiteral(true), new BoolLiteral(true)),
+            'or' => new OrOperator(new BoolLiteral(false), new BoolLiteral(true)),
+            'xor' => new XorOperator(new BoolLiteral(true), new BoolLiteral(false)),
+            'not' => new NotOperator(new BoolLiteral(true)),
+            'spaceship' => new SpaceshipOperator(new IntLiteral(1), new IntLiteral(2)),
+            'int_literal' => new IntLiteral(42),
+            'float_literal' => new FloatLiteral(4.2),
+            'bool_literal' => new BoolLiteral(true),
+            'string_literal' => new StringLiteral('hello'),
+            'array_literal' => new ArrayLiteral(['a', 'b']),
+            'if_else' => new IfElseOperator(new BoolLiteral(true), new StringLiteral('yes'), new StringLiteral('no')),
             'switch_case' => new SwitchCaseOperator(
-                new Value(2),
+                new IntLiteral(2),
                 [
-                    new CaseOfSwitchCase(new Value(1), new Value('a')),
-                    new CaseOfSwitchCase(new Value(2), new Value('b')),
+                    new CaseOfSwitchCase(new IntLiteral(1), new StringLiteral('a')),
+                    new CaseOfSwitchCase(new IntLiteral(2), new StringLiteral('b')),
                 ],
-                new Value('fallback'),
+                new StringLiteral('fallback'),
             ),
-            'nested' => new AdditionOperator(new AdditionOperator(new Value(1), new Value(2)), new Value(3)),
-            'math_ceil' => new CeilFunction(new Value(4.2)),
-            'math_floor' => new FloorFunction(new Value(4.8)),
-            'math_round' => new RoundFunction(new Value(3.14159), new Value(2)),
-            'math_sin' => new SinFunction(new Value(1.0)),
-            'math_cos' => new CosFunction(new Value(1.0)),
-            'math_tan' => new TanFunction(new Value(1.0)),
-            'math_asin' => new AsinFunction(new Value(0.5)),
-            'math_acos' => new AcosFunction(new Value(0.5)),
-            'math_atan' => new AtanFunction(new Value(1.0)),
-            'math_atan2' => new Atan2Function(new Value(1.0), new Value(1.0)),
-            'math_sinh' => new SinhFunction(new Value(1.0)),
-            'math_cosh' => new CoshFunction(new Value(1.0)),
-            'math_tanh' => new TanhFunction(new Value(1.0)),
-            'math_asinh' => new AsinhFunction(new Value(1.0)),
-            'math_acosh' => new AcoshFunction(new Value(2.0)),
-            'math_atanh' => new AtanhFunction(new Value(0.5)),
-            'math_deg2rad' => new Deg2RadFunction(new Value(180.0)),
-            'math_rad2deg' => new Rad2DegFunction(new Value(M_PI)),
+            'nested' => new AdditionOperator(new AdditionOperator(new IntLiteral(1), new IntLiteral(2)), new IntLiteral(3)),
+            'math_ceil' => new CeilFunction(new FloatLiteral(4.2)),
+            'math_floor' => new FloorFunction(new FloatLiteral(4.8)),
+            'math_round' => new RoundFunction(new FloatLiteral(3.14159), new IntLiteral(2)),
+            'math_sin' => new SinFunction(new FloatLiteral(1.0)),
+            'math_cos' => new CosFunction(new FloatLiteral(1.0)),
+            'math_tan' => new TanFunction(new FloatLiteral(1.0)),
+            'math_asin' => new AsinFunction(new FloatLiteral(0.5)),
+            'math_acos' => new AcosFunction(new FloatLiteral(0.5)),
+            'math_atan' => new AtanFunction(new FloatLiteral(1.0)),
+            'math_atan2' => new Atan2Function(new FloatLiteral(1.0), new FloatLiteral(1.0)),
+            'math_sinh' => new SinhFunction(new FloatLiteral(1.0)),
+            'math_cosh' => new CoshFunction(new FloatLiteral(1.0)),
+            'math_tanh' => new TanhFunction(new FloatLiteral(1.0)),
+            'math_asinh' => new AsinhFunction(new FloatLiteral(1.0)),
+            'math_acosh' => new AcoshFunction(new FloatLiteral(2.0)),
+            'math_atanh' => new AtanhFunction(new FloatLiteral(0.5)),
+            'math_deg2rad' => new Deg2RadFunction(new FloatLiteral(180.0)),
+            'math_rad2deg' => new Rad2DegFunction(new FloatLiteral(M_PI)),
             'math_pi' => new PiFunction(),
-            'math_exp' => new ExpFunction(new Value(1.0)),
-            'math_expm1' => new Expm1Function(new Value(1.0)),
-            'math_log' => new LogFunction(new Value(M_E)),
-            'math_log10' => new Log10Function(new Value(100.0)),
-            'math_log1p' => new Log1pFunction(new Value(1.0)),
-            'math_pow' => new PowFunction(new Value(2), new Value(10)),
-            'math_sqrt' => new SqrtFunction(new Value(4.0)),
-            'math_hypot' => new HypotFunction(new Value(3.0), new Value(4.0)),
-            'math_abs' => new AbsFunction(new Value(-5)),
-            'math_fmod' => new FmodFunction(new Value(10.0), new Value(3.0)),
-            'math_fdiv' => new FdivFunction(new Value(10.0), new Value(4.0)),
-            'math_intdiv' => new IntdivFunction(new Value(10), new Value(3)),
-            'math_max' => new MaxFunction(new Value(1), new Value(5), new Value(3)),
-            'math_min' => new MinFunction(new Value(1), new Value(5), new Value(3)),
-            'math_bindec' => new BinDecFunction(new Value('101')),
-            'math_decbin' => new DecBinFunction(new Value(5)),
-            'math_dechex' => new DecHexFunction(new Value(255)),
-            'math_hexdec' => new HexDecFunction(new Value('ff')),
-            'math_decoct' => new DecOctFunction(new Value(8)),
-            'math_octdec' => new OctDecFunction(new Value('17')),
-            'math_base_convert' => new BaseConvertFunction(new Value('ff'), new Value(16), new Value(2)),
+            'math_exp' => new ExpFunction(new FloatLiteral(1.0)),
+            'math_expm1' => new Expm1Function(new FloatLiteral(1.0)),
+            'math_log' => new LogFunction(new FloatLiteral(M_E)),
+            'math_log10' => new Log10Function(new FloatLiteral(100.0)),
+            'math_log1p' => new Log1pFunction(new FloatLiteral(1.0)),
+            'math_pow' => new PowFunction(new IntLiteral(2), new IntLiteral(10)),
+            'math_sqrt' => new SqrtFunction(new FloatLiteral(4.0)),
+            'math_hypot' => new HypotFunction(new FloatLiteral(3.0), new FloatLiteral(4.0)),
+            'math_abs' => new AbsFunction(new IntLiteral(-5)),
+            'math_fmod' => new FmodFunction(new FloatLiteral(10.0), new FloatLiteral(3.0)),
+            'math_fdiv' => new FdivFunction(new FloatLiteral(10.0), new FloatLiteral(4.0)),
+            'math_intdiv' => new IntdivFunction(new IntLiteral(10), new IntLiteral(3)),
+            'math_max' => new MaxFunction(new IntLiteral(1), new IntLiteral(5), new IntLiteral(3)),
+            'math_min' => new MinFunction(new IntLiteral(1), new IntLiteral(5), new IntLiteral(3)),
+            'math_bindec' => new BinDecFunction(new StringLiteral('101')),
+            'math_decbin' => new DecBinFunction(new IntLiteral(5)),
+            'math_dechex' => new DecHexFunction(new IntLiteral(255)),
+            'math_hexdec' => new HexDecFunction(new StringLiteral('ff')),
+            'math_decoct' => new DecOctFunction(new IntLiteral(8)),
+            'math_octdec' => new OctDecFunction(new StringLiteral('17')),
+            'math_base_convert' => new BaseConvertFunction(new StringLiteral('ff'), new IntLiteral(16), new IntLiteral(2)),
             'math_getrandmax' => new GetRandMaxFunction(),
             'math_mt_getrandmax' => new MtGetRandMaxFunction(),
-            'math_srand' => new SrandFunction(new Value(42)),
-            'math_mt_srand' => new MtSrandFunction(new Value(42)),
-            'math_is_finite' => new IsFiniteFunction(new Value(1.5)),
-            'math_is_infinite' => new IsInfiniteFunction(new Value(1.5)),
-            'math_is_nan' => new IsNanFunction(new Value(1.5)),
-            'array_sum' => new SumFunction(new Value(1), new Value(2), new Value(3)),
-            'array_product' => new ProductFunction(new Value(2), new Value(3), new Value(4)),
+            'math_srand' => new SrandFunction(new IntLiteral(42)),
+            'math_mt_srand' => new MtSrandFunction(new IntLiteral(42)),
+            'math_is_finite' => new IsFiniteFunction(new FloatLiteral(1.5)),
+            'math_is_infinite' => new IsInfiniteFunction(new FloatLiteral(1.5)),
+            'math_is_nan' => new IsNanFunction(new FloatLiteral(1.5)),
+            'array_sum' => new SumFunction(new IntLiteral(1), new IntLiteral(2), new IntLiteral(3)),
+            'array_product' => new ProductFunction(new IntLiteral(2), new IntLiteral(3), new IntLiteral(4)),
             'allocation' => new AllocationFunction(
-                new Value(100),
-                new Value(2),
+                new IntLiteral(100),
+                new IntLiteral(2),
                 AllocationRemainderTarget::First,
-                new Value(30),
-                new Value(70),
+                new IntLiteral(30),
+                new IntLiteral(70),
             ),
         ];
     }
@@ -202,9 +210,9 @@ final class ExpressionSerializerRegistryTest extends TestCase
     private function nondeterministicSampleExpressions(): array
     {
         return [
-            'math_rand' => new RandFunction(new Value(1), new Value(10)),
-            'math_mt_rand' => new MtRandFunction(new Value(1), new Value(10)),
-            'math_random_int' => new RandomIntFunction(new Value(1), new Value(10)),
+            'math_rand' => new RandFunction(new IntLiteral(1), new IntLiteral(10)),
+            'math_mt_rand' => new MtRandFunction(new IntLiteral(1), new IntLiteral(10)),
+            'math_random_int' => new RandomIntFunction(new IntLiteral(1), new IntLiteral(10)),
             'math_lcg_value' => new LcgValueFunction(),
         ];
     }
@@ -263,7 +271,7 @@ final class ExpressionSerializerRegistryTest extends TestCase
         $callbacks->register('sum', static fn (int $a, int $b): int => $a + $b);
         $registry = ExpressionSerializers::default($callbacks);
 
-        $expression = new CallbackOperator($callbacks->resolve('sum'), new Value(2), new Value(3));
+        $expression = new CallbackOperator($callbacks->resolve('sum'), new IntLiteral(2), new IntLiteral(3));
 
         $hydrated = $registry->deserialize($registry->serialize($expression));
 
@@ -282,12 +290,12 @@ final class ExpressionSerializerRegistryTest extends TestCase
         ExpressionSerializers::default()->serialize($expression);
     }
 
-    public function testValueSerializationThrowsForNonJsonSafePayload(): void
+    public function testArrayLiteralSerializationThrowsForNonJsonSafePayload(): void
     {
         $this->expectException(UnpersistableValueException::class);
         $this->expectExceptionMessage('Value wraps a "stdClass", which is not JSON-safe and cannot be persisted.');
 
-        ExpressionSerializers::default()->serialize(new Value(new stdClass()));
+        ExpressionSerializers::default()->serialize(new ArrayLiteral([new stdClass()]));
     }
 
     public function testDeserializeThrowsForUnknownUid(): void
@@ -298,7 +306,7 @@ final class ExpressionSerializerRegistryTest extends TestCase
         ExpressionSerializers::default()->deserialize([
             'uid' => 'not-a-registered-uid',
             'key' => 'value',
-            'class' => Value::class,
+            'class' => IntLiteral::class,
             'version' => '1.0',
             'args' => [1],
         ]);
@@ -307,14 +315,14 @@ final class ExpressionSerializerRegistryTest extends TestCase
     public function testDeserializeThrowsOnVersionMismatch(): void
     {
         $registry = ExpressionSerializers::default();
-        $serialized = $registry->serialize(new Value(1));
+        $serialized = $registry->serialize(new IntLiteral(1));
         $serialized['version'] = '999.0';
 
         $this->expectException(IncompatibleExpressionVersionException::class);
         $this->expectExceptionMessage(sprintf(
             'Stored version "999.0" for Expression uid "%s" is incompatible with the currently registered version "%s".',
-            Value::UID,
-            Value::VERSION,
+            IntLiteral::UID,
+            IntLiteral::VERSION,
         ));
 
         $registry->deserialize($serialized);
@@ -339,8 +347,8 @@ final class ExpressionSerializerRegistryTest extends TestCase
     {
         $registry = ExpressionSerializers::default();
 
-        $plain = new AdditionOperator(new Value(2), new Value(3));
-        $decorated = new RecordingExpression(new AdditionOperator(new Value(2), new Value(3)));
+        $plain = new AdditionOperator(new IntLiteral(2), new IntLiteral(3));
+        $decorated = new RecordingExpression(new AdditionOperator(new IntLiteral(2), new IntLiteral(3)));
 
         self::assertSame($registry->serialize($plain), $registry->serialize($decorated));
     }

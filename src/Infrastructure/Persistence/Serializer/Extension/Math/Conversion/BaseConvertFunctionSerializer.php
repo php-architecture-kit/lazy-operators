@@ -9,8 +9,13 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion\BaseConve
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializerRegistry;
 
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Type\StringValue;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Support\DeserializesNarrowly;
 class BaseConvertFunctionSerializer implements ExpressionSerializer
 {
+    use DeserializesNarrowly;
+
     public function supports(Expression $expression): bool
     {
         return $expression instanceof BaseConvertFunction;
@@ -47,9 +52,9 @@ class BaseConvertFunctionSerializer implements ExpressionSerializer
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new BaseConvertFunction(
-            $registry->deserialize($data['args']['value']),
-            $registry->deserialize($data['args']['fromBase']),
-            $registry->deserialize($data['args']['toBase']),
+            $this->deserializeAs($registry, $data['args']['value'], StringValue::class),
+            $this->deserializeAs($registry, $data['args']['fromBase'], NumberValue::class),
+            $this->deserializeAs($registry, $data['args']['toBase'], NumberValue::class),
         );
     }
 }

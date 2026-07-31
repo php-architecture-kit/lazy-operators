@@ -32,6 +32,6 @@ class CallbackOperator implements Expression
 
     public static function formula(): string
     {
-        return 'f(callback, arguments) = callback(arguments)';
+        return 'f(callback, arguments) = callback(...arguments)';
     }
 }

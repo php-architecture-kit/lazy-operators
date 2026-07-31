@@ -9,8 +9,12 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Numeric\AbsFunction;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializerRegistry;
 
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Support\DeserializesNarrowly;
 class AbsFunctionSerializer implements ExpressionSerializer
 {
+    use DeserializesNarrowly;
+
     public function supports(Expression $expression): bool
     {
         return $expression instanceof AbsFunction;
@@ -44,6 +48,6 @@ class AbsFunctionSerializer implements ExpressionSerializer
      */
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
-        return new AbsFunction($registry->deserialize($data['args']['value']));
+        return new AbsFunction($this->deserializeAs($registry, $data['args']['value'], NumberValue::class));
     }
 }

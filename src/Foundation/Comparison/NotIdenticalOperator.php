@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Foundation\Comparison;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
 
-class NotIdenticalOperator implements ComparisonOperator
+class NotIdenticalOperator implements BooleanValue
 {
     public const KEY = 'not_identical';
     public const UID = '90d06e8e-fbdf-4ba7-afad-9be706714d81';

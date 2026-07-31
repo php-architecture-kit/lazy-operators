@@ -12,7 +12,7 @@ use PhpArchitecture\LazyOperators\Foundation\Arithmetic\ModuloOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\MultiplicationOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\SubtractionOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 use PHPUnit\Framework\TestCase;
 
 final class ArithmeticTest extends TestCase
@@ -24,7 +24,7 @@ final class ArithmeticTest extends TestCase
 
     public function testOfAcceptsAnExpressionDirectly(): void
     {
-        self::assertSame(2, Arithmetic::of(new SpyExpression(2))->build()());
+        self::assertSame(2, Arithmetic::of(new NumericSpyExpression(2))->build()());
     }
 
     public function testBuildReturnsAnExpressionNotArithmetic(): void
@@ -105,7 +105,7 @@ final class ArithmeticTest extends TestCase
 
     public function testOperandsAcceptExpressionInstancesDirectly(): void
     {
-        $right = new SpyExpression(3);
+        $right = new NumericSpyExpression(3);
 
         $expr = Arithmetic::of(2)->add($right)->build();
 

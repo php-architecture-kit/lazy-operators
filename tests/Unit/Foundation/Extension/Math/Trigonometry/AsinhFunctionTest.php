@@ -6,13 +6,13 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Tri
 
 use PHPUnit\Framework\TestCase;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\AsinhFunction;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class AsinhFunctionTest extends TestCase
 {
     public function testComputesAsinhFunction(): void
     {
-        $function = new AsinhFunction(new SpyExpression(1.0));
+        $function = new AsinhFunction(new NumericSpyExpression(1.0));
 
         $result = $function();
 

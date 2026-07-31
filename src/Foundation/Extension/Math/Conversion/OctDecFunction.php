@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Type\StringValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 
-class OctDecFunction implements Expression
+class OctDecFunction implements NumberValue
 {
     use GuardsNativeFunction;
 
@@ -17,7 +18,7 @@ class OctDecFunction implements Expression
     private const NATIVE_FUNCTION = 'octdec';
 
     public function __construct(
-        public readonly Expression $value,
+        public readonly StringValue $value,
     ) {
         self::guardAvailable(self::NATIVE_FUNCTION);
     }
@@ -25,7 +26,6 @@ class OctDecFunction implements Expression
     public function __invoke(): int|float
     {
         $value = ($this->value)();
-        assert(is_string($value));
 
         return octdec($value);
     }

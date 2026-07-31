@@ -9,8 +9,12 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential\LogFunct
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializerRegistry;
 
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Support\DeserializesNarrowly;
 class LogFunctionSerializer implements ExpressionSerializer
 {
+    use DeserializesNarrowly;
+
     public function supports(Expression $expression): bool
     {
         return $expression instanceof LogFunction;
@@ -46,8 +50,8 @@ class LogFunctionSerializer implements ExpressionSerializer
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new LogFunction(
-            $registry->deserialize($data['args']['value']),
-            $registry->deserialize($data['args']['base']),
+            $this->deserializeAs($registry, $data['args']['value'], NumberValue::class),
+            $this->deserializeAs($registry, $data['args']['base'], NumberValue::class),
         );
     }
 }

@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Foundation\Comparison;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
 
-class LessThanOrEqualOperator implements ComparisonOperator
+class LessThanOrEqualOperator implements BooleanValue
 {
     public const KEY = 'less_than_or_equal';
     public const UID = '858cf616-69a8-4410-b5ed-816e1d2ae5a4';

@@ -9,8 +9,12 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtRandFunctio
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializerRegistry;
 
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Support\DeserializesNarrowly;
 class MtRandFunctionSerializer implements ExpressionSerializer
 {
+    use DeserializesNarrowly;
+
     public function supports(Expression $expression): bool
     {
         return $expression instanceof MtRandFunction;
@@ -46,8 +50,8 @@ class MtRandFunctionSerializer implements ExpressionSerializer
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         return new MtRandFunction(
-            $data['args']['min'] !== null ? $registry->deserialize($data['args']['min']) : null,
-            $data['args']['max'] !== null ? $registry->deserialize($data['args']['max']) : null,
+            $data['args']['min'] !== null ? $this->deserializeAs($registry, $data['args']['min'], NumberValue::class) : null,
+            $data['args']['max'] !== null ? $this->deserializeAs($registry, $data['args']['max'], NumberValue::class) : null,
         );
     }
 }

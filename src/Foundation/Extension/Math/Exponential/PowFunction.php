@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 
-class PowFunction implements Expression
+class PowFunction implements NumberValue
 {
     use GuardsNativeFunction;
 
@@ -17,8 +17,8 @@ class PowFunction implements Expression
     private const NATIVE_FUNCTION = 'pow';
 
     public function __construct(
-        public readonly Expression $base,
-        public readonly Expression $exponent,
+        public readonly NumberValue $base,
+        public readonly NumberValue $exponent,
     ) {
         self::guardAvailable(self::NATIVE_FUNCTION);
     }
@@ -26,10 +26,8 @@ class PowFunction implements Expression
     public function __invoke(): int|float
     {
         $base = ($this->base)();
-        assert(is_int($base) || is_float($base));
 
         $exponent = ($this->exponent)();
-        assert(is_int($exponent) || is_float($exponent));
 
         return pow($base, $exponent);
     }

@@ -6,13 +6,13 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Cla
 
 use PHPUnit\Framework\TestCase;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsNanFunction;
-use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
+use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class IsNanFunctionTest extends TestCase
 {
     public function testComputesIsNanFunction(): void
     {
-        $function = new IsNanFunction(new SpyExpression(1.5));
+        $function = new IsNanFunction(new NumericSpyExpression(1.5));
 
         $result = $function();
 

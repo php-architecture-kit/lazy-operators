@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Numeric;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 
-class FdivFunction implements Expression
+class FdivFunction implements NumberValue
 {
     use GuardsNativeFunction;
 
@@ -17,8 +17,8 @@ class FdivFunction implements Expression
     private const NATIVE_FUNCTION = 'fdiv';
 
     public function __construct(
-        public readonly Expression $dividend,
-        public readonly Expression $divisor,
+        public readonly NumberValue $dividend,
+        public readonly NumberValue $divisor,
     ) {
         self::guardAvailable(self::NATIVE_FUNCTION);
     }
@@ -26,10 +26,8 @@ class FdivFunction implements Expression
     public function __invoke(): float
     {
         $dividend = ($this->dividend)();
-        assert(is_int($dividend) || is_float($dividend));
 
         $divisor = ($this->divisor)();
-        assert(is_int($divisor) || is_float($divisor));
 
         return fdiv($dividend, $divisor);
     }

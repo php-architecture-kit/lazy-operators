@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 
-class SumFunction implements Expression
+class SumFunction implements NumberValue
 {
     use GuardsNativeFunction;
 
@@ -17,13 +17,13 @@ class SumFunction implements Expression
     private const NATIVE_FUNCTION = 'array_sum';
 
     /**
-     * @var Expression[]
+     * @var NumberValue[]
      */
     public readonly array $values;
 
     public function __construct(
-        Expression $first,
-        Expression ...$rest,
+        NumberValue $first,
+        NumberValue ...$rest,
     ) {
         self::guardAvailable(self::NATIVE_FUNCTION);
 
@@ -32,9 +32,8 @@ class SumFunction implements Expression
 
     public function __invoke(): int|float
     {
-        $values = array_map(static function (Expression $expression): int|float {
+        $values = array_map(static function (NumberValue $expression): int|float {
             $value = $expression();
-            assert(is_int($value) || is_float($value));
 
             return $value;
         }, $this->values);

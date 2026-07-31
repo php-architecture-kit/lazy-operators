@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Foundation\Conditional;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
 
 class IfElseOperator implements Expression
 {
@@ -13,7 +14,7 @@ class IfElseOperator implements Expression
     public const VERSION = '1.0';
 
     public function __construct(
-        public readonly Expression $condition,
+        public readonly Expression&BooleanValue $condition,
         public readonly Expression $then,
         public readonly Expression $else,
     ) {}

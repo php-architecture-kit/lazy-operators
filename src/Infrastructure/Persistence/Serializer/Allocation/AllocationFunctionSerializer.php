@@ -6,12 +6,16 @@ namespace PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Al
 
 use PhpArchitecture\LazyOperators\Foundation\Allocation\AllocationFunction;
 use PhpArchitecture\LazyOperators\Foundation\Allocation\AllocationRemainderTarget;
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializerRegistry;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Support\DeserializesNarrowly;
 
 class AllocationFunctionSerializer implements ExpressionSerializer
 {
+    use DeserializesNarrowly;
+
     public function supports(Expression $expression): bool
     {
         return $expression instanceof AllocationFunction;
@@ -52,13 +56,13 @@ class AllocationFunctionSerializer implements ExpressionSerializer
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
         $shares = array_map(
-            static fn (mixed $share) => $registry->deserialize($share),
+            fn (mixed $share) => $this->deserializeAs($registry, $share, NumberValue::class),
             $data['args']['shares'],
         );
 
         return new AllocationFunction(
-            $registry->deserialize($data['args']['amount']),
-            $registry->deserialize($data['args']['precision']),
+            $this->deserializeAs($registry, $data['args']['amount'], NumberValue::class),
+            $this->deserializeAs($registry, $data['args']['precision'], NumberValue::class),
             constant(AllocationRemainderTarget::class . '::' . $data['args']['remainder_target']['case']),
             ...$shares,
         );

@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Acosh')]
+#[Formula('f(value) = arcosh(value)')]
+#[Description('Acosh returns the inverse hyperbolic cosine of the given value.')]
 class AcoshFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -27,10 +33,5 @@ class AcoshFunction implements NumberValue
         $value = ($this->value)();
 
         return acosh($value);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = arcosh(value)';
     }
 }

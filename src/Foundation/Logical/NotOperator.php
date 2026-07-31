@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Logical;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Not')]
+#[Formula('f(expression) = NOT expression')]
+#[Description('NOT (logical NOT or inversion) works by taking a single input and returning the exact opposite value. It outputs true (1) if the input is false, and outputs false (0) if the input is true.')]
 class NotOperator implements BooleanValue
 {
     public const KEY = 'not';
@@ -21,15 +27,5 @@ class NotOperator implements BooleanValue
     public function __invoke(): bool
     {
         return !($this->expression)();
-    }
-
-    public static function formula(): string
-    {
-        return 'f(expression) = NOT expression';
-    }
-
-    public static function description(): string
-    {
-        return 'NOT (logical NOT or inversion) works by taking a single input and returning the exact opposite value. It outputs true (1) if the input is false, and outputs false (0) if the input is true.';
     }
 }

@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Floor')]
+#[Formula('f(value) = floor(value)')]
+#[Description('Floor rounds the given value down to the nearest integer.')]
 class FloorFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -27,10 +33,5 @@ class FloorFunction implements NumberValue
         $value = ($this->value)();
 
         return floor($value);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = floor(value)';
     }
 }

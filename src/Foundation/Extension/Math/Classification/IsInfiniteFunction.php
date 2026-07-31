@@ -7,7 +7,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Is Infinite')]
+#[Formula('f(value) = value is infinite')]
+#[Description('Is Infinite returns true when the given value is infinite.')]
 class IsInfiniteFunction implements BooleanValue
 {
     use GuardsNativeFunction;
@@ -28,10 +34,5 @@ class IsInfiniteFunction implements BooleanValue
         $value = ($this->value)();
 
         return is_infinite($value);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = value is infinite';
     }
 }

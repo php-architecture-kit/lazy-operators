@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Radians To Degrees')]
+#[Formula('f(value) = value in radians converted to degrees')]
+#[Description('Radians To Degrees converts the given angle from radians to degrees.')]
 class Rad2DegFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -27,10 +33,5 @@ class Rad2DegFunction implements NumberValue
         $value = ($this->value)();
 
         return rad2deg($value);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = value in radians converted to degrees';
     }
 }

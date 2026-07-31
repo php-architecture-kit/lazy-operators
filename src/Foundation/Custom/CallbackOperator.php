@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Custom;
 
 use Closure;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Callback')]
+#[Formula('f(callback, arguments) = callback(...arguments)')]
+#[Description('Callback invokes a user-supplied closure with the given arguments and returns its result.')]
 class CallbackOperator implements Expression
 {
     public const KEY = 'callback';
@@ -28,10 +34,5 @@ class CallbackOperator implements Expression
     public function __invoke(): mixed
     {
         return ($this->callback)(...array_map(static fn(Expression $expr) => $expr(), $this->arguments));
-    }
-
-    public static function formula(): string
-    {
-        return 'f(callback, arguments) = callback(...arguments)';
     }
 }

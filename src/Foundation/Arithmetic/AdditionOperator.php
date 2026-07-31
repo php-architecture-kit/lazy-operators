@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Arithmetic;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Addition')]
+#[Formula('f(left, right) = left + right')]
+#[Description('Addition returns the sum of the left and right operands.')]
 class AdditionOperator implements NumberValue
 {
     public const KEY = 'addition';
@@ -22,10 +28,5 @@ class AdditionOperator implements NumberValue
     public function __invoke(): float|int
     {
         return ($this->left)() + ($this->right)();
-    }
-
-    public static function formula(): string
-    {
-        return 'f(left, right) = left + right';
     }
 }

@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Pow')]
+#[Formula('f(base, exponent) = base ^ exponent')]
+#[Description('Pow returns the base raised to the given exponent.')]
 class PowFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -30,10 +36,5 @@ class PowFunction implements NumberValue
         $exponent = ($this->exponent)();
 
         return pow($base, $exponent);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(base, exponent) = base ^ exponent';
     }
 }

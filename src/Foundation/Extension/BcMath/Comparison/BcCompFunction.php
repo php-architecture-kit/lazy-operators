@@ -10,7 +10,13 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\PrecisionNumberVal
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\GuardsNativeFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\NormalizesPrecisionValues;
 use PhpArchitecture\LazyOperators\Foundation\Type\IntegerValue;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('BC Comp')]
+#[Formula('f(left, right, scale) = -1|0|1 comparing left and right to scale decimal digits via bccomp')]
+#[Description('BC Comp compares two arbitrary-precision numbers to the given scale via bccomp, returning -1, 0, or 1.')]
 class BcCompFunction implements IntegerValue
 {
     use GuardsNativeFunction;
@@ -37,10 +43,5 @@ class BcCompFunction implements IntegerValue
     public function __invoke(): int
     {
         return bccomp((string) $this->left->bcValue(), (string) $this->right->bcValue(), $this->scale);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(left, right, scale) = -1|0|1 comparing left and right to scale decimal digits via bccomp';
     }
 }

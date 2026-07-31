@@ -7,7 +7,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion;
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Type\StringValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Decimal To Hexadecimal')]
+#[Formula('f(value) = hexadecimal string representation of value')]
+#[Description('Decimal To Hexadecimal converts a decimal number into its hexadecimal string representation.')]
 class DecHexFunction implements StringValue
 {
     use GuardsNativeFunction;
@@ -29,10 +35,5 @@ class DecHexFunction implements StringValue
         assert(is_int($value));
 
         return dechex($value);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = hexadecimal string representation of value';
     }
 }

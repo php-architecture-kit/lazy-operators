@@ -8,7 +8,13 @@ use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
 use RoundingMode;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Round')]
+#[Formula('f(value, precision, mode) = value rounded to precision decimal places, using mode to break ties')]
+#[Description('Round rounds the given value to the given number of decimal places, using the given mode to break ties.')]
 class RoundFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -40,10 +46,5 @@ class RoundFunction implements NumberValue
         assert(is_int($precision));
 
         return round($value, $precision, $this->mode);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value, precision, mode) = value rounded to precision decimal places, using mode to break ties';
     }
 }

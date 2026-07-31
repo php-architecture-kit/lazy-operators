@@ -7,7 +7,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion;
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 use PhpArchitecture\LazyOperators\Foundation\Type\StringValue;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Base Convert')]
+#[Formula('f(value, fromBase, toBase) = value converted from fromBase to toBase')]
+#[Description('Base Convert converts a number, given as a string, from one base to another, each between 2 and 36.')]
 class BaseConvertFunction implements StringValue
 {
     use GuardsNativeFunction;
@@ -36,10 +42,5 @@ class BaseConvertFunction implements StringValue
         assert(is_int($toBase));
 
         return base_convert($value, $fromBase, $toBase);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value, fromBase, toBase) = value converted from fromBase to toBase';
     }
 }

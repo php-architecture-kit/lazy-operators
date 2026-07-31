@@ -5,7 +5,13 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Foundation\Static;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\StringValue;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('String Literal')]
+#[Formula('f(value) = value')]
+#[Description('String Literal wraps a raw string as an Expression, returning it unchanged when invoked.')]
 class StringLiteral implements StringValue
 {
     public const KEY = 'string_literal';
@@ -20,10 +26,5 @@ class StringLiteral implements StringValue
     public function __invoke(): string
     {
         return $this->value;
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = value';
     }
 }

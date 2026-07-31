@@ -5,7 +5,13 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Foundation\Static;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\FloatValue;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Float Literal')]
+#[Formula('f(value) = value')]
+#[Description('Float Literal wraps a raw floating point number as an Expression, returning it unchanged when invoked.')]
 class FloatLiteral implements FloatValue
 {
     public const KEY = 'float_literal';
@@ -20,10 +26,5 @@ class FloatLiteral implements FloatValue
     public function __invoke(): float
     {
         return $this->value;
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = value';
     }
 }

@@ -5,7 +5,13 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Foundation\Arithmetic;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Multiplication')]
+#[Formula('f(left, right) = left x right')]
+#[Description('Multiplication returns the product of the left and right operands.')]
 class MultiplicationOperator implements NumberValue
 {
     public const KEY = 'multiplication';
@@ -20,10 +26,5 @@ class MultiplicationOperator implements NumberValue
     public function __invoke(): float|int
     {
         return ($this->left)() * ($this->right)();
-    }
-
-    public static function formula(): string
-    {
-        return 'f(left, right) = left x right';
     }
 }

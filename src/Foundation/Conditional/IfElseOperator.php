@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Conditional;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('If Else')]
+#[Formula('f(condition, then, else) = IF condition THEN then ELSE else')]
+#[Description('If Else evaluates a boolean condition and returns the then branch when it is true, or the else branch when it is false.')]
 class IfElseOperator implements Expression
 {
     public const KEY = 'if_else';
@@ -22,10 +28,5 @@ class IfElseOperator implements Expression
     public function __invoke(): mixed
     {
         return ($this->condition)() ? ($this->then)() : ($this->else)();
-    }
-
-    public static function formula(): string
-    {
-        return 'f(condition, then, else) = IF condition THEN then ELSE else';
     }
 }

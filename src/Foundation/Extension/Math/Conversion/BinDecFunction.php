@@ -7,7 +7,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion;
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Type\StringValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Binary To Decimal')]
+#[Formula('f(value) = decimal value of the binary string value')]
+#[Description('Binary To Decimal converts a binary string into its decimal value.')]
 class BinDecFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -28,10 +34,5 @@ class BinDecFunction implements NumberValue
         $value = ($this->value)();
 
         return bindec($value);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = decimal value of the binary string value';
     }
 }

@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Rand')]
+#[Formula('f(min, max) = a random integer in [min, max], or in the platform default range if omitted')]
+#[Description('Rand returns a random integer between the given minimum and maximum, or from the platform default range when no bounds are given.')]
 class RandFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -38,10 +44,5 @@ class RandFunction implements NumberValue
         assert(is_int($max));
 
         return rand($min, $max);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(min, max) = a random integer in [min, max], or in the platform default range if omitted';
     }
 }

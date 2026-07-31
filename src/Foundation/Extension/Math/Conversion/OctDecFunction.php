@@ -7,7 +7,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion;
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Type\StringValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Octal To Decimal')]
+#[Formula('f(value) = decimal value of the octal string value')]
+#[Description('Octal To Decimal converts an octal string into its decimal value.')]
 class OctDecFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -28,10 +34,5 @@ class OctDecFunction implements NumberValue
         $value = ($this->value)();
 
         return octdec($value);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = decimal value of the octal string value';
     }
 }

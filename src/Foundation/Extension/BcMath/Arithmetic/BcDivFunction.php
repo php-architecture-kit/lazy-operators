@@ -9,7 +9,14 @@ use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\PrecisionNumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\GuardsNativeFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\NormalizesPrecisionValues;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('BC Div')]
+#[Formula('f(dividend, divisor, scale) = dividend / divisor, computed to scale decimal digits via bcdiv; '
+            . 'throws DivisionByZeroError natively when divisor is zero')]
+#[Description('BC Div returns the quotient of two arbitrary-precision numbers, computed to the given scale via bcdiv.')]
 class BcDivFunction implements PrecisionNumberValue
 {
     use GuardsNativeFunction;
@@ -49,11 +56,5 @@ class BcDivFunction implements PrecisionNumberValue
     private function compute(): string
     {
         return bcdiv((string) $this->dividend->bcValue(), (string) $this->divisor->bcValue(), $this->scale);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(dividend, divisor, scale) = dividend / divisor, computed to scale decimal digits via bcdiv; '
-            . 'throws DivisionByZeroError natively when divisor is zero';
     }
 }

@@ -7,7 +7,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential;
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 use PhpArchitecture\LazyOperators\Foundation\Static\FloatLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Log')]
+#[Formula('f(value, base) = log base "base" of value')]
+#[Description('Log returns the logarithm of the given value in the given base, or the natural logarithm when no base is given.')]
 class LogFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -34,10 +40,5 @@ class LogFunction implements NumberValue
         $base = ($this->base)();
 
         return log($value, $base);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value, base) = log base "base" of value';
     }
 }

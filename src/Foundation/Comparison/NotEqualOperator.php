@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Comparison;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Not Equal')]
+#[Formula('f(left, right) = left <> right')]
+#[Description('Not Equal returns true when the left and right operands are not equal under PHP\'s loose (!=) comparison.')]
 class NotEqualOperator implements BooleanValue
 {
     public const KEY = 'not_equal';
@@ -22,10 +28,5 @@ class NotEqualOperator implements BooleanValue
     public function __invoke(): bool
     {
         return ($this->left)() != ($this->right)();
-    }
-
-    public static function formula(): string
-    {
-        return 'f(left, right) = left <> right';
     }
 }

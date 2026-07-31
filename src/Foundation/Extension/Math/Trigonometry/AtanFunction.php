@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Atan')]
+#[Formula('f(value) = arctan(value)')]
+#[Description('Atan returns the inverse tangent of the given value, in radians.')]
 class AtanFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -27,10 +33,5 @@ class AtanFunction implements NumberValue
         $value = ($this->value)();
 
         return atan($value);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = arctan(value)';
     }
 }

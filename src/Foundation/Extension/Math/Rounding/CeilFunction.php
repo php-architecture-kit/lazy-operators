@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Ceil')]
+#[Formula('f(value) = ceil(value)')]
+#[Description('Ceil rounds the given value up to the nearest integer.')]
 class CeilFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -27,10 +33,5 @@ class CeilFunction implements NumberValue
         $value = ($this->value)();
 
         return ceil($value);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = ceil(value)';
     }
 }

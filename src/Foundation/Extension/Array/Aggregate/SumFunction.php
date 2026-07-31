@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Sum')]
+#[Formula('f(values) = the sum of values')]
+#[Description('Sum returns the total of every value in the array added together.')]
 class SumFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -39,10 +45,5 @@ class SumFunction implements NumberValue
         }, $this->values);
 
         return array_sum($values);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(values) = the sum of values';
     }
 }

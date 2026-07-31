@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Mt Get Rand Max')]
+#[Formula('f() = the largest possible value returned by mt_rand()')]
+#[Description('Mt Get Rand Max returns the largest possible value mt_rand() can return.')]
 class MtGetRandMaxFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -24,10 +30,5 @@ class MtGetRandMaxFunction implements NumberValue
     public function __invoke(): int
     {
         return mt_getrandmax();
-    }
-
-    public static function formula(): string
-    {
-        return 'f() = the largest possible value returned by mt_rand()';
     }
 }

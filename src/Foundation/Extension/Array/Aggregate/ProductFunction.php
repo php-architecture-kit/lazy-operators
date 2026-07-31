@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Product')]
+#[Formula('f(values) = the product of values')]
+#[Description('Product returns the result of multiplying every value in the array together.')]
 class ProductFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -39,10 +45,5 @@ class ProductFunction implements NumberValue
         }, $this->values);
 
         return array_product($values);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(values) = the product of values';
     }
 }

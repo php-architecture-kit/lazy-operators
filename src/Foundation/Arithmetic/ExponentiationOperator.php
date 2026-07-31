@@ -5,7 +5,13 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Foundation\Arithmetic;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Exponentiation')]
+#[Formula('f(left, right) = left ^ right')]
+#[Description('Exponentiation returns the left operand raised to the power of the right operand.')]
 class ExponentiationOperator implements NumberValue
 {
     public const KEY = 'exponentiation';
@@ -20,10 +26,5 @@ class ExponentiationOperator implements NumberValue
     public function __invoke(): float|int
     {
         return ($this->left)() ** ($this->right)();
-    }
-
-    public static function formula(): string
-    {
-        return 'f(left, right) = left ^ right';
     }
 }

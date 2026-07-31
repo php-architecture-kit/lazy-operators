@@ -9,7 +9,13 @@ use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\PrecisionNumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\GuardsNativeFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\NormalizesPrecisionValues;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('BC Mul')]
+#[Formula('f(left, right, scale) = left * right, computed to scale decimal digits via bcmul')]
+#[Description('BC Mul returns the product of two arbitrary-precision numbers, computed to the given scale via bcmul.')]
 class BcMulFunction implements PrecisionNumberValue
 {
     use GuardsNativeFunction;
@@ -49,10 +55,5 @@ class BcMulFunction implements PrecisionNumberValue
     private function compute(): string
     {
         return bcmul((string) $this->left->bcValue(), (string) $this->right->bcValue(), $this->scale);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(left, right, scale) = left * right, computed to scale decimal digits via bcmul';
     }
 }

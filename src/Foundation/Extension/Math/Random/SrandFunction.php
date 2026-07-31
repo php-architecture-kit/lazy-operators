@@ -8,7 +8,13 @@ use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Srand')]
+#[Formula('f(seed) = seeds the rand() generator with seed; has no return value')]
+#[Description('Srand seeds the rand() random number generator with the given seed; it has no return value.')]
 class SrandFunction implements Expression
 {
     use GuardsNativeFunction;
@@ -35,10 +41,5 @@ class SrandFunction implements Expression
         srand($seed);
 
         return null;
-    }
-
-    public static function formula(): string
-    {
-        return 'f(seed) = seeds the rand() generator with seed; has no return value';
     }
 }

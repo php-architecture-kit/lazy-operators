@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Numeric;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Abs')]
+#[Formula('f(value) = |value|')]
+#[Description('Abs returns the given number with any negative sign removed.')]
 class AbsFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -27,10 +33,5 @@ class AbsFunction implements NumberValue
         $value = ($this->value)();
 
         return abs($value);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = |value|';
     }
 }

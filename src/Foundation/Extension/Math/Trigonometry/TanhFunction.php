@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Tanh')]
+#[Formula('f(value) = tanh(value)')]
+#[Description('Tanh returns the hyperbolic tangent of the given value.')]
 class TanhFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -27,10 +33,5 @@ class TanhFunction implements NumberValue
         $value = ($this->value)();
 
         return tanh($value);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = tanh(value)';
     }
 }

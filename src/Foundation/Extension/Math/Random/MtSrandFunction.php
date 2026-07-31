@@ -8,7 +8,13 @@ use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Mt Srand')]
+#[Formula('f(seed, mode) = seeds the mt_rand() generator with seed using algorithm mode; has no return value')]
+#[Description('Mt Srand seeds the Mersenne Twister random number generator with the given seed and algorithm mode; it has no return value.')]
 class MtSrandFunction implements Expression
 {
     use GuardsNativeFunction;
@@ -36,10 +42,5 @@ class MtSrandFunction implements Expression
         mt_srand($seed, $this->mode);
 
         return null;
-    }
-
-    public static function formula(): string
-    {
-        return 'f(seed, mode) = seeds the mt_rand() generator with seed using algorithm mode; has no return value';
     }
 }

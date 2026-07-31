@@ -7,7 +7,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Is NaN')]
+#[Formula('f(value) = value is "not a number"')]
+#[Description('Is NaN returns true when the given value is "not a number".')]
 class IsNanFunction implements BooleanValue
 {
     use GuardsNativeFunction;
@@ -28,10 +34,5 @@ class IsNanFunction implements BooleanValue
         $value = ($this->value)();
 
         return is_nan($value);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = value is "not a number"';
     }
 }

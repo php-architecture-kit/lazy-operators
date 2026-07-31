@@ -5,12 +5,18 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Foundation\Static;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\ArrayValue;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
 /**
  * @template T
  *
  * @implements ArrayValue<T>
  */
+#[Name('Array Literal')]
+#[Formula('f(value) = value')]
+#[Description('Array Literal wraps a raw PHP array as an Expression, returning it unchanged when invoked.')]
 class ArrayLiteral implements ArrayValue
 {
     public const KEY = 'array_literal';
@@ -31,10 +37,5 @@ class ArrayLiteral implements ArrayValue
     public function __invoke(): array
     {
         return $this->value;
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = value';
     }
 }

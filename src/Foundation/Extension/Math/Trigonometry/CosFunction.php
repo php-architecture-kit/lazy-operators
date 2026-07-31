@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Cos')]
+#[Formula('f(value) = cos(value)')]
+#[Description('Cos returns the cosine of the given angle, in radians.')]
 class CosFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -27,10 +33,5 @@ class CosFunction implements NumberValue
         $value = ($this->value)();
 
         return cos($value);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = cos(value)';
     }
 }

@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Numeric;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Fmod')]
+#[Formula('f(dividend, divisor) = floating point remainder of dividend / divisor')]
+#[Description('Fmod returns the floating point remainder of dividing the dividend by the divisor.')]
 class FmodFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -30,10 +36,5 @@ class FmodFunction implements NumberValue
         $divisor = ($this->divisor)();
 
         return fmod($dividend, $divisor);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(dividend, divisor) = floating point remainder of dividend / divisor';
     }
 }

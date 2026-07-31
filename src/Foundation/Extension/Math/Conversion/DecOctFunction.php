@@ -7,7 +7,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion;
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Type\StringValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Decimal To Octal')]
+#[Formula('f(value) = octal string representation of value')]
+#[Description('Decimal To Octal converts a decimal number into its octal string representation.')]
 class DecOctFunction implements StringValue
 {
     use GuardsNativeFunction;
@@ -29,10 +35,5 @@ class DecOctFunction implements StringValue
         assert(is_int($value));
 
         return decoct($value);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = octal string representation of value';
     }
 }

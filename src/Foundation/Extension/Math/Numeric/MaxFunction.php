@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Numeric;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Max')]
+#[Formula('f(values) = the greatest of values')]
+#[Description('Max returns the greatest of the given values.')]
 class MaxFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -39,10 +45,5 @@ class MaxFunction implements NumberValue
         }, $this->values);
 
         return count($values) === 1 ? $values[0] : max(...$values);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(values) = the greatest of values';
     }
 }

@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Numeric;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Min')]
+#[Formula('f(values) = the smallest of values')]
+#[Description('Min returns the smallest of the given values.')]
 class MinFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -39,10 +45,5 @@ class MinFunction implements NumberValue
         }, $this->values);
 
         return count($values) === 1 ? $values[0] : min(...$values);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(values) = the smallest of values';
     }
 }

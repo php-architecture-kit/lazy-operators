@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Asinh')]
+#[Formula('f(value) = arsinh(value)')]
+#[Description('Asinh returns the inverse hyperbolic sine of the given value.')]
 class AsinhFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -27,10 +33,5 @@ class AsinhFunction implements NumberValue
         $value = ($this->value)();
 
         return asinh($value);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = arsinh(value)';
     }
 }

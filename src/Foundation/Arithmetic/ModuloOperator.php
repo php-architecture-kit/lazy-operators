@@ -5,7 +5,13 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Foundation\Arithmetic;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Modulo')]
+#[Formula('f(left, right) = left mod right')]
+#[Description('Modulo returns the remainder of dividing the left operand by the right operand.')]
 class ModuloOperator implements NumberValue
 {
     public const KEY = 'modulo';
@@ -20,10 +26,5 @@ class ModuloOperator implements NumberValue
     public function __invoke(): float|int
     {
         return ($this->left)() % ($this->right)();
-    }
-
-    public static function formula(): string
-    {
-        return 'f(left, right) = left mod right';
     }
 }

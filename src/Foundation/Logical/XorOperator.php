@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Logical;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Xor')]
+#[Formula('f(left, right) = left XOR right')]
+#[Description('XOR (exclusive OR) works by comparing two inputs and returning true (1) only when the inputs are different, meaning one is true and the other is false. It outputs false (0) if both inputs are the same (both true or both false).')]
 class XorOperator implements BooleanValue
 {
     public const KEY = 'xor';
@@ -22,15 +28,5 @@ class XorOperator implements BooleanValue
     public function __invoke(): bool
     {
         return ($this->left)() xor ($this->right)();
-    }
-
-    public static function formula(): string
-    {
-        return 'f(left, right) = left XOR right';
-    }
-
-    public static function description(): string
-    {
-        return 'XOR (exclusive OR) works by comparing two inputs and returning true (1) only when the inputs are different, meaning one is true and the other is false. It outputs false (0) if both inputs are the same (both true or both false).';
     }
 }

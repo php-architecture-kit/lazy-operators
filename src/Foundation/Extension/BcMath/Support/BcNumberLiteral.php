@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support;
 
 use BcMath\Number;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\PrecisionNumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('BC Number Literal')]
+#[Formula('f(value) = value')]
+#[Description('BC Number Literal wraps a raw BcMath\\Number value as an Expression, returning it unchanged when invoked.')]
 final class BcNumberLiteral implements PrecisionNumberValue
 {
     public const KEY = 'bcmath_number_literal';
@@ -26,10 +32,5 @@ final class BcNumberLiteral implements PrecisionNumberValue
     public function bcValue(): Number
     {
         return $this->value;
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = value';
     }
 }

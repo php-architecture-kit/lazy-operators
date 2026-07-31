@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Comparison;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Identical')]
+#[Formula('f(left, right) = left is identical to right')]
+#[Description('Identical returns true when the left and right operands are equal in both value and type, under PHP\'s strict (===) comparison.')]
 class IdenticalOperator implements BooleanValue
 {
     public const KEY = 'identical';
@@ -22,10 +28,5 @@ class IdenticalOperator implements BooleanValue
     public function __invoke(): bool
     {
         return ($this->left)() === ($this->right)();
-    }
-
-    public static function formula(): string
-    {
-        return 'f(left, right) = left is identical to right';
     }
 }

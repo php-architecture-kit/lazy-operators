@@ -8,10 +8,18 @@ use LogicException;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Type\ArrayValue;
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
 /**
  * @implements ArrayValue<float>
  */
+#[Name('Allocation')]
+#[Formula('f(amount, shares, precision) = amount split proportionally to shares, '
+            . 'each rounded to precision, with the rounding remainder folded into one share; '
+            . 'computed via bcmath when available, native float arithmetic otherwise')]
+#[Description('Allocation splits an amount proportionally across a list of shares, rounds each part to the given precision, and folds the rounding remainder into one share.')]
 class AllocationFunction implements ArrayValue
 {
     public const KEY = 'allocation';
@@ -164,12 +172,5 @@ class AllocationFunction implements ArrayValue
         }
 
         return $extremeIndex;
-    }
-
-    public static function formula(): string
-    {
-        return 'f(amount, shares, precision) = amount split proportionally to shares, '
-            . 'each rounded to precision, with the rounding remainder folded into one share; '
-            . 'computed via bcmath when available, native float arithmetic otherwise';
     }
 }

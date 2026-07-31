@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Acos')]
+#[Formula('f(value) = arccos(value)')]
+#[Description('Acos returns the inverse cosine of the given value, in radians.')]
 class AcosFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -27,10 +33,5 @@ class AcosFunction implements NumberValue
         $value = ($this->value)();
 
         return acos($value);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = arccos(value)';
     }
 }

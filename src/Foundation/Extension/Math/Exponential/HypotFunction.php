@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Hypot')]
+#[Formula('f(x, y) = length of the hypotenuse of a right triangle with legs x and y')]
+#[Description('Hypot returns the length of the hypotenuse of a right triangle with legs x and y, without intermediate overflow or underflow.')]
 class HypotFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -30,10 +36,5 @@ class HypotFunction implements NumberValue
         $y = ($this->y)();
 
         return hypot($x, $y);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(x, y) = length of the hypotenuse of a right triangle with legs x and y';
     }
 }

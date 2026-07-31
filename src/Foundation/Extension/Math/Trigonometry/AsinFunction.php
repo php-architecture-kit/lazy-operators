@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Asin')]
+#[Formula('f(value) = arcsin(value)')]
+#[Description('Asin returns the inverse sine of the given value, in radians.')]
 class AsinFunction implements NumberValue
 {
     use GuardsNativeFunction;
@@ -27,10 +33,5 @@ class AsinFunction implements NumberValue
         $value = ($this->value)();
 
         return asin($value);
-    }
-
-    public static function formula(): string
-    {
-        return 'f(value) = arcsin(value)';
     }
 }

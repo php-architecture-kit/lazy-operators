@@ -6,7 +6,13 @@ namespace PhpArchitecture\LazyOperators\Foundation\Comparison;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Name('Greater Than Or Equal')]
+#[Formula('f(left, right) = left >= right')]
+#[Description('Greater Than Or Equal returns true when the left operand is greater than or equal to the right operand.')]
 class GreaterThanOrEqualOperator implements BooleanValue
 {
     public const KEY = 'greater_than_or_equal';
@@ -22,10 +28,5 @@ class GreaterThanOrEqualOperator implements BooleanValue
     public function __invoke(): bool
     {
         return ($this->left)() >= ($this->right)();
-    }
-
-    public static function formula(): string
-    {
-        return 'f(left, right) = left >= right';
     }
 }

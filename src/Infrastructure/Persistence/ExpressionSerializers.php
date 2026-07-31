@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Infrastructure\Persistence;
 
-use PhpArchitecture\LazyOperators\Foundation\Allocation\AllocationFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationFunction;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\AdditionOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\DivisionOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\ExponentiationOperator;
@@ -82,10 +82,17 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtSrandFuncti
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\LcgValueFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate\ProductFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate\SumFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcAddFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcDivFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcMulFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcSubFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Comparison\BcCompFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\BcNumberLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\PrecisionNumberAdapter;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsFiniteFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsInfiniteFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsNanFunction;
-use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Allocation\AllocationFunctionSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Allocation\AllocationFunctionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Arithmetic\AdditionOperatorSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Arithmetic\DivisionOperatorSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Arithmetic\ExponentiationOperatorSerializer;
@@ -167,6 +174,13 @@ use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extensio
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Math\Classification\IsNanFunctionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Array\Aggregate\ProductFunctionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Array\Aggregate\SumFunctionSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\BcMath\Arithmetic\BcAddFunctionSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\BcMath\Arithmetic\BcDivFunctionSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\BcMath\Arithmetic\BcMulFunctionSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\BcMath\Arithmetic\BcSubFunctionSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\BcMath\Comparison\BcCompFunctionSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\BcMath\Support\BcNumberLiteralSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\BcMath\Support\PrecisionNumberAdapterSerializer;
 
 final class ExpressionSerializers
 {
@@ -254,6 +268,13 @@ final class ExpressionSerializers
             SumFunction::UID => new SumFunctionSerializer(),
             ProductFunction::UID => new ProductFunctionSerializer(),
             AllocationFunction::UID => new AllocationFunctionSerializer(),
+            BcAddFunction::UID => new BcAddFunctionSerializer(),
+            BcSubFunction::UID => new BcSubFunctionSerializer(),
+            BcMulFunction::UID => new BcMulFunctionSerializer(),
+            BcDivFunction::UID => new BcDivFunctionSerializer(),
+            BcCompFunction::UID => new BcCompFunctionSerializer(),
+            BcNumberLiteral::UID => new BcNumberLiteralSerializer(),
+            PrecisionNumberAdapter::UID => new PrecisionNumberAdapterSerializer(),
         ], $callbacks ?? new CallbackRegistry());
     }
 }

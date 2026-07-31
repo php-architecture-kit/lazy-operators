@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Tests\Unit\Infrastructure\Persistence;
 
-use PhpArchitecture\LazyOperators\Foundation\Allocation\AllocationFunction;
-use PhpArchitecture\LazyOperators\Foundation\Allocation\AllocationRemainderTarget;
+use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationRemainderTarget;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\AdditionOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\DivisionOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\ExponentiationOperator;
@@ -28,6 +28,13 @@ use PhpArchitecture\LazyOperators\Foundation\Custom\CallbackOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate\ProductFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate\SumFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcAddFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcDivFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcMulFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcSubFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Comparison\BcCompFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\BcNumberLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\PrecisionNumberAdapter;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsFiniteFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsInfiniteFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsNanFunction;
@@ -197,6 +204,13 @@ final class ExpressionSerializerRegistryTest extends TestCase
                 new IntLiteral(30),
                 new IntLiteral(70),
             ),
+            'bcmath_add' => new BcAddFunction(new StringLiteral('1.1'), new StringLiteral('2.2'), 2),
+            'bcmath_sub' => new BcSubFunction(new StringLiteral('5'), new StringLiteral('3')),
+            'bcmath_mul' => new BcMulFunction(new StringLiteral('2.5'), new StringLiteral('4'), 2),
+            'bcmath_div' => new BcDivFunction(new StringLiteral('10'), new StringLiteral('4'), 2),
+            'bcmath_comp' => new BcCompFunction(new StringLiteral('1'), new StringLiteral('2')),
+            'bcmath_number_literal' => new BcNumberLiteral(new \BcMath\Number('4.20')),
+            'bcmath_precision_number_adapter' => new PrecisionNumberAdapter(new IntLiteral(7)),
         ];
     }
 

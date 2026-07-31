@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Allocation\Exception;
+namespace PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\Exception;
 
 use PhpArchitecture\LazyOperators\Foundation\Exception\LazyOperatorsException;
 

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Allocation;
+namespace PhpArchitecture\LazyOperators\Foundation\Extension\Allocation;
 
-use PhpArchitecture\LazyOperators\Foundation\Allocation\Exception\EmptySharesException;
+use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\Exception\EmptySharesException;
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\PipelineConfig;

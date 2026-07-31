@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Allocation;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Allocation;
 
-use PhpArchitecture\LazyOperators\Foundation\Allocation\Allocation;
-use PhpArchitecture\LazyOperators\Foundation\Allocation\AllocationRemainderTarget;
-use PhpArchitecture\LazyOperators\Foundation\Allocation\Exception\EmptySharesException;
+use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\Allocation;
+use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationRemainderTarget;
+use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\Exception\EmptySharesException;
 use PHPUnit\Framework\TestCase;
 
 final class AllocationTest extends TestCase

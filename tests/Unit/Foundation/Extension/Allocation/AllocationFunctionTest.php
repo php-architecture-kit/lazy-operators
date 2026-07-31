@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Allocation;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Allocation;
 
-use PhpArchitecture\LazyOperators\Foundation\Allocation\AllocationFunction;
-use PhpArchitecture\LazyOperators\Foundation\Allocation\AllocationRemainderTarget;
+use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationRemainderTarget;
 use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 use PHPUnit\Framework\TestCase;
 
@@ -198,6 +198,70 @@ final class AllocationFunctionTest extends TestCase
                     $function(),
                     sprintf('Lossless check failed for amount=%s, precision=%d, target=%s', $amount, $precision, $target->name),
                 );
+            }
+        }
+    }
+
+    public function testUseBcMathIfAvailableDefaultsToTrue(): void
+    {
+        $function = new AllocationFunction(
+            new NumericSpyExpression(1),
+            new NumericSpyExpression(2),
+            AllocationRemainderTarget::First,
+            new NumericSpyExpression(1),
+        );
+
+        self::assertTrue($function->useBcMathIfAvailable);
+    }
+
+    /**
+     * __invoke() picks bcmath or native floats based on useBcMathIfAvailable && function_exists('bcadd').
+     * This dev/CI environment always has ext-bcmath loaded, so without the flag the native fallback path
+     * (for environments where ext-bcmath isn't installed, which composer.json only ever "suggests", never
+     * requires) would never actually run under test. Toggling useBcMathIfAvailable to false forces that
+     * path directly, independently of what the environment provides, against the same case matrix as
+     * testEveryAllocationSumsBackToTheOriginalAmount().
+     */
+    public function testBothTheBcMathAndNativeFloatStrategiesAreIndependentlyLossless(): void
+    {
+        $cases = [
+            [10, [1, 1, 1], 2],
+            [1, [1, 4, 1], 2],
+            [100, [30, 70], 2],
+            [99.99, [1, 2, 3, 4], 2],
+            [7, [1], 0],
+            [-10, [1, 1, 1], 2],
+            [123.456, [1, 1], 3],
+            [0.1, [1, 1, 1], 4],
+            [1_000_000, [2, 3, 5, 7, 11, 13], 2],
+            [50, [2.5, 1.5, 6], 2],
+            [1, [1, 1, 1, 1, 1, 1], 0],
+            [-99.99, [3, 7], 2],
+        ];
+
+        foreach ($cases as [$amount, $shares, $precision]) {
+            foreach (AllocationRemainderTarget::cases() as $target) {
+                $shareExpressions = array_map(static fn (int|float $share) => new NumericSpyExpression($share), $shares);
+                $bcMathFunction = new AllocationFunction(
+                    new NumericSpyExpression($amount),
+                    new NumericSpyExpression($precision),
+                    $target,
+                    ...$shareExpressions,
+                );
+
+                $shareExpressions = array_map(static fn (int|float $share) => new NumericSpyExpression($share), $shares);
+                $nativeFloatFunction = new AllocationFunction(
+                    new NumericSpyExpression($amount),
+                    new NumericSpyExpression($precision),
+                    $target,
+                    ...$shareExpressions,
+                );
+                $nativeFloatFunction->useBcMathIfAvailable = false;
+
+                $context = sprintf('amount=%s, precision=%d, target=%s', $amount, $precision, $target->name);
+
+                self::assertLossless($amount, $precision, $bcMathFunction(), "bcmath strategy: {$context}");
+                self::assertLossless($amount, $precision, $nativeFloatFunction(), "native float strategy: {$context}");
             }
         }
     }

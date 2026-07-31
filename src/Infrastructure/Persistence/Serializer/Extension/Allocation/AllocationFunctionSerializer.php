@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Allocation;
+namespace PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Allocation;
 
-use PhpArchitecture\LazyOperators\Foundation\Allocation\AllocationFunction;
-use PhpArchitecture\LazyOperators\Foundation\Allocation\AllocationRemainderTarget;
+use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationRemainderTarget;
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializer;

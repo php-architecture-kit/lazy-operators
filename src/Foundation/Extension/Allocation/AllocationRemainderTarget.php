@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Allocation;
+namespace PhpArchitecture\LazyOperators\Foundation\Extension\Allocation;
 
 enum AllocationRemainderTarget
 {

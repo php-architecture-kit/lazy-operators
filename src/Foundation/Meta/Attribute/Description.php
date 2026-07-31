@@ -6,7 +6,7 @@ namespace PhpArchitecture\LazyOperators\Foundation\Meta\Attribute;
 
 use Attribute;
 
-#[Attribute(Attribute::TARGET_CLASS)]
+#[Attribute(Attribute::TARGET_CLASS|Attribute::TARGET_PROPERTY)]
 final readonly class Description
 {
     public function __construct(

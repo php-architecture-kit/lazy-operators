@@ -76,12 +76,12 @@ class Math
 
     // Rounding
 
-    public static function ceil(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function ceil(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new CeilFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function floor(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function floor(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new FloorFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
@@ -90,11 +90,11 @@ class Math
      * @param 1|2|3|4|RoundingMode $mode
      */
     public static function round(
-        int|float|(Expression&NumberValue) $value,
-        int|(Expression&NumberValue)|null $precision = null,
+        int|float|NumberValue $value,
+        int|NumberValue|null $precision = null,
         int|RoundingMode $mode = PHP_ROUND_HALF_UP,
         ?PipelineConfig $config = null,
-    ): Expression&NumberValue {
+    ): NumberValue {
         $config ??= new PipelineConfig();
 
         return self::decorateNumber(
@@ -109,37 +109,37 @@ class Math
 
     // Trigonometry
 
-    public static function sin(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function sin(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new SinFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function cos(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function cos(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new CosFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function tan(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function tan(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new TanFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function asin(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function asin(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new AsinFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function acos(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function acos(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new AcosFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function atan(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function atan(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new AtanFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function atan2(int|float|(Expression&NumberValue) $y, int|float|(Expression&NumberValue) $x, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function atan2(int|float|NumberValue $y, int|float|NumberValue $x, ?PipelineConfig $config = null): NumberValue
     {
         $config ??= new PipelineConfig();
 
@@ -149,68 +149,68 @@ class Math
         );
     }
 
-    public static function sinh(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function sinh(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new SinhFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function cosh(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function cosh(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new CoshFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function tanh(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function tanh(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new TanhFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function asinh(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function asinh(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new AsinhFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function acosh(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function acosh(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new AcoshFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function atanh(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function atanh(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new AtanhFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function deg2rad(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function deg2rad(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new Deg2RadFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function rad2deg(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function rad2deg(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new Rad2DegFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function pi(?PipelineConfig $config = null): Expression&NumberValue
+    public static function pi(?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new PiFunction(), $config ?? new PipelineConfig());
     }
 
     // Exponential / logarithmic
 
-    public static function exp(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function exp(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new ExpFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function expm1(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function expm1(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new Expm1Function(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
     public static function log(
-        int|float|(Expression&NumberValue) $value,
-        int|float|(Expression&NumberValue)|null $base = null,
+        int|float|NumberValue $value,
+        int|float|NumberValue|null $base = null,
         ?PipelineConfig $config = null,
-    ): Expression&NumberValue {
+    ): NumberValue {
         $config ??= new PipelineConfig();
 
         return self::decorateNumber(
@@ -222,17 +222,17 @@ class Math
         );
     }
 
-    public static function log10(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function log10(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new Log10Function(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function log1p(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function log1p(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new Log1pFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function pow(int|float|(Expression&NumberValue) $base, int|float|(Expression&NumberValue) $exponent, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function pow(int|float|NumberValue $base, int|float|NumberValue $exponent, ?PipelineConfig $config = null): NumberValue
     {
         $config ??= new PipelineConfig();
 
@@ -242,12 +242,12 @@ class Math
         );
     }
 
-    public static function sqrt(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function sqrt(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new SqrtFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function hypot(int|float|(Expression&NumberValue) $x, int|float|(Expression&NumberValue) $y, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function hypot(int|float|NumberValue $x, int|float|NumberValue $y, ?PipelineConfig $config = null): NumberValue
     {
         $config ??= new PipelineConfig();
 
@@ -259,12 +259,12 @@ class Math
 
     // Numeric
 
-    public static function abs(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function abs(int|float|NumberValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new AbsFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function fmod(int|float|(Expression&NumberValue) $dividend, int|float|(Expression&NumberValue) $divisor, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function fmod(int|float|NumberValue $dividend, int|float|NumberValue $divisor, ?PipelineConfig $config = null): NumberValue
     {
         $config ??= new PipelineConfig();
 
@@ -274,7 +274,7 @@ class Math
         );
     }
 
-    public static function fdiv(int|float|(Expression&NumberValue) $dividend, int|float|(Expression&NumberValue) $divisor, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function fdiv(int|float|NumberValue $dividend, int|float|NumberValue $divisor, ?PipelineConfig $config = null): NumberValue
     {
         $config ??= new PipelineConfig();
 
@@ -284,7 +284,7 @@ class Math
         );
     }
 
-    public static function intdiv(int|(Expression&NumberValue) $dividend, int|(Expression&NumberValue) $divisor, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function intdiv(int|NumberValue $dividend, int|NumberValue $divisor, ?PipelineConfig $config = null): NumberValue
     {
         $config ??= new PipelineConfig();
 
@@ -294,12 +294,12 @@ class Math
         );
     }
 
-    public static function max(int|float|(Expression&NumberValue) $first, int|float|(Expression&NumberValue) ...$rest): Expression&NumberValue
+    public static function max(int|float|NumberValue $first, int|float|NumberValue ...$rest): NumberValue
     {
         return self::variadicNumeric(MaxFunction::class, $first, ...$rest);
     }
 
-    public static function min(int|float|(Expression&NumberValue) $first, int|float|(Expression&NumberValue) ...$rest): Expression&NumberValue
+    public static function min(int|float|NumberValue $first, int|float|NumberValue ...$rest): NumberValue
     {
         return self::variadicNumeric(MinFunction::class, $first, ...$rest);
     }
@@ -307,11 +307,11 @@ class Math
     /**
      * @param class-string<MaxFunction|MinFunction> $class
      */
-    private static function variadicNumeric(string $class, int|float|(Expression&NumberValue) $first, int|float|(Expression&NumberValue) ...$rest): Expression&NumberValue
+    private static function variadicNumeric(string $class, int|float|NumberValue $first, int|float|NumberValue ...$rest): NumberValue
     {
         $config = new PipelineConfig();
         $values = array_map(
-            static fn (int|float|(Expression&NumberValue) $value) => self::decorateNumeric($value, $config),
+            static fn (int|float|NumberValue $value) => self::decorateNumeric($value, $config),
             [$first, ...$rest],
         );
 
@@ -320,42 +320,42 @@ class Math
 
     // Base conversion
 
-    public static function binDec(string|(Expression&StringValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function binDec(string|StringValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new BinDecFunction(self::wrapAs(StringValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function decBin(int|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&StringValue
+    public static function decBin(int|NumberValue $value, ?PipelineConfig $config = null): StringValue
     {
         return self::decorateString(new DecBinFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function decHex(int|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&StringValue
+    public static function decHex(int|NumberValue $value, ?PipelineConfig $config = null): StringValue
     {
         return self::decorateString(new DecHexFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function hexDec(string|(Expression&StringValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function hexDec(string|StringValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new HexDecFunction(self::wrapAs(StringValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function decOct(int|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&StringValue
+    public static function decOct(int|NumberValue $value, ?PipelineConfig $config = null): StringValue
     {
         return self::decorateString(new DecOctFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function octDec(string|(Expression&StringValue) $value, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function octDec(string|StringValue $value, ?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new OctDecFunction(self::wrapAs(StringValue::class, $value)), $config ?? new PipelineConfig());
     }
 
     public static function baseConvert(
-        string|(Expression&StringValue) $value,
-        int|(Expression&NumberValue) $fromBase,
-        int|(Expression&NumberValue) $toBase,
+        string|StringValue $value,
+        int|NumberValue $fromBase,
+        int|NumberValue $toBase,
         ?PipelineConfig $config = null,
-    ): Expression&StringValue {
+    ): StringValue {
         $config ??= new PipelineConfig();
 
         return self::decorateString(
@@ -370,7 +370,7 @@ class Math
 
     // Random
 
-    public static function rand(int|(Expression&NumberValue)|null $min = null, int|(Expression&NumberValue)|null $max = null, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function rand(int|NumberValue|null $min = null, int|NumberValue|null $max = null, ?PipelineConfig $config = null): NumberValue
     {
         $config ??= new PipelineConfig();
 
@@ -383,7 +383,7 @@ class Math
         );
     }
 
-    public static function mtRand(int|(Expression&NumberValue)|null $min = null, int|(Expression&NumberValue)|null $max = null, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function mtRand(int|NumberValue|null $min = null, int|NumberValue|null $max = null, ?PipelineConfig $config = null): NumberValue
     {
         $config ??= new PipelineConfig();
 
@@ -396,7 +396,7 @@ class Math
         );
     }
 
-    public static function randomInt(int|(Expression&NumberValue) $min, int|(Expression&NumberValue) $max, ?PipelineConfig $config = null): Expression&NumberValue
+    public static function randomInt(int|NumberValue $min, int|NumberValue $max, ?PipelineConfig $config = null): NumberValue
     {
         $config ??= new PipelineConfig();
 
@@ -406,22 +406,22 @@ class Math
         );
     }
 
-    public static function getRandMax(?PipelineConfig $config = null): Expression&NumberValue
+    public static function getRandMax(?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new GetRandMaxFunction(), $config ?? new PipelineConfig());
     }
 
-    public static function mtGetRandMax(?PipelineConfig $config = null): Expression&NumberValue
+    public static function mtGetRandMax(?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new MtGetRandMaxFunction(), $config ?? new PipelineConfig());
     }
 
-    public static function lcgValue(?PipelineConfig $config = null): Expression&NumberValue
+    public static function lcgValue(?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new LcgValueFunction(), $config ?? new PipelineConfig());
     }
 
-    public static function srand(int|(Expression&NumberValue)|null $seed = null, ?PipelineConfig $config = null): Expression
+    public static function srand(int|NumberValue|null $seed = null, ?PipelineConfig $config = null): Expression
     {
         $config ??= new PipelineConfig();
 
@@ -432,7 +432,7 @@ class Math
     }
 
     public static function mtSrand(
-        int|(Expression&NumberValue)|null $seed = null,
+        int|NumberValue|null $seed = null,
         int $mode = MT_RAND_MT19937,
         ?PipelineConfig $config = null,
     ): Expression {
@@ -446,22 +446,22 @@ class Math
 
     // Classification
 
-    public static function isFinite(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&BooleanValue
+    public static function isFinite(int|float|NumberValue $value, ?PipelineConfig $config = null): BooleanValue
     {
         return self::decorateBoolean(new IsFiniteFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function isInfinite(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&BooleanValue
+    public static function isInfinite(int|float|NumberValue $value, ?PipelineConfig $config = null): BooleanValue
     {
         return self::decorateBoolean(new IsInfiniteFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    public static function isNan(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): Expression&BooleanValue
+    public static function isNan(int|float|NumberValue $value, ?PipelineConfig $config = null): BooleanValue
     {
         return self::decorateBoolean(new IsNanFunction(self::wrapAs(NumberValue::class, $value)), $config ?? new PipelineConfig());
     }
 
-    private static function decorateNumeric(int|float|(Expression&NumberValue) $value, PipelineConfig $config): Expression&NumberValue
+    private static function decorateNumeric(int|float|NumberValue $value, PipelineConfig $config): NumberValue
     {
         return self::decorateNumber(self::wrapAs(NumberValue::class, $value), $config);
     }

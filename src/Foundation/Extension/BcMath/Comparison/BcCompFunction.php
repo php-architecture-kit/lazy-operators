@@ -26,8 +26,8 @@ class BcCompFunction implements IntegerValue
     public const UID = '923053e1-492b-4d87-b36c-e414e4962dc9';
     public const VERSION = '1.0';
     private const NATIVE_FUNCTION = 'bccomp';
-    public readonly Expression&PrecisionNumberValue $left;
-    public readonly Expression&PrecisionNumberValue $right;
+    public readonly PrecisionNumberValue $left;
+    public readonly PrecisionNumberValue $right;
 
     public function __construct(
         Number|Expression $left,

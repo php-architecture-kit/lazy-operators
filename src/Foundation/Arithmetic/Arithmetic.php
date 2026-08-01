@@ -16,19 +16,19 @@ class Arithmetic
     use DecoratesNodes;
 
     private function __construct(
-        private readonly Expression&NumberValue $current,
+        private readonly NumberValue $current,
         private readonly PipelineConfig $config,
     ) {
     }
 
-    public static function of(int|float|(Expression&NumberValue) $value, ?PipelineConfig $config = null): self
+    public static function of(int|float|NumberValue $value, ?PipelineConfig $config = null): self
     {
         $config ??= new PipelineConfig();
 
         return new self(self::decorateNumeric($value, $config), $config);
     }
 
-    public function add(int|float|(Expression&NumberValue) $value): self
+    public function add(int|float|NumberValue $value): self
     {
         return new self(
             self::decorateOperator(new AdditionOperator($this->current, self::decorateNumeric($value, $this->config)), $this->config),
@@ -36,7 +36,7 @@ class Arithmetic
         );
     }
 
-    public function subtract(int|float|(Expression&NumberValue) $value): self
+    public function subtract(int|float|NumberValue $value): self
     {
         return new self(
             self::decorateOperator(new SubtractionOperator($this->current, self::decorateNumeric($value, $this->config)), $this->config),
@@ -44,7 +44,7 @@ class Arithmetic
         );
     }
 
-    public function multiply(int|float|(Expression&NumberValue) $value): self
+    public function multiply(int|float|NumberValue $value): self
     {
         return new self(
             self::decorateOperator(new MultiplicationOperator($this->current, self::decorateNumeric($value, $this->config)), $this->config),
@@ -52,7 +52,7 @@ class Arithmetic
         );
     }
 
-    public function divide(int|float|(Expression&NumberValue) $value): self
+    public function divide(int|float|NumberValue $value): self
     {
         return new self(
             self::decorateOperator(new DivisionOperator($this->current, self::decorateNumeric($value, $this->config)), $this->config),
@@ -60,7 +60,7 @@ class Arithmetic
         );
     }
 
-    public function modulo(int|float|(Expression&NumberValue) $value): self
+    public function modulo(int|float|NumberValue $value): self
     {
         return new self(
             self::decorateOperator(new ModuloOperator($this->current, self::decorateNumeric($value, $this->config)), $this->config),
@@ -68,7 +68,7 @@ class Arithmetic
         );
     }
 
-    public function power(int|float|(Expression&NumberValue) $value): self
+    public function power(int|float|NumberValue $value): self
     {
         return new self(
             self::decorateOperator(new ExponentiationOperator($this->current, self::decorateNumeric($value, $this->config)), $this->config),
@@ -76,17 +76,17 @@ class Arithmetic
         );
     }
 
-    public function build(): Expression&NumberValue
+    public function build(): NumberValue
     {
         return $this->current;
     }
 
-    private static function decorateNumeric(int|float|(Expression&NumberValue) $value, PipelineConfig $config): Expression&NumberValue
+    private static function decorateNumeric(int|float|NumberValue $value, PipelineConfig $config): NumberValue
     {
         return self::decorateNumber(self::wrapAs(NumberValue::class, $value), $config);
     }
 
-    private static function decorateOperator(Expression&NumberValue $node, PipelineConfig $config): Expression&NumberValue
+    private static function decorateOperator(NumberValue $node, PipelineConfig $config): NumberValue
     {
         return self::decorateNumber($node, $config);
     }

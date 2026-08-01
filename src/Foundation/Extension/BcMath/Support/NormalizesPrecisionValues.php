@@ -10,7 +10,7 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\PrecisionNumberVal
 
 trait NormalizesPrecisionValues
 {
-    private static function normalize(Number|Expression $value): Expression&PrecisionNumberValue
+    private static function normalize(Number|Expression $value): PrecisionNumberValue
     {
         return match (true) {
             $value instanceof PrecisionNumberValue => $value,

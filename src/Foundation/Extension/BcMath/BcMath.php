@@ -32,7 +32,7 @@ final class BcMath
         Number|int|float|string|Expression $right,
         ?int $scale = null,
         ?PipelineConfig $config = null,
-    ): Expression&PrecisionNumberValue {
+    ): PrecisionNumberValue {
         return self::decoratePrecisionNumber(
             new BcAddFunction(self::wrapRawScalar($left), self::wrapRawScalar($right), $scale),
             $config ?? new PipelineConfig(),
@@ -44,7 +44,7 @@ final class BcMath
         Number|int|float|string|Expression $right,
         ?int $scale = null,
         ?PipelineConfig $config = null,
-    ): Expression&PrecisionNumberValue {
+    ): PrecisionNumberValue {
         return self::decoratePrecisionNumber(
             new BcSubFunction(self::wrapRawScalar($left), self::wrapRawScalar($right), $scale),
             $config ?? new PipelineConfig(),
@@ -56,7 +56,7 @@ final class BcMath
         Number|int|float|string|Expression $right,
         ?int $scale = null,
         ?PipelineConfig $config = null,
-    ): Expression&PrecisionNumberValue {
+    ): PrecisionNumberValue {
         return self::decoratePrecisionNumber(
             new BcMulFunction(self::wrapRawScalar($left), self::wrapRawScalar($right), $scale),
             $config ?? new PipelineConfig(),
@@ -68,7 +68,7 @@ final class BcMath
         Number|int|float|string|Expression $divisor,
         ?int $scale = null,
         ?PipelineConfig $config = null,
-    ): Expression&PrecisionNumberValue {
+    ): PrecisionNumberValue {
         return self::decoratePrecisionNumber(
             new BcDivFunction(self::wrapRawScalar($dividend), self::wrapRawScalar($divisor), $scale),
             $config ?? new PipelineConfig(),
@@ -80,7 +80,7 @@ final class BcMath
         Number|int|float|string|Expression $right,
         ?int $scale = null,
         ?PipelineConfig $config = null,
-    ): Expression&NumberValue {
+    ): NumberValue {
         return self::decorateNumber(
             new BcCompFunction(self::wrapRawScalar($left), self::wrapRawScalar($right), $scale),
             $config ?? new PipelineConfig(),
@@ -104,7 +104,7 @@ final class BcMath
      * lose bcValue() for the next BcMath node in the chain. This stays local to BcMath rather than
      * living in the shared DecoratesNodes trait, since PrecisionNumberValue is itself BcMath-only.
      */
-    private static function decoratePrecisionNumber(Expression&PrecisionNumberValue $node, PipelineConfig $config): Expression&PrecisionNumberValue
+    private static function decoratePrecisionNumber(PrecisionNumberValue $node, PipelineConfig $config): PrecisionNumberValue
     {
         $decorated = self::decorate($node, $config);
 

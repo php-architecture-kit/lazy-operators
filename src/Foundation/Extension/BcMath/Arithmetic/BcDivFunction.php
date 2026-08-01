@@ -26,8 +26,8 @@ class BcDivFunction implements PrecisionNumberValue
     public const UID = '0e966b45-8f22-48de-a9c9-c81d1df7f299';
     public const VERSION = '1.0';
     private const NATIVE_FUNCTION = 'bcdiv';
-    public readonly Expression&PrecisionNumberValue $dividend;
-    public readonly Expression&PrecisionNumberValue $divisor;
+    public readonly PrecisionNumberValue $dividend;
+    public readonly PrecisionNumberValue $divisor;
 
     public function __construct(
         Number|Expression $dividend,

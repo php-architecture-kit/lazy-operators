@@ -17,6 +17,14 @@ final class CallbackRegistry
         $this->callbacks[$name] = $callback;
     }
 
+    /**
+     * @return string[]
+     */
+    public function names(): array
+    {
+        return array_keys($this->callbacks);
+    }
+
     public function nameFor(Closure $callback): string
     {
         foreach ($this->callbacks as $name => $registered) {

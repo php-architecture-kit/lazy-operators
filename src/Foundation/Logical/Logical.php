@@ -16,18 +16,18 @@ class Logical
     use DecoratesNodes;
 
     private function __construct(
-        private readonly Expression&BooleanValue $current,
+        private readonly BooleanValue $current,
         private readonly PipelineConfig $config,
     ) {}
 
-    public static function of(bool|(Expression&BooleanValue) $value, ?PipelineConfig $config = null): self
+    public static function of(bool|BooleanValue $value, ?PipelineConfig $config = null): self
     {
         $config ??= new PipelineConfig();
 
         return new self(self::wrapDecorate($value, $config), $config);
     }
 
-    public function and(bool|(Expression&BooleanValue) $value): self
+    public function and(bool|BooleanValue $value): self
     {
         return new self(
             self::decorateBoolean(new AndOperator($this->current, self::wrapDecorate($value, $this->config)), $this->config),
@@ -35,7 +35,7 @@ class Logical
         );
     }
 
-    public function or(bool|(Expression&BooleanValue) $value): self
+    public function or(bool|BooleanValue $value): self
     {
         return new self(
             self::decorateBoolean(new OrOperator($this->current, self::wrapDecorate($value, $this->config)), $this->config),
@@ -43,7 +43,7 @@ class Logical
         );
     }
 
-    public function xor(bool|(Expression&BooleanValue) $value): self
+    public function xor(bool|BooleanValue $value): self
     {
         return new self(
             self::decorateBoolean(new XorOperator($this->current, self::wrapDecorate($value, $this->config)), $this->config),
@@ -56,12 +56,12 @@ class Logical
         return new self(self::decorateBoolean(new NotOperator($this->current), $this->config), $this->config);
     }
 
-    public function build(): Expression&BooleanValue
+    public function build(): BooleanValue
     {
         return $this->current;
     }
 
-    private static function wrapDecorate(bool|(Expression&BooleanValue) $value, PipelineConfig $config): Expression&BooleanValue
+    private static function wrapDecorate(bool|BooleanValue $value, PipelineConfig $config): BooleanValue
     {
         return self::decorateBoolean(self::wrapAs(BooleanValue::class, $value), $config);
     }

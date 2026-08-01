@@ -25,8 +25,8 @@ class BcMulFunction implements PrecisionNumberValue
     public const UID = '05d100f9-0142-4a29-8d67-bb4a73014a23';
     public const VERSION = '1.0';
     private const NATIVE_FUNCTION = 'bcmul';
-    public readonly Expression&PrecisionNumberValue $left;
-    public readonly Expression&PrecisionNumberValue $right;
+    public readonly PrecisionNumberValue $left;
+    public readonly PrecisionNumberValue $right;
 
     public function __construct(
         Number|Expression $left,

@@ -20,8 +20,8 @@ class AdditionOperator implements NumberValue
     public const VERSION = '1.0';
 
     public function __construct(
-        public readonly Expression&NumberValue $left,
-        public readonly Expression&NumberValue $right,
+        public readonly NumberValue $left,
+        public readonly NumberValue $right,
     ) {
     }
     

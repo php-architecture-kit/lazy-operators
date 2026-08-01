@@ -25,8 +25,8 @@ class BcAddFunction implements PrecisionNumberValue
     public const UID = '2ebc9b5a-1744-4902-9ebb-90ae50bd7e30';
     public const VERSION = '1.0';
     private const NATIVE_FUNCTION = 'bcadd';
-    public readonly Expression&PrecisionNumberValue $left;
-    public readonly Expression&PrecisionNumberValue $right;
+    public readonly PrecisionNumberValue $left;
+    public readonly PrecisionNumberValue $right;
 
     public function __construct(
         Number|Expression $left,

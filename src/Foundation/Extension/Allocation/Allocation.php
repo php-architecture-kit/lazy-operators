@@ -17,12 +17,12 @@ class Allocation
     use DecoratesNodes;
 
     /**
-     * @param non-empty-array<int|float|(Expression&NumberValue)> $shares
+     * @param non-empty-array<int|float|NumberValue> $shares
      */
     public static function allocate(
-        int|float|(Expression&NumberValue) $amount,
+        int|float|NumberValue $amount,
         array $shares,
-        int|(Expression&NumberValue) $precision,
+        int|NumberValue $precision,
         AllocationRemainderTarget $remainderTarget = AllocationRemainderTarget::First,
         ?PipelineConfig $config = null,
     ): Expression {
@@ -33,7 +33,7 @@ class Allocation
         $config ??= new PipelineConfig();
 
         $decorated = array_map(
-            static fn (int|float|(Expression&NumberValue) $share) => self::decorateNumeric($share, $config),
+            static fn (int|float|NumberValue $share) => self::decorateNumeric($share, $config),
             array_values($shares),
         );
         $first = array_shift($decorated);
@@ -51,7 +51,7 @@ class Allocation
         );
     }
 
-    private static function decorateNumeric(int|float|(Expression&NumberValue) $value, PipelineConfig $config): NumberValue
+    private static function decorateNumeric(int|float|NumberValue $value, PipelineConfig $config): NumberValue
     {
         return self::decorateNumber(self::wrapAs(NumberValue::class, $value), $config);
     }

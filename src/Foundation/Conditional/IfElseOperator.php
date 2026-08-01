@@ -20,7 +20,7 @@ class IfElseOperator implements Expression
     public const VERSION = '1.0';
 
     public function __construct(
-        public readonly Expression&BooleanValue $condition,
+        public readonly BooleanValue $condition,
         public readonly Expression $then,
         public readonly Expression $else,
     ) {}

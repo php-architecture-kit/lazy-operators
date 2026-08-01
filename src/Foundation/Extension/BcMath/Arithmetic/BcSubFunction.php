@@ -25,8 +25,8 @@ class BcSubFunction implements PrecisionNumberValue
     public const UID = 'e6e40e67-e321-4381-bd50-374900e97aee';
     public const VERSION = '1.0';
     private const NATIVE_FUNCTION = 'bcsub';
-    public readonly Expression&PrecisionNumberValue $left;
-    public readonly Expression&PrecisionNumberValue $right;
+    public readonly PrecisionNumberValue $left;
+    public readonly PrecisionNumberValue $right;
 
     public function __construct(
         Number|Expression $left,

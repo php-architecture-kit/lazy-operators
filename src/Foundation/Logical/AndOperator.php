@@ -20,8 +20,8 @@ class AndOperator implements BooleanValue
     public const VERSION = '1.0';
 
     public function __construct(
-        public readonly Expression&BooleanValue $left,
-        public readonly Expression&BooleanValue $right,
+        public readonly BooleanValue $left,
+        public readonly BooleanValue $right,
     ) {}
 
     public function __invoke(): bool

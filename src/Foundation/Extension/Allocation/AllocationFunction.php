@@ -33,16 +33,16 @@ class AllocationFunction implements ArrayValue
     public bool $useBcMathIfAvailable = true;
 
     /**
-     * @var list<Expression&NumberValue>
+     * @var list<NumberValue>
      */
     public readonly array $shares;
 
     public function __construct(
-        public readonly Expression&NumberValue $amount,
-        public readonly Expression&NumberValue $precision,
+        public readonly NumberValue $amount,
+        public readonly NumberValue $precision,
         public readonly AllocationRemainderTarget $remainderTarget,
-        Expression&NumberValue $firstShare,
-        Expression&NumberValue ...$restShares,
+        NumberValue $firstShare,
+        NumberValue ...$restShares,
     ) {
         $this->shares = array_values([$firstShare, ...$restShares]);
     }

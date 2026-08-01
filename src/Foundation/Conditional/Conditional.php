@@ -10,7 +10,7 @@ use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
 
 class Conditional
 {
-    public static function if(bool|(Expression&BooleanValue) $condition, ?PipelineConfig $config = null): IfBuilder
+    public static function if(bool|BooleanValue $condition, ?PipelineConfig $config = null): IfBuilder
     {
         return IfBuilder::of($condition, $config);
     }

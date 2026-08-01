@@ -68,7 +68,7 @@ interface Expression
 `Foundation\Type` narrows this contract for each kind of value an operator can produce:
 `NumberValue` (`int|float`), `IntegerValue` and `FloatValue` (each a narrower `NumberValue`),
 `StringValue`, `BooleanValue`, `ArrayValue`, and `ObjectValue`. An operator that needs a number
-type-hints `Expression&NumberValue` on its operand. This lets one operator's output plug directly
+type-hints `NumberValue` on its operand. This lets one operator's output plug directly
 into the next operator's constructor.
 
 You rarely construct these node classes directly. Every operator accepts either a raw scalar

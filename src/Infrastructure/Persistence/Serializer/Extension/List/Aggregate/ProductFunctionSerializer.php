@@ -2,27 +2,27 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Array\Aggregate;
+namespace PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\List\Aggregate;
 
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate\SumFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\List\Aggregate\ProductFunction;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializerRegistry;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Support\DeserializesNarrowly;
 
-class SumFunctionSerializer implements ExpressionSerializer
+class ProductFunctionSerializer implements ExpressionSerializer
 {
     use DeserializesNarrowly;
 
     public function supports(Expression $expression): bool
     {
-        return $expression instanceof SumFunction;
+        return $expression instanceof ProductFunction;
     }
 
     public function expressionVersion(): string
     {
-        return SumFunction::VERSION;
+        return ProductFunction::VERSION;
     }
 
     /**
@@ -30,13 +30,13 @@ class SumFunctionSerializer implements ExpressionSerializer
      */
     public function serialize(Expression $expression, ExpressionSerializerRegistry $registry): array
     {
-        assert($expression instanceof SumFunction);
+        assert($expression instanceof ProductFunction);
 
         return [
-            'uid' => SumFunction::UID,
-            'key' => SumFunction::KEY,
-            'class' => SumFunction::class,
-            'version' => SumFunction::VERSION,
+            'uid' => ProductFunction::UID,
+            'key' => ProductFunction::KEY,
+            'class' => ProductFunction::class,
+            'version' => ProductFunction::VERSION,
             'args' => array_map(
                 static fn (Expression $value) => $registry->serialize($value),
                 $expression->values,
@@ -54,6 +54,6 @@ class SumFunctionSerializer implements ExpressionSerializer
             $data['args'],
         );
 
-        return new SumFunction(...$values);
+        return new ProductFunction(...$values);
     }
 }

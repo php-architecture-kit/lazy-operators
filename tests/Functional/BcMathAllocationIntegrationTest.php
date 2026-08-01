@@ -4,18 +4,23 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Tests\Functional;
 
+use PhpArchitecture\LazyOperators\Foundation\Comparator\SpaceshipOperator;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\Allocation;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationRemainderTarget;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\BcMath;
+use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Foundation\Extension\Allocation\AllocationFunction is a plain NumberValue consumer: it invokes its amount/shares/
- * precision operands via NumberValue::__invoke(): int|float, so any Foundation\Extension\BcMath node
- * (PrecisionNumberValue extends NumberValue) can be handed to it directly as an amount, a share, or the
- * precision itself. These tests exercise that mix — precise decimal sources feeding the existing
- * float-based allocator — across various amounts/precisions/share counts/remainder targets, and assert
- * the pieces always sum back to the declared amount.
+ * Foundation\Extension\Allocation\AllocationFunction's amount/shares are plain NumberValue consumers,
+ * so any Foundation\Extension\BcMath node (PrecisionNumberValue extends NumberValue) can be handed to
+ * it directly as an amount or a share. precision is narrower (IntegerValue, not NumberValue — a decimal
+ * place count is inherently an integer), so it can't be fed a BcMath arithmetic result directly (those
+ * are arbitrary-precision decimals by design); it's instead exercised here via SpaceshipOperator, the
+ * library's other IntegerValue-typed node, to prove precision needn't be a literal either. These tests
+ * exercise that mix — precise decimal sources feeding the existing float-based allocator — across
+ * various amounts/precisions/share counts/remainder targets, and assert the pieces always sum back to
+ * the declared amount.
  */
 final class BcMathAllocationIntegrationTest extends TestCase
 {
@@ -52,14 +57,14 @@ final class BcMathAllocationIntegrationTest extends TestCase
         $this->assertSumMatchesAmount(99.97, $result, 2);
     }
 
-    public function testAllocationAcceptsAPrecisionArgumentComputedViaBcMath(): void
+    public function testAllocationAcceptsAPrecisionArgumentComputedRatherThanLiteral(): void
     {
-        $precision = BcMath::add('1', '1', 0); // 2, computed rather than a literal int
+        $precision = new SpaceshipOperator(new IntLiteral(5), new IntLiteral(3)); // 1, computed rather than a literal int
 
         $result = Allocation::allocate(7, [1, 3, 2], $precision, AllocationRemainderTarget::Smallest)();
 
-        self::assertSame([1.17, 3.5, 2.33], $result);
-        $this->assertSumMatchesAmount(7, $result, 2);
+        self::assertSame([1.2, 3.5, 2.3], $result);
+        $this->assertSumMatchesAmount(7, $result, 1);
     }
 
     public function testRemainderTargetsAllProduceASumMatchingTheBcMathComputedAmount(): void

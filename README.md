@@ -116,7 +116,8 @@ built from core operators.
 | Extension | Namespace | Covers |
 |---|---|---|
 | `Math` | `Extension\Math` | Rounding, trigonometry, exponential/logarithmic functions, base conversion, random numbers, and value classification — one method per native PHP math function |
-| `Array` | `Extension\Array` | A growing subset of PHP's array functions; currently `sum` and `product` |
+| `List` | `Extension\List` | Reducing an unbounded list of values to a single scalar: `sum`, `product` — computed via bcmath when available, native arithmetic otherwise |
+| `Array` | `Extension\Array` | Genuinely array-shaped operations: `get` (dot-path lookup) |
 | `BcMath` | `Extension\BcMath` | Arbitrary-precision arithmetic (`add`, `sub`, `mul`, `div`, `comp`), requires `ext-bcmath` |
 | `Allocation` | `Extension\Allocation` | Proportional split of an amount across shares, remainder folded into one share |
 

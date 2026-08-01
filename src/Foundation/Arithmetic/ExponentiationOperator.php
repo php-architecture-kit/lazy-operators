@@ -7,8 +7,10 @@ namespace PhpArchitecture\LazyOperators\Foundation\Arithmetic;
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Arithmetic')]
 #[Name('Exponentiation')]
 #[Formula('f(left, right) = left ^ right')]
 #[Description('Exponentiation returns the left operand raised to the power of the right operand.')]

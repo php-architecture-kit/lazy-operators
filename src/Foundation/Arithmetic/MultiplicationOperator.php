@@ -7,8 +7,10 @@ namespace PhpArchitecture\LazyOperators\Foundation\Arithmetic;
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Arithmetic')]
 #[Name('Multiplication')]
 #[Formula('f(left, right) = left x right')]
 #[Description('Multiplication returns the product of the left and right operands.')]

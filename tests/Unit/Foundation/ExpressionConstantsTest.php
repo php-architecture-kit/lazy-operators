@@ -10,6 +10,10 @@ use PhpArchitecture\LazyOperators\Foundation\Arithmetic\ExponentiationOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\ModuloOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\MultiplicationOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\SubtractionOperator;
+use PhpArchitecture\LazyOperators\Foundation\Cast\BooleanCast;
+use PhpArchitecture\LazyOperators\Foundation\Cast\FloatCast;
+use PhpArchitecture\LazyOperators\Foundation\Cast\IntegerCast;
+use PhpArchitecture\LazyOperators\Foundation\Cast\StringCast;
 use PhpArchitecture\LazyOperators\Foundation\Comparator\SpaceshipOperator;
 use PhpArchitecture\LazyOperators\Foundation\Comparison\EqualOperator;
 use PhpArchitecture\LazyOperators\Foundation\Comparison\GreaterThanOperator;
@@ -23,15 +27,16 @@ use PhpArchitecture\LazyOperators\Foundation\Conditional\IfElseOperator;
 use PhpArchitecture\LazyOperators\Foundation\Conditional\SwitchCaseOperator;
 use PhpArchitecture\LazyOperators\Foundation\Custom\CallbackOperator;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate\ProductFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate\SumFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\Array\ArrayGetFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\List\Aggregate\ProductFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\List\Aggregate\SumFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcAddFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcDivFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcMulFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcSubFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Comparison\BcCompFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\BcNumberLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\PrecisionNumberAdapter;
+use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\NumberValueToPrecisionAdapter;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsFiniteFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsInfiniteFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsNanFunction;
@@ -60,10 +65,8 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\GetRandMaxFun
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\LcgValueFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtGetRandMaxFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtRandFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtSrandFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\RandFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\RandomIntFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\SrandFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding\CeilFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding\FloorFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding\RoundFunction;
@@ -89,7 +92,9 @@ use PhpArchitecture\LazyOperators\Foundation\Logical\OrOperator;
 use PhpArchitecture\LazyOperators\Foundation\Logical\XorOperator;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
+use PhpArchitecture\LazyOperators\Foundation\Runtime\Port;
 use PhpArchitecture\LazyOperators\Foundation\Static\ArrayLiteral;
 use PhpArchitecture\LazyOperators\Foundation\Static\BoolLiteral;
 use PhpArchitecture\LazyOperators\Foundation\Static\FloatLiteral;
@@ -101,8 +106,8 @@ use ReflectionClass;
 /**
  * Guards the persistence identity and UI metadata of every Expression node: each concrete class
  * must declare its own KEY/UID/VERSION (not inherit them), KEY and UID must be unique across the
- * whole set, UID must be a real UUIDv4, and each class must carry exactly one #[Name], #[Formula]
- * and #[Description] attribute with a non-empty value.
+ * whole set, UID must be a real UUIDv4, and each class must carry exactly one #[Name], #[Formula],
+ * #[Description] and #[Group] attribute with a non-empty value.
  */
 final class ExpressionConstantsTest extends TestCase
 {
@@ -113,6 +118,7 @@ final class ExpressionConstantsTest extends TestCase
         AdditionOperator::class,
         AllocationFunction::class,
         AndOperator::class,
+        ArrayGetFunction::class,
         ArrayLiteral::class,
         AsinFunction::class,
         AsinhFunction::class,
@@ -128,6 +134,7 @@ final class ExpressionConstantsTest extends TestCase
         BcSubFunction::class,
         BinDecFunction::class,
         BoolLiteral::class,
+        BooleanCast::class,
         CallbackOperator::class,
         CeilFunction::class,
         CosFunction::class,
@@ -142,6 +149,7 @@ final class ExpressionConstantsTest extends TestCase
         Expm1Function::class,
         ExponentiationOperator::class,
         FdivFunction::class,
+        FloatCast::class,
         FloatLiteral::class,
         FloorFunction::class,
         FmodFunction::class,
@@ -154,6 +162,7 @@ final class ExpressionConstantsTest extends TestCase
         IfElseOperator::class,
         IntLiteral::class,
         IntdivFunction::class,
+        IntegerCast::class,
         IsFiniteFunction::class,
         IsInfiniteFunction::class,
         IsNanFunction::class,
@@ -168,16 +177,16 @@ final class ExpressionConstantsTest extends TestCase
         ModuloOperator::class,
         MtGetRandMaxFunction::class,
         MtRandFunction::class,
-        MtSrandFunction::class,
         MultiplicationOperator::class,
         NotEqualOperator::class,
         NotIdenticalOperator::class,
         NotOperator::class,
+        NumberValueToPrecisionAdapter::class,
         OctDecFunction::class,
         OrOperator::class,
         PiFunction::class,
+        Port::class,
         PowFunction::class,
-        PrecisionNumberAdapter::class,
         ProductFunction::class,
         Rad2DegFunction::class,
         RandFunction::class,
@@ -187,7 +196,7 @@ final class ExpressionConstantsTest extends TestCase
         SinhFunction::class,
         SpaceshipOperator::class,
         SqrtFunction::class,
-        SrandFunction::class,
+        StringCast::class,
         StringLiteral::class,
         SubtractionOperator::class,
         SumFunction::class,
@@ -240,12 +249,12 @@ final class ExpressionConstantsTest extends TestCase
         }
     }
 
-    public function testEachClassHasExactlyOneNameFormulaAndDescriptionAttribute(): void
+    public function testEachClassHasExactlyOneOfEachMetaAttribute(): void
     {
         foreach (self::CLASSES as $class) {
             $reflection = new ReflectionClass($class);
 
-            foreach ([Name::class, Formula::class, Description::class] as $attributeClass) {
+            foreach ([Name::class, Formula::class, Description::class, Group::class] as $attributeClass) {
                 $attributes = $reflection->getAttributes($attributeClass);
 
                 self::assertCount(1, $attributes, "{$class} must have exactly one #[{$attributeClass}] attribute");

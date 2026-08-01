@@ -8,8 +8,10 @@ use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Math | Trigonometry')]
 #[Name('Degrees To Radians')]
 #[Formula('f(value) = value in degrees converted to radians')]
 #[Description('Degrees To Radians converts the given angle from degrees to radians.')]

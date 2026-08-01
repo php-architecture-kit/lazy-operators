@@ -8,8 +8,10 @@ use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Math | Random')]
 #[Name('Random Int')]
 #[Formula('f(min, max) = a cryptographically secure random integer in [min, max]')]
 #[Description('Random Int returns a cryptographically secure random integer between the given minimum and maximum.')]

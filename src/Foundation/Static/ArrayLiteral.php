@@ -7,6 +7,7 @@ namespace PhpArchitecture\LazyOperators\Foundation\Static;
 use PhpArchitecture\LazyOperators\Foundation\Type\ArrayValue;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
 /**
@@ -14,6 +15,7 @@ use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
  *
  * @implements ArrayValue<T>
  */
+#[Group('Static')]
 #[Name('Array Literal')]
 #[Formula('f(value) = value')]
 #[Description('Array Literal wraps a raw PHP array as an Expression, returning it unchanged when invoked.')]

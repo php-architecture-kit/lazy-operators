@@ -8,8 +8,10 @@ use Closure;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Custom')]
 #[Name('Callback')]
 #[Formula('f(callback, arguments) = callback(...arguments)')]
 #[Description('Callback invokes a user-supplied closure with the given arguments and returns its result.')]

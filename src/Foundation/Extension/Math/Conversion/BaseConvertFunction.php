@@ -9,8 +9,10 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNative
 use PhpArchitecture\LazyOperators\Foundation\Type\StringValue;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Math | Conversion')]
 #[Name('Base Convert')]
 #[Formula('f(value, fromBase, toBase) = value converted from fromBase to toBase')]
 #[Description('Base Convert converts a number, given as a string, from one base to another, each between 2 and 36.')]

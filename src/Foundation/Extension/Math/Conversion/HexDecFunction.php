@@ -9,8 +9,10 @@ use PhpArchitecture\LazyOperators\Foundation\Type\StringValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Math | Conversion')]
 #[Name('Hexadecimal To Decimal')]
 #[Formula('f(value) = decimal value of the hexadecimal string value')]
 #[Description('Hexadecimal To Decimal converts a hexadecimal string into its decimal value.')]

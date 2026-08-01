@@ -8,8 +8,10 @@ use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Math | Trigonometry')]
 #[Name('Arc Tangent Of Two Variables')]
 #[Formula('f(y, x) = arctan(y / x), using the signs of both to determine the quadrant')]
 #[Description('Arc Tangent Of Two Variables returns the angle between the positive x-axis and the point (x, y), using the sign of both to pick the correct quadrant.')]

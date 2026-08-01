@@ -1,0 +1,376 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+}
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    background: #111827;
+    border-right: 1px solid #1f2937;
+    padding: 16px;
+    overflow-y: auto;
+    max-height: 100vh;
+}
+
+.sidebar-title {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #9ca3af;
+    margin: 0 0 12px;
+}
+
+.sidebar-title:not(:first-child) {
+    margin-top: 20px;
+}
+
+.callbacks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.callback-tile {
+    position: relative;
+    padding: 4px 8px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 999px;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+}
+
+.callback-tile:hover,
+.callback-tile.is-selected {
+    border-color: #6366f1;
+}
+
+.callback-tile-name {
+    font-size: 12px;
+    font-family: "SFMono-Regular", Consolas, monospace;
+    color: #86efac;
+}
+
+.callback-popover {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 10;
+    min-width: 220px;
+    background: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 6px;
+    padding: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    text-align: left;
+    white-space: normal;
+}
+
+.callback-popover-signature {
+    display: block;
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 12px;
+    color: #86efac;
+    margin-bottom: 6px;
+}
+
+.callback-popover-param {
+    display: block;
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+.tiles {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.group-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+    margin: 0;
+    padding: 0 2px;
+}
+
+.group-title:not(:first-child) {
+    margin-top: 14px;
+}
+
+.subgroup-title {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #4b5563;
+    margin: 0;
+    padding: 6px 2px 0 10px;
+}
+
+.tile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 8px 10px;
+    background: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 6px;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+}
+
+.tile:hover {
+    border-color: #6366f1;
+}
+
+.tile.is-selected {
+    border-color: #6366f1;
+    background: #1e1b4b;
+}
+
+.tile-type {
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: #a5b4fc;
+}
+
+.tile-name {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.canvas {
+    flex: 1;
+    padding: 32px;
+}
+
+.canvas-hint {
+    color: #9ca3af;
+}
+
+#detail-group {
+    color: #9ca3af;
+}
+
+.detail code {
+    display: block;
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 6px;
+    padding: 12px;
+    margin: 12px 0;
+    white-space: pre-wrap;
+}
+
+.detail-arguments-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #9ca3af;
+    margin: 20px 0 8px;
+}
+
+.arguments {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.argument {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.argument-name {
+    font-weight: 600;
+}
+
+.argument-type {
+    font-family: "SFMono-Regular", Consolas, monospace;
+    color: #a5b4fc;
+    font-size: 12px;
+}
+
+.argument-kind {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 6px;
+    border-radius: 999px;
+    background: #1e293b;
+    color: #86efac;
+}
+
+.argument-options {
+    font-size: 12px;
+    color: #9ca3af;
+    width: 100%;
+}
+
+.tile.is-dragging {
+    opacity: 0.5;
+}
+
+.argument-compatible {
+    border-color: #86efac;
+}
+
+.argument-incompatible {
+    opacity: 0.45;
+    border-color: #7f1d1d;
+}
+
+.argument-incompatible .argument-type {
+    color: #f87171;
+}
+
+.argument-drop-hover {
+    border-color: #86efac;
+    background: #14261b;
+}
+
+.argument-assigned {
+    border-color: #86efac;
+}
+
+.argument-assigned-value {
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 12px;
+    color: #86efac;
+}
+
+.argument-assigned-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}
+
+.argument-assigned-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.argument-unassign {
+    padding: 0 6px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 999px;
+    color: #9ca3af;
+    font: inherit;
+    font-size: 12px;
+    line-height: 18px;
+    cursor: pointer;
+}
+
+.argument-unassign:hover {
+    color: #f87171;
+    border-color: #7f1d1d;
+}
+
+.argument-assign-hint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.argument-choose {
+    padding: 2px 8px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 999px;
+    color: #a5b4fc;
+    font: inherit;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.argument-choose:hover {
+    border-color: #6366f1;
+}
+
+.argument-no-targets {
+    font-size: 12px;
+    color: #6b7280;
+    font-style: italic;
+    width: 100%;
+}
+
+.arg-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 10;
+    min-width: 260px;
+    max-height: 320px;
+    overflow-y: auto;
+    background: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 6px;
+    padding: 6px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.arg-dropdown-group {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+    padding: 6px 8px 2px;
+}
+
+.arg-dropdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 5px 8px;
+    background: none;
+    border: none;
+    border-radius: 4px;
+    color: inherit;
+    text-align: left;
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.arg-dropdown-item:hover {
+    background: #1e1b4b;
+}
+
+.arg-dropdown-item-type {
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 11px;
+    color: #a5b4fc;
+}

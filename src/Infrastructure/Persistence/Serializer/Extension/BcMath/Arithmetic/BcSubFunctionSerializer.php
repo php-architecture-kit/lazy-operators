@@ -7,6 +7,7 @@ namespace PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Ex
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcSubFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\PrecisionNumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Type\IntegerValue;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializerRegistry;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Support\DeserializesNarrowly;
@@ -40,7 +41,7 @@ class BcSubFunctionSerializer implements ExpressionSerializer
             'args' => [
                 $registry->serialize($expression->left),
                 $registry->serialize($expression->right),
-                $expression->scale,
+                $expression->scale === null ? null : $registry->serialize($expression->scale),
             ],
         ];
     }
@@ -53,7 +54,7 @@ class BcSubFunctionSerializer implements ExpressionSerializer
         return new BcSubFunction(
             $this->deserializeAs($registry, $data['args'][0], PrecisionNumberValue::class),
             $this->deserializeAs($registry, $data['args'][1], PrecisionNumberValue::class),
-            $data['args'][2],
+            $data['args'][2] === null ? null : $this->deserializeAs($registry, $data['args'][2], IntegerValue::class),
         );
     }
 }

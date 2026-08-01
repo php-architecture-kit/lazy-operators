@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Foundation\Extension\Allocation;
 
 use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\Exception\EmptySharesException;
+use PhpArchitecture\LazyOperators\Foundation\Type\IntegerValue;
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\PipelineConfig;
@@ -22,7 +23,7 @@ class Allocation
     public static function allocate(
         int|float|NumberValue $amount,
         array $shares,
-        int|NumberValue $precision,
+        int|IntegerValue $precision,
         AllocationRemainderTarget $remainderTarget = AllocationRemainderTarget::First,
         ?PipelineConfig $config = null,
     ): Expression {
@@ -42,7 +43,7 @@ class Allocation
         return self::decorate(
             new AllocationFunction(
                 self::decorateNumeric($amount, $config),
-                self::decorateNumeric($precision, $config),
+                self::decorateInteger(self::wrapAs(IntegerValue::class, $precision), $config),
                 $remainderTarget,
                 $first,
                 ...$rest,

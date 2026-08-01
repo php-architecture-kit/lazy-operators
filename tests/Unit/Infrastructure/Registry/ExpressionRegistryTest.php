@@ -9,9 +9,12 @@ use PhpArchitecture\LazyOperators\Application\Registry\Entry\Argument\EnumArgume
 use PhpArchitecture\LazyOperators\Application\Registry\Entry\ExpressionArgument;
 use PhpArchitecture\LazyOperators\Application\Registry\Entry\ExpressionAttributes;
 use PhpArchitecture\LazyOperators\Application\Registry\Entry\ExpressionEntry;
+use PhpArchitecture\LazyOperators\Foundation\Conditional\SwitchCaseOperator;
 use PhpArchitecture\LazyOperators\Foundation\Custom\CallbackOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\List\Aggregate\SumFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcAddFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding\RoundFunction;
 use PhpArchitecture\LazyOperators\Foundation\Logical\AndOperator;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
@@ -84,7 +87,78 @@ final class ExpressionRegistryTest extends TestCase
         self::assertCount(2, $arguments);
         self::assertSame('left', $arguments[0]->name);
         self::assertSame('right', $arguments[1]->name);
-        self::assertStringContainsString('BooleanValue', $arguments[0]->type);
+        self::assertSame('BooleanValue', $arguments[0]->type, 'the FQCN reflection gives back must be shortened to its class basename for UI display');
+    }
+
+    public function testRegisterCapturesTheGroupAttribute(): void
+    {
+        $registry = new ExpressionRegistry();
+        $registry->register(AndOperator::class);
+
+        self::assertSame('Logical', $registry->getAll()[0]->attributes->group?->value);
+    }
+
+    public function testVariadicConstructorParameterIsMarkedAsSpread(): void
+    {
+        $registry = new ExpressionRegistry();
+        $registry->register(SumFunction::class);
+
+        $arguments = $registry->getAll()[0]->arguments;
+
+        self::assertFalse($arguments[0]->spread, 'the leading "first" parameter is not variadic');
+        self::assertTrue($arguments[1]->spread, 'the trailing "...rest" parameter is variadic');
+    }
+
+    public function testPlainArrayConstructorParameterWithItemTypeOfExposesItsItemType(): void
+    {
+        $registry = new ExpressionRegistry();
+        $registry->register(SwitchCaseOperator::class);
+
+        $arguments = $registry->getAll()[0]->arguments;
+        $cases = array_values(array_filter(
+            $arguments,
+            static fn ($argument): bool => $argument->name === 'cases',
+        ))[0];
+
+        self::assertSame('CaseOfSwitchCase', $cases->itemType);
+    }
+
+    public function testOptionalParameterWithANonNullDefaultExposesItsDisplayValue(): void
+    {
+        $registry = new ExpressionRegistry();
+        $registry->register(RoundFunction::class);
+
+        $arguments = $registry->getAll()[0]->arguments;
+        $mode = array_values(array_filter(
+            $arguments,
+            static fn ($argument): bool => $argument->name === 'mode',
+        ))[0];
+
+        self::assertTrue($mode->optional);
+        self::assertSame((string) PHP_ROUND_HALF_UP, $mode->defaultValue);
+    }
+
+    public function testOptionalParameterWithANullDefaultExposesNoDisplayValue(): void
+    {
+        $registry = new ExpressionRegistry();
+        $registry->register(BcAddFunction::class);
+
+        $arguments = $registry->getAll()[0]->arguments;
+        $scale = array_values(array_filter(
+            $arguments,
+            static fn ($argument): bool => $argument->name === 'scale',
+        ))[0];
+
+        self::assertTrue($scale->optional);
+        self::assertNull($scale->defaultValue, 'a null default is already fully conveyed by optional=true');
+    }
+
+    public function testRequiredParameterIsNotOptional(): void
+    {
+        $registry = new ExpressionRegistry();
+        $registry->register(AndOperator::class);
+
+        self::assertFalse($registry->getAll()[0]->arguments[0]->optional);
     }
 
     public function testEnumConstructorParameterProducesAnEnumArgumentWithItsCaseNames(): void
@@ -141,7 +215,7 @@ final class ExpressionRegistryTest extends TestCase
 
         $fqcns = array_map(static fn ($entry): string => $entry->fqcn, $registry->getAll());
 
-        self::assertCount(88, $fqcns);
+        self::assertCount(92, $fqcns);
         self::assertContains(AndOperator::class, $fqcns);
         self::assertContains(IntLiteral::class, $fqcns);
         self::assertContains(CallbackOperator::class, $fqcns);
@@ -172,6 +246,7 @@ final class ExpressionRegistryTest extends TestCase
                     name: $attributes->name,
                     formula: $attributes->formula,
                     description: new Description('custom override'),
+                    group: $attributes->group,
                 );
             }
         };
@@ -189,7 +264,11 @@ final class ExpressionRegistryTest extends TestCase
                 return new ExpressionArgument(
                     strtoupper($parameter->getName()),
                     'custom-type',
-                    null,
+                    itemType: null,
+                    spread: false,
+                    optional: false,
+                    defaultValue: null,
+                    description: null,
                 );
             }
         };

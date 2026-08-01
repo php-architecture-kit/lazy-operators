@@ -6,6 +6,7 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Allocati
 
 use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationRemainderTarget;
+use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
 use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 use PHPUnit\Framework\TestCase;
 
@@ -29,7 +30,7 @@ final class AllocationFunctionTest extends TestCase
     {
         $function = new AllocationFunction(
             new NumericSpyExpression(30),
-            new NumericSpyExpression(0),
+            new IntLiteral(0),
             AllocationRemainderTarget::First,
             new NumericSpyExpression(1),
             new NumericSpyExpression(1),
@@ -46,7 +47,7 @@ final class AllocationFunctionTest extends TestCase
     {
         $function = new AllocationFunction(
             new NumericSpyExpression(1),
-            new NumericSpyExpression(2),
+            new IntLiteral(2),
             AllocationRemainderTarget::First,
             new NumericSpyExpression(1),
             new NumericSpyExpression(4),
@@ -63,7 +64,7 @@ final class AllocationFunctionTest extends TestCase
     {
         $function = new AllocationFunction(
             new NumericSpyExpression(1),
-            new NumericSpyExpression(2),
+            new IntLiteral(2),
             AllocationRemainderTarget::Last,
             new NumericSpyExpression(1),
             new NumericSpyExpression(4),
@@ -80,7 +81,7 @@ final class AllocationFunctionTest extends TestCase
     {
         $function = new AllocationFunction(
             new NumericSpyExpression(1),
-            new NumericSpyExpression(2),
+            new IntLiteral(2),
             AllocationRemainderTarget::Largest,
             new NumericSpyExpression(1),
             new NumericSpyExpression(4),
@@ -97,7 +98,7 @@ final class AllocationFunctionTest extends TestCase
     {
         $function = new AllocationFunction(
             new NumericSpyExpression(1),
-            new NumericSpyExpression(2),
+            new IntLiteral(2),
             AllocationRemainderTarget::Smallest,
             new NumericSpyExpression(4),
             new NumericSpyExpression(1),
@@ -114,7 +115,7 @@ final class AllocationFunctionTest extends TestCase
     {
         $function = new AllocationFunction(
             new NumericSpyExpression(100),
-            new NumericSpyExpression(2),
+            new IntLiteral(2),
             AllocationRemainderTarget::First,
             new NumericSpyExpression(30),
             new NumericSpyExpression(70),
@@ -130,7 +131,7 @@ final class AllocationFunctionTest extends TestCase
     {
         $function = new AllocationFunction(
             new NumericSpyExpression(42.5),
-            new NumericSpyExpression(2),
+            new IntLiteral(2),
             AllocationRemainderTarget::First,
             new NumericSpyExpression(1),
         );
@@ -145,7 +146,7 @@ final class AllocationFunctionTest extends TestCase
     {
         $function = new AllocationFunction(
             new NumericSpyExpression(-10),
-            new NumericSpyExpression(2),
+            new IntLiteral(2),
             AllocationRemainderTarget::First,
             new NumericSpyExpression(1),
             new NumericSpyExpression(1),
@@ -187,7 +188,7 @@ final class AllocationFunctionTest extends TestCase
                 $shareExpressions = array_map(static fn (int|float $share) => new NumericSpyExpression($share), $shares);
                 $function = new AllocationFunction(
                     new NumericSpyExpression($amount),
-                    new NumericSpyExpression($precision),
+                    new IntLiteral($precision),
                     $target,
                     ...$shareExpressions,
                 );
@@ -206,7 +207,7 @@ final class AllocationFunctionTest extends TestCase
     {
         $function = new AllocationFunction(
             new NumericSpyExpression(1),
-            new NumericSpyExpression(2),
+            new IntLiteral(2),
             AllocationRemainderTarget::First,
             new NumericSpyExpression(1),
         );
@@ -244,7 +245,7 @@ final class AllocationFunctionTest extends TestCase
                 $shareExpressions = array_map(static fn (int|float $share) => new NumericSpyExpression($share), $shares);
                 $bcMathFunction = new AllocationFunction(
                     new NumericSpyExpression($amount),
-                    new NumericSpyExpression($precision),
+                    new IntLiteral($precision),
                     $target,
                     ...$shareExpressions,
                 );
@@ -252,7 +253,7 @@ final class AllocationFunctionTest extends TestCase
                 $shareExpressions = array_map(static fn (int|float $share) => new NumericSpyExpression($share), $shares);
                 $nativeFloatFunction = new AllocationFunction(
                     new NumericSpyExpression($amount),
-                    new NumericSpyExpression($precision),
+                    new IntLiteral($precision),
                     $target,
                     ...$shareExpressions,
                 );

@@ -10,8 +10,10 @@ use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
 use RoundingMode;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Math | Rounding')]
 #[Name('Round')]
 #[Formula('f(value, precision, mode) = value rounded to precision decimal places, using mode to break ties')]
 #[Description('Round rounds the given value to the given number of decimal places, using the given mode to break ties.')]

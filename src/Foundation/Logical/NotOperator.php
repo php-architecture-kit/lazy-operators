@@ -8,8 +8,10 @@ use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Logical')]
 #[Name('Not')]
 #[Formula('f(expression) = NOT expression')]
 #[Description('NOT (logical NOT or inversion) works by taking a single input and returning the exact opposite value. It outputs true (1) if the input is false, and outputs false (0) if the input is true.')]

@@ -36,10 +36,8 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\GetRandMaxFun
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\LcgValueFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtGetRandMaxFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtRandFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtSrandFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\RandFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\RandomIntFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\SrandFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding\CeilFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding\FloorFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding\RoundFunction;
@@ -419,29 +417,6 @@ class Math
     public static function lcgValue(?PipelineConfig $config = null): NumberValue
     {
         return self::decorateNumber(new LcgValueFunction(), $config ?? new PipelineConfig());
-    }
-
-    public static function srand(int|NumberValue|null $seed = null, ?PipelineConfig $config = null): Expression
-    {
-        $config ??= new PipelineConfig();
-
-        return self::decorate(
-            new SrandFunction($seed !== null ? self::decorateNumeric($seed, $config) : null),
-            $config,
-        );
-    }
-
-    public static function mtSrand(
-        int|NumberValue|null $seed = null,
-        int $mode = MT_RAND_MT19937,
-        ?PipelineConfig $config = null,
-    ): Expression {
-        $config ??= new PipelineConfig();
-
-        return self::decorate(
-            new MtSrandFunction($seed !== null ? self::decorateNumeric($seed, $config) : null, $mode),
-            $config,
-        );
     }
 
     // Classification

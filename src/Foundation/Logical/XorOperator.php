@@ -8,8 +8,10 @@ use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Logical')]
 #[Name('Xor')]
 #[Formula('f(left, right) = left XOR right')]
 #[Description('XOR (exclusive OR) works by comparing two inputs and returning true (1) only when the inputs are different, meaning one is true and the other is false. It outputs false (0) if both inputs are the same (both true or both false).')]

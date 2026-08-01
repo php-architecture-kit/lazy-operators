@@ -8,8 +8,10 @@ use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Math | Random')]
 #[Name('Mt Rand')]
 #[Formula('f(min, max) = a random integer in [min, max], or in the platform default range if omitted')]
 #[Description('Mt Rand returns a random integer between the given minimum and maximum using the Mersenne Twister generator, or from the platform default range when no bounds are given.')]

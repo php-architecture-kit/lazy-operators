@@ -8,8 +8,15 @@ use BcMath\Number;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\PrecisionNumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+/**
+ * The Literal-boundary node for a raw BcMath\Number you already have (same role IntLiteral plays
+ * for int). If you instead have some other NumberValue expression (a Math result, a plain
+ * IntLiteral) and need it bridged into PrecisionNumberValue, use NumberValueToPrecisionAdapter.
+ */
+#[Group('BcMath')]
 #[Name('BC Number Literal')]
 #[Formula('f(value) = value')]
 #[Description('BC Number Literal wraps a raw BcMath\\Number value as an Expression, returning it unchanged when invoked.')]

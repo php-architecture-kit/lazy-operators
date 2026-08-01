@@ -7,8 +7,10 @@ namespace PhpArchitecture\LazyOperators\Foundation\Static;
 use PhpArchitecture\LazyOperators\Foundation\Type\FloatValue;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Static')]
 #[Name('Float Literal')]
 #[Formula('f(value) = value')]
 #[Description('Float Literal wraps a raw floating point number as an Expression, returning it unchanged when invoked.')]

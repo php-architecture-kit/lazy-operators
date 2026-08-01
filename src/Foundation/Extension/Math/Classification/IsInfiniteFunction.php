@@ -9,8 +9,10 @@ use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Math | Classification')]
 #[Name('Is Infinite')]
 #[Formula('f(value) = value is infinite')]
 #[Description('Is Infinite returns true when the given value is infinite.')]

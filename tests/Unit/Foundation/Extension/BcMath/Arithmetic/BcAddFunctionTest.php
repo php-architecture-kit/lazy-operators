@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\BcMath\Arithmetic;
 
-use BcMath\Number;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcAddFunction;
-use PhpArchitecture\LazyOperators\Foundation\Static\StringLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Static\FloatLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
 use PHPUnit\Framework\TestCase;
 
 final class BcAddFunctionTest extends TestCase
 {
     public function testAddsTwoDecimalStringsToTheGivenScale(): void
     {
-        $function = new BcAddFunction(new StringLiteral('1.1'), new StringLiteral('2.2'), 2);
+        $function = new BcAddFunction(new FloatLiteral(1.1), new FloatLiteral(2.2), new IntLiteral(2));
 
         self::assertSame(3.3, $function());
         self::assertSame('3.30', (string) $function->bcValue());
@@ -21,22 +21,15 @@ final class BcAddFunctionTest extends TestCase
 
     public function testDefaultsToTheNativeScaleWhenNoneGiven(): void
     {
-        $function = new BcAddFunction(new StringLiteral('1'), new StringLiteral('2'));
+        $function = new BcAddFunction(new IntLiteral(1), new IntLiteral(2));
 
         self::assertSame(3, $function());
     }
 
-    public function testAcceptsANativeBcMathNumberDirectly(): void
-    {
-        $function = new BcAddFunction(new Number('1.50'), new StringLiteral('2.50'), 2);
-
-        self::assertSame(4.0, $function());
-    }
-
     public function testChainsWithAnotherBcMathNodeWithoutRoundTrippingThroughAPrimitive(): void
     {
-        $inner = new BcAddFunction(new StringLiteral('0.1'), new StringLiteral('0.2'), 10);
-        $outer = new BcAddFunction($inner, new StringLiteral('0.3'), 10);
+        $inner = new BcAddFunction(new FloatLiteral(0.1), new FloatLiteral(0.2), new IntLiteral(10));
+        $outer = new BcAddFunction($inner, new FloatLiteral(0.3), new IntLiteral(10));
 
         self::assertSame('0.6000000000', (string) $outer->bcValue());
     }

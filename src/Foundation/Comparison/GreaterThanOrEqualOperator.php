@@ -8,8 +8,10 @@ use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Comparison')]
 #[Name('Greater Than Or Equal')]
 #[Formula('f(left, right) = left >= right')]
 #[Description('Greater Than Or Equal returns true when the left operand is greater than or equal to the right operand.')]

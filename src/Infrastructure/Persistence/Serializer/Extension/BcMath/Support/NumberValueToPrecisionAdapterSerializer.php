@@ -5,20 +5,24 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\BcMath\Support;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\PrecisionNumberAdapter;
+use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\NumberValueToPrecisionAdapter;
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializerRegistry;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Support\DeserializesNarrowly;
 
-class PrecisionNumberAdapterSerializer implements ExpressionSerializer
+class NumberValueToPrecisionAdapterSerializer implements ExpressionSerializer
 {
+    use DeserializesNarrowly;
+
     public function supports(Expression $expression): bool
     {
-        return $expression instanceof PrecisionNumberAdapter;
+        return $expression instanceof NumberValueToPrecisionAdapter;
     }
 
     public function expressionVersion(): string
     {
-        return PrecisionNumberAdapter::VERSION;
+        return NumberValueToPrecisionAdapter::VERSION;
     }
 
     /**
@@ -26,13 +30,13 @@ class PrecisionNumberAdapterSerializer implements ExpressionSerializer
      */
     public function serialize(Expression $expression, ExpressionSerializerRegistry $registry): array
     {
-        assert($expression instanceof PrecisionNumberAdapter);
+        assert($expression instanceof NumberValueToPrecisionAdapter);
 
         return [
-            'uid' => PrecisionNumberAdapter::UID,
-            'key' => PrecisionNumberAdapter::KEY,
-            'class' => PrecisionNumberAdapter::class,
-            'version' => PrecisionNumberAdapter::VERSION,
+            'uid' => NumberValueToPrecisionAdapter::UID,
+            'key' => NumberValueToPrecisionAdapter::KEY,
+            'class' => NumberValueToPrecisionAdapter::class,
+            'version' => NumberValueToPrecisionAdapter::VERSION,
             'args' => [$registry->serialize($expression->value)],
         ];
     }
@@ -42,6 +46,6 @@ class PrecisionNumberAdapterSerializer implements ExpressionSerializer
      */
     public function deserialize(array $data, ExpressionSerializerRegistry $registry): Expression
     {
-        return new PrecisionNumberAdapter($registry->deserialize($data['args'][0]));
+        return new NumberValueToPrecisionAdapter($this->deserializeAs($registry, $data['args'][0], NumberValue::class));
     }
 }

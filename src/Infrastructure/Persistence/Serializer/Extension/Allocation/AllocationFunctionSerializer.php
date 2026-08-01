@@ -6,6 +6,7 @@ namespace PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Ex
 
 use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationRemainderTarget;
+use PhpArchitecture\LazyOperators\Foundation\Type\IntegerValue;
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\ExpressionSerializer;
@@ -62,7 +63,7 @@ class AllocationFunctionSerializer implements ExpressionSerializer
 
         return new AllocationFunction(
             $this->deserializeAs($registry, $data['args']['amount'], NumberValue::class),
-            $this->deserializeAs($registry, $data['args']['precision'], NumberValue::class),
+            $this->deserializeAs($registry, $data['args']['precision'], IntegerValue::class),
             constant(AllocationRemainderTarget::class . '::' . $data['args']['remainder_target']['case']),
             ...$shares,
         );

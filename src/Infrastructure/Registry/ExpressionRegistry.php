@@ -6,12 +6,17 @@ namespace PhpArchitecture\LazyOperators\Infrastructure\Registry;
 
 use Closure;
 use PhpArchitecture\LazyOperators\Application\Registry\Entry\Argument\CallbackArgument;
+use PhpArchitecture\LazyOperators\Application\Registry\Entry\Argument\CaseArgument;
 use PhpArchitecture\LazyOperators\Application\Registry\Entry\Argument\EnumArgument;
 use PhpArchitecture\LazyOperators\Application\Registry\Entry\ExpressionArgument;
 use PhpArchitecture\LazyOperators\Application\Registry\Entry\ExpressionAttributes;
 use PhpArchitecture\LazyOperators\Application\Registry\Entry\ExpressionEntry;
 use PhpArchitecture\LazyOperators\Application\Registry\ExpressionRegistryInterface;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\AdditionOperator;
+use PhpArchitecture\LazyOperators\Foundation\Cast\BooleanCast;
+use PhpArchitecture\LazyOperators\Foundation\Cast\FloatCast;
+use PhpArchitecture\LazyOperators\Foundation\Cast\IntegerCast;
+use PhpArchitecture\LazyOperators\Foundation\Cast\StringCast;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\DivisionOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\ExponentiationOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\ModuloOperator;
@@ -26,20 +31,22 @@ use PhpArchitecture\LazyOperators\Foundation\Comparison\LessThanOperator;
 use PhpArchitecture\LazyOperators\Foundation\Comparison\LessThanOrEqualOperator;
 use PhpArchitecture\LazyOperators\Foundation\Comparison\NotEqualOperator;
 use PhpArchitecture\LazyOperators\Foundation\Comparison\NotIdenticalOperator;
+use PhpArchitecture\LazyOperators\Foundation\Conditional\CaseOfSwitchCase;
 use PhpArchitecture\LazyOperators\Foundation\Conditional\IfElseOperator;
 use PhpArchitecture\LazyOperators\Foundation\Conditional\SwitchCaseOperator;
 use PhpArchitecture\LazyOperators\Foundation\Custom\CallbackOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate\ProductFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate\SumFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\Array\ArrayGetFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\List\Aggregate\ProductFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\List\Aggregate\SumFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcAddFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcDivFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcMulFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcSubFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Comparison\BcCompFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\BcNumberLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\PrecisionNumberAdapter;
+use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\NumberValueToPrecisionAdapter;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsFiniteFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsInfiniteFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsNanFunction;
@@ -68,10 +75,8 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\GetRandMaxFun
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\LcgValueFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtGetRandMaxFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtRandFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtSrandFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\RandFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\RandomIntFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\SrandFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding\CeilFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding\FloorFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding\RoundFunction;
@@ -97,7 +102,10 @@ use PhpArchitecture\LazyOperators\Foundation\Logical\OrOperator;
 use PhpArchitecture\LazyOperators\Foundation\Logical\XorOperator;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\ItemTypeOf;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
+use PhpArchitecture\LazyOperators\Foundation\Runtime\Port;
 use PhpArchitecture\LazyOperators\Foundation\Static\ArrayLiteral;
 use PhpArchitecture\LazyOperators\Foundation\Static\BoolLiteral;
 use PhpArchitecture\LazyOperators\Foundation\Static\FloatLiteral;
@@ -213,14 +221,13 @@ class ExpressionRegistry implements ExpressionRegistryInterface
         RandomIntFunction::class,
         GetRandMaxFunction::class,
         MtGetRandMaxFunction::class,
-        SrandFunction::class,
-        MtSrandFunction::class,
         LcgValueFunction::class,
         IsFiniteFunction::class,
         IsInfiniteFunction::class,
         IsNanFunction::class,
         SumFunction::class,
         ProductFunction::class,
+        ArrayGetFunction::class,
         AllocationFunction::class,
         BcAddFunction::class,
         BcSubFunction::class,
@@ -228,7 +235,12 @@ class ExpressionRegistry implements ExpressionRegistryInterface
         BcDivFunction::class,
         BcCompFunction::class,
         BcNumberLiteral::class,
-        PrecisionNumberAdapter::class,
+        NumberValueToPrecisionAdapter::class,
+        IntegerCast::class,
+        FloatCast::class,
+        StringCast::class,
+        BooleanCast::class,
+        Port::class,
     ];
 
     /**
@@ -301,17 +313,22 @@ class ExpressionRegistry implements ExpressionRegistryInterface
             name: $this->readAttribute($reflection, Name::class),
             formula: $this->readAttribute($reflection, Formula::class),
             description: $this->readAttribute($reflection, Description::class),
+            group: $this->readAttribute($reflection, Group::class),
         );
     }
 
     protected function createArgument(ReflectionParameter $parameter): ExpressionArgument
     {
         $name = $parameter->getName();
-        $type = (string) $parameter->getType();
+        $type = $this->shortenType((string) $parameter->getType());
+        $itemType = $this->readAttribute($parameter, ItemTypeOf::class)?->value;
+        $spread = $parameter->isVariadic();
+        $optional = $parameter->isOptional();
+        $defaultValue = $this->defaultValueDisplay($parameter);
         $description = $this->readAttribute($parameter, Description::class);
 
         if ($this->isCallbackType($parameter)) {
-            return new CallbackArgument($name, $type, $description);
+            return new CallbackArgument($name, $type, $itemType, $spread, $optional, $defaultValue, $description);
         }
 
         $enumClass = $this->resolveEnumType($parameter);
@@ -320,16 +337,37 @@ class ExpressionRegistry implements ExpressionRegistryInterface
             return new EnumArgument(
                 $name,
                 $type,
+                $itemType,
+                $spread,
+                $optional,
+                $defaultValue,
                 $description,
                 array_map(static fn (UnitEnum $case): string => $case->name, $enumClass::cases()),
             );
         }
 
-        return new ExpressionArgument($name, $type, $description);
+        // One-off, Enum-style special case: CaseOfSwitchCase is SwitchCaseOperator's only plain
+        // value-object argument shape, not worth a generic "look inside this" mechanism for a
+        // single occurrence.
+        if ($itemType === (new ReflectionClass(CaseOfSwitchCase::class))->getShortName()) {
+            return new CaseArgument(
+                $name,
+                $type,
+                $itemType,
+                $spread,
+                $optional,
+                $defaultValue,
+                $description,
+                $this->createArguments(new ReflectionClass(CaseOfSwitchCase::class)),
+            );
+        }
+
+        return new ExpressionArgument($name, $type, $itemType, $spread, $optional, $defaultValue, $description);
     }
 
     /**
-     * @param ReflectionClass<Expression> $reflection
+     * @template T of object
+     * @param ReflectionClass<T> $reflection
      * @return ExpressionArgument[]
      */
     protected function createArguments(ReflectionClass $reflection): array
@@ -427,5 +465,34 @@ class ExpressionRegistry implements ExpressionRegistryInterface
         assert(is_string($value));
 
         return $value;
+    }
+
+    /**
+     * Strips namespaces from a reflection type string for UI display (e.g. the FQCN
+     * "PhpArchitecture\LazyOperators\Foundation\Type\NumberValue" becomes "NumberValue"), while
+     * leaving union separators ("|"), the nullable "?" prefix, and unqualified builtin names
+     * (int, string, array, ...) untouched.
+     */
+    private function shortenType(string $type): string
+    {
+        return implode('|', array_map(
+            static function (string $segment): string {
+                $lastSeparator = strrpos($segment, '\\');
+
+                return $lastSeparator === false ? $segment : substr($segment, $lastSeparator + 1);
+            },
+            explode('|', $type),
+        ));
+    }
+
+    private function defaultValueDisplay(ReflectionParameter $parameter): ?string
+    {
+        if (!$parameter->isDefaultValueAvailable()) {
+            return null;
+        }
+
+        $default = $parameter->getDefaultValue();
+
+        return $default === null ? null : var_export($default, true);
     }
 }

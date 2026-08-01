@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{TITLE}}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>{{STYLE}}</style>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <h1 class="sidebar-title">Callbacks</h1>
+            <div class="callbacks">
+                {{CALLBACK_TILES}}
+            </div>
+
+            <h1 class="sidebar-title">Expressions</h1>
+            <div class="tiles">
+                {{SIDEBAR_TILES}}
+            </div>
+        </aside>
+        <main class="canvas">
+            <p class="canvas-hint">Click a tile to see its formula and description.</p>
+            <section class="detail" id="detail" hidden>
+                <p class="detail-type">
+                    <span id="detail-group"></span>
+                    <span id="detail-type"></span>
+                </p>
+                <h2 id="detail-name"></h2>
+                <code id="detail-formula"></code>
+                <p id="detail-description"></p>
+                <h3 class="detail-arguments-title">Arguments</h3>
+                <ul class="arguments" id="detail-arguments"></ul>
+            </section>
+        </main>
+    </div>
+
+    <script type="application/json" id="catalog-data">{{CATALOG_JSON}}</script>
+    <script type="application/json" id="callbacks-data">{{CALLBACKS_JSON}}</script>
+    <script>{{SCRIPT}}</script>
+</body>
+</html>

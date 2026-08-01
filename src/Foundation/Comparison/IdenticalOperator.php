@@ -8,8 +8,10 @@ use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Comparison')]
 #[Name('Identical')]
 #[Formula('f(left, right) = left is identical to right')]
 #[Description('Identical returns true when the left and right operands are equal in both value and type, under PHP\'s strict (===) comparison.')]

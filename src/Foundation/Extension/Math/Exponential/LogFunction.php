@@ -9,8 +9,10 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNative
 use PhpArchitecture\LazyOperators\Foundation\Static\FloatLiteral;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Math | Exponential')]
 #[Name('Log')]
 #[Formula('f(value, base) = log base "base" of value')]
 #[Description('Log returns the logarithm of the given value in the given base, or the natural logarithm when no base is given.')]

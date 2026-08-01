@@ -7,8 +7,10 @@ namespace PhpArchitecture\LazyOperators\Foundation\Arithmetic;
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Arithmetic')]
 #[Name('Division')]
 #[Formula('f(left, right) = left : right')]
 #[Description('Division returns the left operand divided by the right operand.')]

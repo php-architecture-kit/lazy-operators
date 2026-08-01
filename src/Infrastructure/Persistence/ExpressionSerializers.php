@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Infrastructure\Persistence;
 
+use PhpArchitecture\LazyOperators\Foundation\Cast\BooleanCast;
+use PhpArchitecture\LazyOperators\Foundation\Cast\FloatCast;
+use PhpArchitecture\LazyOperators\Foundation\Cast\IntegerCast;
+use PhpArchitecture\LazyOperators\Foundation\Cast\StringCast;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\Array\ArrayGetFunction;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\AdditionOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\DivisionOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\ExponentiationOperator;
@@ -77,18 +82,16 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtRandFunctio
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\RandomIntFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\GetRandMaxFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtGetRandMaxFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\SrandFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtSrandFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\LcgValueFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate\ProductFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate\SumFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\List\Aggregate\ProductFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\List\Aggregate\SumFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcAddFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcDivFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcMulFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcSubFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Comparison\BcCompFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\BcNumberLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\PrecisionNumberAdapter;
+use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\NumberValueToPrecisionAdapter;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsFiniteFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsInfiniteFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsNanFunction;
@@ -166,21 +169,26 @@ use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extensio
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Math\Random\RandomIntFunctionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Math\Random\GetRandMaxFunctionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Math\Random\MtGetRandMaxFunctionSerializer;
-use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Math\Random\SrandFunctionSerializer;
-use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Math\Random\MtSrandFunctionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Math\Random\LcgValueFunctionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Math\Classification\IsFiniteFunctionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Math\Classification\IsInfiniteFunctionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Math\Classification\IsNanFunctionSerializer;
-use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Array\Aggregate\ProductFunctionSerializer;
-use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Array\Aggregate\SumFunctionSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\List\Aggregate\ProductFunctionSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\List\Aggregate\SumFunctionSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\Array\ArrayGetFunctionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\BcMath\Arithmetic\BcAddFunctionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\BcMath\Arithmetic\BcDivFunctionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\BcMath\Arithmetic\BcMulFunctionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\BcMath\Arithmetic\BcSubFunctionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\BcMath\Comparison\BcCompFunctionSerializer;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\BcMath\Support\BcNumberLiteralSerializer;
-use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\BcMath\Support\PrecisionNumberAdapterSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Extension\BcMath\Support\NumberValueToPrecisionAdapterSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Cast\BooleanCastSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Cast\FloatCastSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Cast\IntegerCastSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Cast\StringCastSerializer;
+use PhpArchitecture\LazyOperators\Foundation\Runtime\Port;
+use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Runtime\PortSerializer;
 
 final class ExpressionSerializers
 {
@@ -259,14 +267,13 @@ final class ExpressionSerializers
             RandomIntFunction::UID => new RandomIntFunctionSerializer(),
             GetRandMaxFunction::UID => new GetRandMaxFunctionSerializer(),
             MtGetRandMaxFunction::UID => new MtGetRandMaxFunctionSerializer(),
-            SrandFunction::UID => new SrandFunctionSerializer(),
-            MtSrandFunction::UID => new MtSrandFunctionSerializer(),
             LcgValueFunction::UID => new LcgValueFunctionSerializer(),
             IsFiniteFunction::UID => new IsFiniteFunctionSerializer(),
             IsInfiniteFunction::UID => new IsInfiniteFunctionSerializer(),
             IsNanFunction::UID => new IsNanFunctionSerializer(),
             SumFunction::UID => new SumFunctionSerializer(),
             ProductFunction::UID => new ProductFunctionSerializer(),
+            ArrayGetFunction::UID => new ArrayGetFunctionSerializer(),
             AllocationFunction::UID => new AllocationFunctionSerializer(),
             BcAddFunction::UID => new BcAddFunctionSerializer(),
             BcSubFunction::UID => new BcSubFunctionSerializer(),
@@ -274,7 +281,12 @@ final class ExpressionSerializers
             BcDivFunction::UID => new BcDivFunctionSerializer(),
             BcCompFunction::UID => new BcCompFunctionSerializer(),
             BcNumberLiteral::UID => new BcNumberLiteralSerializer(),
-            PrecisionNumberAdapter::UID => new PrecisionNumberAdapterSerializer(),
+            NumberValueToPrecisionAdapter::UID => new NumberValueToPrecisionAdapterSerializer(),
+            IntegerCast::UID => new IntegerCastSerializer(),
+            FloatCast::UID => new FloatCastSerializer(),
+            StringCast::UID => new StringCastSerializer(),
+            BooleanCast::UID => new BooleanCastSerializer(),
+            Port::UID => new PortSerializer(),
         ], $callbacks ?? new CallbackRegistry());
     }
 }

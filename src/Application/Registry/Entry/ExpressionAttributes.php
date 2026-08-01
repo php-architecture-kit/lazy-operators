@@ -6,6 +6,7 @@ namespace PhpArchitecture\LazyOperators\Application\Registry\Entry;
 
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
 readonly class ExpressionAttributes
@@ -14,5 +15,6 @@ readonly class ExpressionAttributes
         public ?Name $name,
         public ?Formula $formula,
         public ?Description $description,
+        public ?Group $group,
     ) {}
 }

@@ -6,12 +6,17 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Infrastructure\Persistence;
 
 use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationRemainderTarget;
+use PhpArchitecture\LazyOperators\Foundation\Extension\Array\ArrayGetFunction;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\AdditionOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\DivisionOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\ExponentiationOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\ModuloOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\MultiplicationOperator;
 use PhpArchitecture\LazyOperators\Foundation\Arithmetic\SubtractionOperator;
+use PhpArchitecture\LazyOperators\Foundation\Cast\BooleanCast;
+use PhpArchitecture\LazyOperators\Foundation\Cast\FloatCast;
+use PhpArchitecture\LazyOperators\Foundation\Cast\IntegerCast;
+use PhpArchitecture\LazyOperators\Foundation\Cast\StringCast;
 use PhpArchitecture\LazyOperators\Foundation\Comparator\SpaceshipOperator;
 use PhpArchitecture\LazyOperators\Foundation\Comparison\EqualOperator;
 use PhpArchitecture\LazyOperators\Foundation\Comparison\GreaterThanOperator;
@@ -25,16 +30,17 @@ use PhpArchitecture\LazyOperators\Foundation\Conditional\CaseOfSwitchCase;
 use PhpArchitecture\LazyOperators\Foundation\Conditional\IfElseOperator;
 use PhpArchitecture\LazyOperators\Foundation\Conditional\SwitchCaseOperator;
 use PhpArchitecture\LazyOperators\Foundation\Custom\CallbackOperator;
+use PhpArchitecture\LazyOperators\Foundation\Exception\PortNotBoundException;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate\ProductFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Array\Aggregate\SumFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\List\Aggregate\ProductFunction;
+use PhpArchitecture\LazyOperators\Foundation\Extension\List\Aggregate\SumFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcAddFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcDivFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcMulFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcSubFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Comparison\BcCompFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\BcNumberLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\PrecisionNumberAdapter;
+use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\NumberValueToPrecisionAdapter;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsFiniteFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsInfiniteFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsNanFunction;
@@ -63,10 +69,8 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\GetRandMaxFun
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\LcgValueFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtGetRandMaxFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtRandFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtSrandFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\RandFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\RandomIntFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\SrandFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding\CeilFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding\FloorFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding\RoundFunction;
@@ -90,6 +94,7 @@ use PhpArchitecture\LazyOperators\Foundation\Logical\AndOperator;
 use PhpArchitecture\LazyOperators\Foundation\Logical\NotOperator;
 use PhpArchitecture\LazyOperators\Foundation\Logical\OrOperator;
 use PhpArchitecture\LazyOperators\Foundation\Logical\XorOperator;
+use PhpArchitecture\LazyOperators\Foundation\Runtime\Port;
 use PhpArchitecture\LazyOperators\Foundation\Static\ArrayLiteral;
 use PhpArchitecture\LazyOperators\Foundation\Static\BoolLiteral;
 use PhpArchitecture\LazyOperators\Foundation\Static\FloatLiteral;
@@ -190,13 +195,12 @@ final class ExpressionSerializerRegistryTest extends TestCase
             'math_base_convert' => new BaseConvertFunction(new StringLiteral('ff'), new IntLiteral(16), new IntLiteral(2)),
             'math_getrandmax' => new GetRandMaxFunction(),
             'math_mt_getrandmax' => new MtGetRandMaxFunction(),
-            'math_srand' => new SrandFunction(new IntLiteral(42)),
-            'math_mt_srand' => new MtSrandFunction(new IntLiteral(42)),
             'math_is_finite' => new IsFiniteFunction(new FloatLiteral(1.5)),
             'math_is_infinite' => new IsInfiniteFunction(new FloatLiteral(1.5)),
             'math_is_nan' => new IsNanFunction(new FloatLiteral(1.5)),
             'array_sum' => new SumFunction(new IntLiteral(1), new IntLiteral(2), new IntLiteral(3)),
             'array_product' => new ProductFunction(new IntLiteral(2), new IntLiteral(3), new IntLiteral(4)),
+            'array_get' => new ArrayGetFunction(new ArrayLiteral(['a' => ['b' => 1]]), new StringLiteral('a.b')),
             'allocation' => new AllocationFunction(
                 new IntLiteral(100),
                 new IntLiteral(2),
@@ -204,13 +208,17 @@ final class ExpressionSerializerRegistryTest extends TestCase
                 new IntLiteral(30),
                 new IntLiteral(70),
             ),
-            'bcmath_add' => new BcAddFunction(new StringLiteral('1.1'), new StringLiteral('2.2'), 2),
-            'bcmath_sub' => new BcSubFunction(new StringLiteral('5'), new StringLiteral('3')),
-            'bcmath_mul' => new BcMulFunction(new StringLiteral('2.5'), new StringLiteral('4'), 2),
-            'bcmath_div' => new BcDivFunction(new StringLiteral('10'), new StringLiteral('4'), 2),
-            'bcmath_comp' => new BcCompFunction(new StringLiteral('1'), new StringLiteral('2')),
+            'bcmath_add' => new BcAddFunction(new FloatLiteral(1.1), new FloatLiteral(2.2), new IntLiteral(2)),
+            'bcmath_sub' => new BcSubFunction(new IntLiteral(5), new IntLiteral(3)),
+            'bcmath_mul' => new BcMulFunction(new FloatLiteral(2.5), new IntLiteral(4), new IntLiteral(2)),
+            'bcmath_div' => new BcDivFunction(new IntLiteral(10), new IntLiteral(4), new IntLiteral(2)),
+            'bcmath_comp' => new BcCompFunction(new IntLiteral(1), new IntLiteral(2)),
             'bcmath_number_literal' => new BcNumberLiteral(new \BcMath\Number('4.20')),
-            'bcmath_precision_number_adapter' => new PrecisionNumberAdapter(new IntLiteral(7)),
+            'bcmath_precision_number_adapter' => new NumberValueToPrecisionAdapter(new IntLiteral(7)),
+            'cast_integer' => new IntegerCast(new StringLiteral('42')),
+            'cast_float' => new FloatCast(new IntLiteral(3)),
+            'cast_string' => new StringCast(new IntLiteral(5)),
+            'cast_boolean' => new BooleanCast(new IntLiteral(0)),
         ];
     }
 
@@ -355,6 +363,23 @@ final class ExpressionSerializerRegistryTest extends TestCase
         $this->expectExceptionMessage(sprintf('No serializer registered for Expression class "%s".', $expression::class));
 
         ExpressionSerializers::default()->serialize($expression);
+    }
+
+    public function testPortSerializesWithNoArgsAndDeserializesAsAFreshUnboundPort(): void
+    {
+        $registry = ExpressionSerializers::default();
+        $port = new Port();
+        $port->setExpr(new IntLiteral(1));
+
+        $serialized = $registry->serialize($port);
+
+        self::assertSame([], $serialized['args'], 'a bound value is deliberately not persisted');
+
+        $hydrated = $registry->deserialize($serialized);
+
+        self::assertInstanceOf(Port::class, $hydrated);
+        $this->expectException(PortNotBoundException::class);
+        $hydrated();
     }
 
     public function testSerializedShapeIsIdenticalRegardlessOfDecoration(): void

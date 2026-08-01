@@ -16,9 +16,13 @@ readonly class EnumArgument extends ExpressionArgument
     public function __construct(
         string $name,
         string $type,
+        ?string $itemType,
+        bool $spread,
+        bool $optional,
+        ?string $defaultValue,
         ?Description $description,
         public array $options,
     ) {
-        parent::__construct($name, $type, $description);
+        parent::__construct($name, $type, $itemType, $spread, $optional, $defaultValue, $description);
     }
 }

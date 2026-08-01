@@ -7,8 +7,10 @@ namespace PhpArchitecture\LazyOperators\Foundation\Static;
 use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Static')]
 #[Name('Boolean Literal')]
 #[Formula('f(value) = value')]
 #[Description('Boolean Literal wraps a raw true or false value as an Expression, returning it unchanged when invoked.')]

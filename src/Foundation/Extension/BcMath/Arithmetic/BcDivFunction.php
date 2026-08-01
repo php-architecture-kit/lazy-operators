@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic;
 
 use BcMath\Number;
-use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\PrecisionNumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\GuardsNativeFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\NormalizesPrecisionValues;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
+use PhpArchitecture\LazyOperators\Foundation\Type\IntegerValue;
+use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 
+#[Group('BcMath')]
 #[Name('BC Div')]
 #[Formula('f(dividend, divisor, scale) = dividend / divisor, computed to scale decimal digits via bcdiv; '
             . 'throws DivisionByZeroError natively when divisor is zero')]
@@ -30,9 +33,9 @@ class BcDivFunction implements PrecisionNumberValue
     public readonly PrecisionNumberValue $divisor;
 
     public function __construct(
-        Number|Expression $dividend,
-        Number|Expression $divisor,
-        public readonly ?int $scale = null,
+        NumberValue $dividend,
+        NumberValue $divisor,
+        public readonly ?IntegerValue $scale = null,
     ) {
         self::guardAvailable(self::NATIVE_FUNCTION);
 
@@ -55,6 +58,6 @@ class BcDivFunction implements PrecisionNumberValue
      */
     private function compute(): string
     {
-        return bcdiv((string) $this->dividend->bcValue(), (string) $this->divisor->bcValue(), $this->scale);
+        return bcdiv((string) $this->dividend->bcValue(), (string) $this->divisor->bcValue(), $this->scale?->__invoke());
     }
 }

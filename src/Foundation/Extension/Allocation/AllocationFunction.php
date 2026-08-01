@@ -7,14 +7,17 @@ namespace PhpArchitecture\LazyOperators\Foundation\Extension\Allocation;
 use LogicException;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Type\ArrayValue;
+use PhpArchitecture\LazyOperators\Foundation\Type\IntegerValue;
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
 /**
  * @implements ArrayValue<float>
  */
+#[Group('Allocation')]
 #[Name('Allocation')]
 #[Formula('f(amount, shares, precision) = amount split proportionally to shares, '
             . 'each rounded to precision, with the rounding remainder folded into one share; '
@@ -39,7 +42,7 @@ class AllocationFunction implements ArrayValue
 
     public function __construct(
         public readonly NumberValue $amount,
-        public readonly NumberValue $precision,
+        public readonly IntegerValue $precision,
         public readonly AllocationRemainderTarget $remainderTarget,
         NumberValue $firstShare,
         NumberValue ...$restShares,
@@ -55,7 +58,6 @@ class AllocationFunction implements ArrayValue
         $amount = ($this->amount)();
 
         $precision = ($this->precision)();
-        assert(is_int($precision));
 
         $shareValues = array_values(array_map(static function (NumberValue $share): int|float {
             $value = $share();

@@ -7,8 +7,10 @@ namespace PhpArchitecture\LazyOperators\Foundation\Arithmetic;
 use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Arithmetic')]
 #[Name('Modulo')]
 #[Formula('f(left, right) = left mod right')]
 #[Description('Modulo returns the remainder of dividing the left operand by the right operand.')]

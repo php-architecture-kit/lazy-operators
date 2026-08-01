@@ -7,8 +7,10 @@ namespace PhpArchitecture\LazyOperators\Foundation\Static;
 use PhpArchitecture\LazyOperators\Foundation\Type\StringValue;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
 
+#[Group('Static')]
 #[Name('String Literal')]
 #[Formula('f(value) = value')]
 #[Description('String Literal wraps a raw string as an Expression, returning it unchanged when invoked.')]

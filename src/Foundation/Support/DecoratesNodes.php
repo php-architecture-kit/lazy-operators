@@ -8,6 +8,7 @@ use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\PipelineConfig;
 use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
+use PhpArchitecture\LazyOperators\Foundation\Type\IntegerValue;
 use PhpArchitecture\LazyOperators\Foundation\Type\StringValue;
 
 trait DecoratesNodes
@@ -33,6 +34,16 @@ trait DecoratesNodes
         $decorated = self::decorate($node, $config);
 
         return $decorated instanceof NumberValue ? $decorated : new DecoratedNumberValue($decorated);
+    }
+
+    /**
+     * Same as decorate(), but re-exposes the result as IntegerValue (see decorateNumber()).
+     */
+    private static function decorateInteger(Expression $node, PipelineConfig $config): IntegerValue
+    {
+        $decorated = self::decorate($node, $config);
+
+        return $decorated instanceof IntegerValue ? $decorated : new DecoratedIntegerValue($decorated);
     }
 
     /**

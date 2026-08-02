@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Infrastructure\Persistence;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Infrastructure\Registry;
 
-use PhpArchitecture\LazyOperators\Infrastructure\Persistence\CallbackRegistry;
+use PhpArchitecture\LazyOperators\Infrastructure\Registry\CallbackRegistry;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Exception\UnpersistableCallbackException;
 use PHPUnit\Framework\TestCase;
 

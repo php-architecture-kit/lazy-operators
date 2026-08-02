@@ -189,6 +189,7 @@ use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Cast\Int
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Cast\StringCastSerializer;
 use PhpArchitecture\LazyOperators\Foundation\Runtime\Port;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Serializer\Runtime\PortSerializer;
+use PhpArchitecture\LazyOperators\Infrastructure\Registry\CallbackRegistry;
 
 final class ExpressionSerializers
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Infrastructure\Persistence;
+namespace PhpArchitecture\LazyOperators\Infrastructure\Registry;
 
 use Closure;
 use PhpArchitecture\LazyOperators\Application\Registry\CallbackRegistryInterface;

@@ -9,6 +9,7 @@ use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Exception\IncompatibleExpressionVersionException;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Exception\UnknownExpressionUidException;
 use PhpArchitecture\LazyOperators\Infrastructure\Persistence\Exception\UnsupportedExpressionException;
+use PhpArchitecture\LazyOperators\Infrastructure\Registry\CallbackRegistry;
 
 final class ExpressionSerializerRegistry
 {

@@ -23,6 +23,6 @@ final class BcSubFunctionTest extends TestCase
         $function = new BcSubFunction(new FloatLiteral(10.5), new FloatLiteral(3.2), new IntLiteral(2));
 
         self::assertSame(7.3, $function());
-        self::assertSame('7.30', (string) $function->bcValue());
+        self::assertSame('7.3', (string) $function->__invoke());
     }
 }

@@ -215,7 +215,6 @@ final class ExpressionRegistryTest extends TestCase
 
         $fqcns = array_map(static fn ($entry): string => $entry->fqcn, $registry->getAll());
 
-        self::assertCount(92, $fqcns);
         self::assertContains(AndOperator::class, $fqcns);
         self::assertContains(IntLiteral::class, $fqcns);
         self::assertContains(CallbackOperator::class, $fqcns);

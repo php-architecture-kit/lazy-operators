@@ -280,8 +280,6 @@ final class ExpressionSerializers
             BcMulFunction::UID => new BcMulFunctionSerializer(),
             BcDivFunction::UID => new BcDivFunctionSerializer(),
             BcCompFunction::UID => new BcCompFunctionSerializer(),
-            BcNumberLiteral::UID => new BcNumberLiteralSerializer(),
-            NumberValueToPrecisionAdapter::UID => new NumberValueToPrecisionAdapterSerializer(),
             IntegerCast::UID => new IntegerCastSerializer(),
             FloatCast::UID => new FloatCastSerializer(),
             StringCast::UID => new StringCastSerializer(),

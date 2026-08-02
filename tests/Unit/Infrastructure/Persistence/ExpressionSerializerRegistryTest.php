@@ -39,8 +39,6 @@ use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcDivFu
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcMulFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcSubFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Comparison\BcCompFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\BcNumberLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\NumberValueToPrecisionAdapter;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsFiniteFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsInfiniteFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsNanFunction;
@@ -213,8 +211,8 @@ final class ExpressionSerializerRegistryTest extends TestCase
             'bcmath_mul' => new BcMulFunction(new FloatLiteral(2.5), new IntLiteral(4), new IntLiteral(2)),
             'bcmath_div' => new BcDivFunction(new IntLiteral(10), new IntLiteral(4), new IntLiteral(2)),
             'bcmath_comp' => new BcCompFunction(new IntLiteral(1), new IntLiteral(2)),
-            'bcmath_number_literal' => new BcNumberLiteral(new \BcMath\Number('4.20')),
-            'bcmath_precision_number_adapter' => new NumberValueToPrecisionAdapter(new IntLiteral(7)),
+            'bcmath_number_literal' => new FloatLiteral(4.20),
+            'bcmath_precision_number_adapter' => new IntLiteral(7),
             'cast_integer' => new IntegerCast(new StringLiteral('42')),
             'cast_float' => new FloatCast(new IntLiteral(3)),
             'cast_string' => new StringCast(new IntLiteral(5)),

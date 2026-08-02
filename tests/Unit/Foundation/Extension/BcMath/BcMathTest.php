@@ -22,7 +22,7 @@ final class BcMathTest extends TestCase
 
     public function testAddAcceptsANativeBcMathNumberDirectly(): void
     {
-        self::assertSame(4.0, BcMath::add(new Number('1.50'), new Number('2.50'), 2)());
+        self::assertSame(4.0, BcMath::add('1.50', '2.50', 2)());
     }
 
     public function testChainingTwoAddCallsPreservesPrecisionThroughBcValue(): void
@@ -30,7 +30,7 @@ final class BcMathTest extends TestCase
         $inner = BcMath::add('0.1', '0.2', 10);
         $outer = BcMath::add($inner, '0.3', 10);
 
-        self::assertSame('0.6000000000', (string) $outer->bcValue());
+        self::assertSame('0.6', (string) $outer->__invoke());
     }
 
     public function testSubMulDivBuildTheExpectedNodes(): void

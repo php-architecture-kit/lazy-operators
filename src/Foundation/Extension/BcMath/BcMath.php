@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Foundation\Extension\BcMath;
 
-use BcMath\Number;
-use PhpArchitecture\LazyOperators\Foundation\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcAddFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcDivFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcMulFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcSubFunction;
 use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Comparison\BcCompFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\BcNumberLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\NumberValueToPrecisionAdapter;
 use PhpArchitecture\LazyOperators\Foundation\PipelineConfig;
+use PhpArchitecture\LazyOperators\Foundation\Static\FloatLiteral;
 use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
 use PhpArchitecture\LazyOperators\Foundation\Support\DecoratesNodes;
 use PhpArchitecture\LazyOperators\Foundation\Support\WrapsRawValues;
@@ -31,57 +28,57 @@ final class BcMath
     use WrapsRawValues;
 
     public static function add(
-        Number|int|float|string|Expression $left,
-        Number|int|float|string|Expression $right,
-        ?int $scale = null,
+        int|float|string|NumberValue $left,
+        int|float|string|NumberValue $right,
+        null|int|IntegerValue $scale = null,
         ?PipelineConfig $config = null,
-    ): PrecisionNumberValue {
-        return self::decoratePrecisionNumber(
+    ): NumberValue {
+        return self::decorateNumber(
             new BcAddFunction(self::wrapRawScalar($left), self::wrapRawScalar($right), self::wrapScale($scale)),
             $config ?? new PipelineConfig(),
         );
     }
 
     public static function sub(
-        Number|int|float|string|Expression $left,
-        Number|int|float|string|Expression $right,
-        ?int $scale = null,
+        int|float|string|NumberValue $left,
+        int|float|string|NumberValue $right,
+        null|int|IntegerValue $scale = null,
         ?PipelineConfig $config = null,
-    ): PrecisionNumberValue {
-        return self::decoratePrecisionNumber(
+    ): NumberValue {
+        return self::decorateNumber(
             new BcSubFunction(self::wrapRawScalar($left), self::wrapRawScalar($right), self::wrapScale($scale)),
             $config ?? new PipelineConfig(),
         );
     }
 
     public static function mul(
-        Number|int|float|string|Expression $left,
-        Number|int|float|string|Expression $right,
-        ?int $scale = null,
+        int|float|string|NumberValue $left,
+        int|float|string|NumberValue $right,
+        null|int|IntegerValue $scale = null,
         ?PipelineConfig $config = null,
-    ): PrecisionNumberValue {
-        return self::decoratePrecisionNumber(
+    ): NumberValue {
+        return self::decorateNumber(
             new BcMulFunction(self::wrapRawScalar($left), self::wrapRawScalar($right), self::wrapScale($scale)),
             $config ?? new PipelineConfig(),
         );
     }
 
     public static function div(
-        Number|int|float|string|Expression $dividend,
-        Number|int|float|string|Expression $divisor,
-        ?int $scale = null,
+        int|float|string|NumberValue $dividend,
+        int|float|string|NumberValue $divisor,
+        null|int|IntegerValue $scale = null,
         ?PipelineConfig $config = null,
-    ): PrecisionNumberValue {
-        return self::decoratePrecisionNumber(
+    ): NumberValue {
+        return self::decorateNumber(
             new BcDivFunction(self::wrapRawScalar($dividend), self::wrapRawScalar($divisor), self::wrapScale($scale)),
             $config ?? new PipelineConfig(),
         );
     }
 
     public static function comp(
-        Number|int|float|string|Expression $left,
-        Number|int|float|string|Expression $right,
-        ?int $scale = null,
+        int|float|string|NumberValue $left,
+        int|float|string|NumberValue $right,
+        null|int|IntegerValue $scale = null,
         ?PipelineConfig $config = null,
     ): NumberValue {
         return self::decorateNumber(
@@ -90,47 +87,30 @@ final class BcMath
         );
     }
 
-    /**
-     * BcAddFunction et al. only accept NumberValue (every constructor argument must be the result of
-     * an Expression). A raw Number, or a raw numeric string (bcmath's own currency, kept as-is rather
-     * than round-tripped through a PHP float), is bridged through BcNumberLiteral; a raw int|float
-     * goes through the shared WrapsRawValues, same as every other facade (Arithmetic, Math, ...) does
-     * for its operands.
-     */
-    private static function wrapRawScalar(Number|int|float|string|Expression $value): NumberValue
+    private static function wrapRawScalar(int|float|string|NumberValue $value): NumberValue
     {
-        if ($value instanceof Number) {
-            return new BcNumberLiteral($value);
+        if ($value instanceof NumberValue) {
+            return $value;
         }
 
         if (is_string($value)) {
             assert(is_numeric($value));
 
-            return new BcNumberLiteral(new Number($value));
+            return new FloatLiteral((float) $value);
         }
 
-        $wrapped = $value instanceof Expression ? $value : self::wrap($value);
+        $wrapped = self::wrap($value);
         assert($wrapped instanceof NumberValue);
 
         return $wrapped;
     }
 
-    private static function wrapScale(?int $scale): ?IntegerValue
+    private static function wrapScale(null|int|IntegerValue $scale): ?IntegerValue
     {
+        if ($scale instanceof IntegerValue) {
+            return $scale;
+        }
+
         return $scale === null ? null : new IntLiteral($scale);
-    }
-
-    /**
-     * Same as decorateNumber()/decorateBoolean()/decorateString() (Foundation\Support\DecoratesNodes), but
-     * re-exposed as PrecisionNumberValue instead of the plain NumberValue those helpers guarantee — a
-     * user-supplied decorator only implements the generic Decorator contract, which would otherwise
-     * lose bcValue() for the next BcMath node in the chain. This stays local to BcMath rather than
-     * living in the shared DecoratesNodes trait, since PrecisionNumberValue is itself BcMath-only.
-     */
-    private static function decoratePrecisionNumber(PrecisionNumberValue $node, PipelineConfig $config): PrecisionNumberValue
-    {
-        $decorated = self::decorateNumber($node, $config);
-
-        return $decorated instanceof PrecisionNumberValue ? $decorated : new NumberValueToPrecisionAdapter($decorated);
     }
 }

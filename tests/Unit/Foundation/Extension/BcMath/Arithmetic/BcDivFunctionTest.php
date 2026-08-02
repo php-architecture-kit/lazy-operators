@@ -16,7 +16,7 @@ final class BcDivFunctionTest extends TestCase
         $function = new BcDivFunction(new IntLiteral(10), new IntLiteral(4), new IntLiteral(2));
 
         self::assertSame(2.5, $function());
-        self::assertSame('2.50', (string) $function->bcValue());
+        self::assertSame('2.5', (string) $function->__invoke());
     }
 
     public function testThrowsTheNativeErrorWhenDividingByZero(): void

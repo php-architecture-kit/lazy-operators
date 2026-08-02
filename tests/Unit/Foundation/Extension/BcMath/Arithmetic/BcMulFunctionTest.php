@@ -16,7 +16,7 @@ final class BcMulFunctionTest extends TestCase
         $function = new BcMulFunction(new FloatLiteral(2.5), new IntLiteral(4), new IntLiteral(2));
 
         self::assertSame(10.0, $function());
-        self::assertSame('10.00', (string) $function->bcValue());
+        self::assertSame('10', (string) $function->__invoke());
     }
 
     public function testDefaultsToTheNativeScaleWhenNoneGiven(): void

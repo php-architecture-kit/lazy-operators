@@ -12,94 +12,16 @@ use PhpArchitecture\LazyOperators\Application\Registry\Entry\ExpressionArgument;
 use PhpArchitecture\LazyOperators\Application\Registry\Entry\ExpressionAttributes;
 use PhpArchitecture\LazyOperators\Application\Registry\Entry\ExpressionEntry;
 use PhpArchitecture\LazyOperators\Application\Registry\ExpressionRegistryInterface;
-use PhpArchitecture\LazyOperators\Foundation\Arithmetic\AdditionOperator;
-use PhpArchitecture\LazyOperators\Foundation\Cast\BooleanCast;
-use PhpArchitecture\LazyOperators\Foundation\Cast\FloatCast;
-use PhpArchitecture\LazyOperators\Foundation\Cast\IntegerCast;
-use PhpArchitecture\LazyOperators\Foundation\Cast\StringCast;
-use PhpArchitecture\LazyOperators\Foundation\Arithmetic\DivisionOperator;
-use PhpArchitecture\LazyOperators\Foundation\Arithmetic\ExponentiationOperator;
-use PhpArchitecture\LazyOperators\Foundation\Arithmetic\ModuloOperator;
-use PhpArchitecture\LazyOperators\Foundation\Arithmetic\MultiplicationOperator;
-use PhpArchitecture\LazyOperators\Foundation\Arithmetic\SubtractionOperator;
-use PhpArchitecture\LazyOperators\Foundation\Comparator\SpaceshipOperator;
-use PhpArchitecture\LazyOperators\Foundation\Comparison\EqualOperator;
-use PhpArchitecture\LazyOperators\Foundation\Comparison\GreaterThanOperator;
-use PhpArchitecture\LazyOperators\Foundation\Comparison\GreaterThanOrEqualOperator;
-use PhpArchitecture\LazyOperators\Foundation\Comparison\IdenticalOperator;
-use PhpArchitecture\LazyOperators\Foundation\Comparison\LessThanOperator;
-use PhpArchitecture\LazyOperators\Foundation\Comparison\LessThanOrEqualOperator;
-use PhpArchitecture\LazyOperators\Foundation\Comparison\NotEqualOperator;
-use PhpArchitecture\LazyOperators\Foundation\Comparison\NotIdenticalOperator;
+use PhpArchitecture\LazyOperators\Foundation\Arithmetic;
+use PhpArchitecture\LazyOperators\Foundation\Cast;
+use PhpArchitecture\LazyOperators\Foundation\Comparator;
+use PhpArchitecture\LazyOperators\Foundation\Comparison;
 use PhpArchitecture\LazyOperators\Foundation\Conditional\CaseOfSwitchCase;
-use PhpArchitecture\LazyOperators\Foundation\Conditional\IfElseOperator;
-use PhpArchitecture\LazyOperators\Foundation\Conditional\SwitchCaseOperator;
-use PhpArchitecture\LazyOperators\Foundation\Custom\CallbackOperator;
+use PhpArchitecture\LazyOperators\Foundation\Conditional;
+use PhpArchitecture\LazyOperators\Foundation\Custom;
 use PhpArchitecture\LazyOperators\Foundation\Expression;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Array\ArrayGetFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\List\Aggregate\ProductFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\List\Aggregate\SumFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcAddFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcDivFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcMulFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcSubFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Comparison\BcCompFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\BcNumberLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support\NumberValueToPrecisionAdapter;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsFiniteFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsInfiniteFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsNanFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion\BaseConvertFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion\BinDecFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion\DecBinFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion\DecHexFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion\DecOctFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion\HexDecFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion\OctDecFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential\ExpFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential\Expm1Function;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential\HypotFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential\Log10Function;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential\Log1pFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential\LogFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential\PowFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential\SqrtFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Numeric\AbsFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Numeric\FdivFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Numeric\FmodFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Numeric\IntdivFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Numeric\MaxFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Numeric\MinFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\GetRandMaxFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\LcgValueFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtGetRandMaxFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtRandFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\RandFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\RandomIntFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding\CeilFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding\FloorFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding\RoundFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\AcosFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\AcoshFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\AsinFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\AsinhFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\Atan2Function;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\AtanFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\AtanhFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\CosFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\CoshFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\Deg2RadFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\PiFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\Rad2DegFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\SinFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\SinhFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\TanFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\TanhFunction;
-use PhpArchitecture\LazyOperators\Foundation\Logical\AndOperator;
-use PhpArchitecture\LazyOperators\Foundation\Logical\NotOperator;
-use PhpArchitecture\LazyOperators\Foundation\Logical\OrOperator;
-use PhpArchitecture\LazyOperators\Foundation\Logical\XorOperator;
+use PhpArchitecture\LazyOperators\Foundation\Extension;
+use PhpArchitecture\LazyOperators\Foundation\Logical;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
 use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
@@ -149,97 +71,95 @@ class ExpressionRegistry implements ExpressionRegistryInterface
      * @var class-string<Expression>[]
      */
     private const LIBRARY_CLASSES = [
-        AdditionOperator::class,
-        SubtractionOperator::class,
-        MultiplicationOperator::class,
-        DivisionOperator::class,
-        ModuloOperator::class,
-        ExponentiationOperator::class,
-        EqualOperator::class,
-        NotEqualOperator::class,
-        IdenticalOperator::class,
-        NotIdenticalOperator::class,
-        GreaterThanOperator::class,
-        GreaterThanOrEqualOperator::class,
-        LessThanOperator::class,
-        LessThanOrEqualOperator::class,
-        AndOperator::class,
-        OrOperator::class,
-        XorOperator::class,
-        NotOperator::class,
-        SpaceshipOperator::class,
-        IfElseOperator::class,
-        SwitchCaseOperator::class,
-        CallbackOperator::class,
+        Arithmetic\AdditionOperator::class,
+        Arithmetic\SubtractionOperator::class,
+        Arithmetic\MultiplicationOperator::class,
+        Arithmetic\DivisionOperator::class,
+        Arithmetic\ModuloOperator::class,
+        Arithmetic\ExponentiationOperator::class,
+        Cast\IntegerCast::class,
+        Cast\FloatCast::class,
+        Cast\StringCast::class,
+        Cast\BooleanCast::class,
+        Comparator\SpaceshipOperator::class,
+        Comparison\EqualOperator::class,
+        Comparison\NotEqualOperator::class,
+        Comparison\IdenticalOperator::class,
+        Comparison\NotIdenticalOperator::class,
+        Comparison\GreaterThanOperator::class,
+        Comparison\GreaterThanOrEqualOperator::class,
+        Comparison\LessThanOperator::class,
+        Comparison\LessThanOrEqualOperator::class,
+        Logical\AndOperator::class,
+        Logical\OrOperator::class,
+        Logical\XorOperator::class,
+        Logical\NotOperator::class,
+        Conditional\IfElseOperator::class,
+        Conditional\SwitchCaseOperator::class,
+        Custom\CallbackOperator::class,
         IntLiteral::class,
         FloatLiteral::class,
         BoolLiteral::class,
         StringLiteral::class,
         ArrayLiteral::class,
-        CeilFunction::class,
-        FloorFunction::class,
-        RoundFunction::class,
-        SinFunction::class,
-        CosFunction::class,
-        TanFunction::class,
-        AsinFunction::class,
-        AcosFunction::class,
-        AtanFunction::class,
-        Atan2Function::class,
-        SinhFunction::class,
-        CoshFunction::class,
-        TanhFunction::class,
-        AsinhFunction::class,
-        AcoshFunction::class,
-        AtanhFunction::class,
-        Deg2RadFunction::class,
-        Rad2DegFunction::class,
-        PiFunction::class,
-        ExpFunction::class,
-        Expm1Function::class,
-        LogFunction::class,
-        Log10Function::class,
-        Log1pFunction::class,
-        PowFunction::class,
-        SqrtFunction::class,
-        HypotFunction::class,
-        AbsFunction::class,
-        FmodFunction::class,
-        FdivFunction::class,
-        IntdivFunction::class,
-        MaxFunction::class,
-        MinFunction::class,
-        BinDecFunction::class,
-        DecBinFunction::class,
-        DecHexFunction::class,
-        HexDecFunction::class,
-        DecOctFunction::class,
-        OctDecFunction::class,
-        BaseConvertFunction::class,
-        RandFunction::class,
-        MtRandFunction::class,
-        RandomIntFunction::class,
-        GetRandMaxFunction::class,
-        MtGetRandMaxFunction::class,
-        LcgValueFunction::class,
-        IsFiniteFunction::class,
-        IsInfiniteFunction::class,
-        IsNanFunction::class,
-        SumFunction::class,
-        ProductFunction::class,
-        ArrayGetFunction::class,
-        AllocationFunction::class,
-        BcAddFunction::class,
-        BcSubFunction::class,
-        BcMulFunction::class,
-        BcDivFunction::class,
-        BcCompFunction::class,
-        BcNumberLiteral::class,
-        NumberValueToPrecisionAdapter::class,
-        IntegerCast::class,
-        FloatCast::class,
-        StringCast::class,
-        BooleanCast::class,
+        Extension\Math\Rounding\CeilFunction::class,
+        Extension\Math\Rounding\FloorFunction::class,
+        Extension\Math\Rounding\RoundFunction::class,
+        Extension\Math\Trigonometry\SinFunction::class,
+        Extension\Math\Trigonometry\CosFunction::class,
+        Extension\Math\Trigonometry\TanFunction::class,
+        Extension\Math\Trigonometry\AsinFunction::class,
+        Extension\Math\Trigonometry\AcosFunction::class,
+        Extension\Math\Trigonometry\AtanFunction::class,
+        Extension\Math\Trigonometry\Atan2Function::class,
+        Extension\Math\Trigonometry\SinhFunction::class,
+        Extension\Math\Trigonometry\CoshFunction::class,
+        Extension\Math\Trigonometry\TanhFunction::class,
+        Extension\Math\Trigonometry\AsinhFunction::class,
+        Extension\Math\Trigonometry\AcoshFunction::class,
+        Extension\Math\Trigonometry\AtanhFunction::class,
+        Extension\Math\Trigonometry\Deg2RadFunction::class,
+        Extension\Math\Trigonometry\Rad2DegFunction::class,
+        Extension\Math\Trigonometry\PiFunction::class,
+        Extension\Math\Exponential\ExpFunction::class,
+        Extension\Math\Exponential\Expm1Function::class,
+        Extension\Math\Exponential\LogFunction::class,
+        Extension\Math\Exponential\Log10Function::class,
+        Extension\Math\Exponential\Log1pFunction::class,
+        Extension\Math\Exponential\PowFunction::class,
+        Extension\Math\Exponential\SqrtFunction::class,
+        Extension\Math\Exponential\HypotFunction::class,
+        Extension\Math\Numeric\AbsFunction::class,
+        Extension\Math\Numeric\FmodFunction::class,
+        Extension\Math\Numeric\FdivFunction::class,
+        Extension\Math\Numeric\IntdivFunction::class,
+        Extension\Math\Numeric\MaxFunction::class,
+        Extension\Math\Numeric\MinFunction::class,
+        Extension\Math\Conversion\BinDecFunction::class,
+        Extension\Math\Conversion\DecBinFunction::class,
+        Extension\Math\Conversion\DecHexFunction::class,
+        Extension\Math\Conversion\HexDecFunction::class,
+        Extension\Math\Conversion\DecOctFunction::class,
+        Extension\Math\Conversion\OctDecFunction::class,
+        Extension\Math\Conversion\BaseConvertFunction::class,
+        Extension\Math\Random\RandFunction::class,
+        Extension\Math\Random\MtRandFunction::class,
+        Extension\Math\Random\RandomIntFunction::class,
+        Extension\Math\Random\GetRandMaxFunction::class,
+        Extension\Math\Random\MtGetRandMaxFunction::class,
+        Extension\Math\Random\LcgValueFunction::class,
+        Extension\Math\Classification\IsFiniteFunction::class,
+        Extension\Math\Classification\IsInfiniteFunction::class,
+        Extension\Math\Classification\IsNanFunction::class,
+        Extension\List\Aggregate\SumFunction::class,
+        Extension\List\Aggregate\ProductFunction::class,
+        Extension\Array\ArrayGetFunction::class,
+        Extension\Allocation\AllocationFunction::class,
+        Extension\BcMath\Arithmetic\BcAddFunction::class,
+        Extension\BcMath\Arithmetic\BcSubFunction::class,
+        Extension\BcMath\Arithmetic\BcMulFunction::class,
+        Extension\BcMath\Arithmetic\BcDivFunction::class,
+        Extension\BcMath\Comparison\BcCompFunction::class,
         Port::class,
     ];
 
@@ -342,7 +262,7 @@ class ExpressionRegistry implements ExpressionRegistryInterface
                 $optional,
                 $defaultValue,
                 $description,
-                array_map(static fn (UnitEnum $case): string => $case->name, $enumClass::cases()),
+                array_map(static fn(UnitEnum $case): string => $case->name, $enumClass::cases()),
             );
         }
 
@@ -379,7 +299,7 @@ class ExpressionRegistry implements ExpressionRegistryInterface
         }
 
         return array_map(
-            fn (ReflectionParameter $parameter): ExpressionArgument => $this->createArgument($parameter),
+            fn(ReflectionParameter $parameter): ExpressionArgument => $this->createArgument($parameter),
             $constructor->getParameters(),
         );
     }
@@ -452,7 +372,7 @@ class ExpressionRegistry implements ExpressionRegistryInterface
 
         return array_values(array_filter(
             $candidates,
-            static fn (mixed $candidate): bool => $candidate instanceof ReflectionNamedType,
+            static fn(mixed $candidate): bool => $candidate instanceof ReflectionNamedType,
         ));
     }
 

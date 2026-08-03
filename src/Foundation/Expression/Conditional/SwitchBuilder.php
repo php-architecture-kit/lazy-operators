@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Foundation\Expression\Conditional;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
-use PhpArchitecture\LazyOperators\Foundation\Expression\PipelineConfig;
+use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\DecoratesNodes;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\WrapsRawValues;
 
@@ -19,15 +19,15 @@ class SwitchBuilder
      */
     private function __construct(
         private readonly Expression $subject,
-        private readonly PipelineConfig $config,
+        private readonly ExpressionTreeConfig $config,
         private readonly array $cases = [],
         private readonly ?Expression $default = null,
     ) {
     }
 
-    public static function of(mixed $subject, ?PipelineConfig $config = null): self
+    public static function of(mixed $subject, ?ExpressionTreeConfig $config = null): self
     {
-        $config ??= new PipelineConfig();
+        $config ??= new ExpressionTreeConfig();
 
         return new self(self::decorate(self::wrap($subject), $config), $config);
     }

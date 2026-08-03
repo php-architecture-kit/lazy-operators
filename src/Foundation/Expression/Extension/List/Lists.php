@@ -8,7 +8,7 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\List\Aggregate\ProductFunction;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\List\Aggregate\SumFunction;
-use PhpArchitecture\LazyOperators\Foundation\Expression\PipelineConfig;
+use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\DecoratesNodes;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\WrapsRawValues;
 
@@ -37,7 +37,7 @@ class Lists
      */
     private static function variadicNumeric(string $class, int|float|Expression $first, int|float|Expression ...$rest): Expression
     {
-        $config = new PipelineConfig();
+        $config = new ExpressionTreeConfig();
         $values = array_map(
             static fn (int|float|Expression $value) => self::decorateNumber(self::wrapAs(NumberValue::class, $value), $config),
             [$first, ...$rest],

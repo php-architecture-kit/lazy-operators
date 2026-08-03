@@ -7,7 +7,7 @@ namespace PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Array;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\ArrayValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\StringValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
-use PhpArchitecture\LazyOperators\Foundation\Expression\PipelineConfig;
+use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\DecoratesNodes;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\WrapsRawValues;
 
@@ -23,9 +23,9 @@ class Arrays
     /**
      * @param array<array-key,mixed>|Expression $array
      */
-    public static function get(array|Expression $array, string|Expression $path, ?PipelineConfig $config = null): Expression
+    public static function get(array|Expression $array, string|Expression $path, ?ExpressionTreeConfig $config = null): Expression
     {
-        $config ??= new PipelineConfig();
+        $config ??= new ExpressionTreeConfig();
 
         return self::decorate(
             new ArrayGetFunction(

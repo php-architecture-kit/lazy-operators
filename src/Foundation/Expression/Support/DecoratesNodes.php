@@ -6,14 +6,14 @@ namespace PhpArchitecture\LazyOperators\Foundation\Expression\Support;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
-use PhpArchitecture\LazyOperators\Foundation\Expression\PipelineConfig;
+use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\BooleanValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\IntegerValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\StringValue;
 
 trait DecoratesNodes
 {
-    private static function decorate(Expression $node, PipelineConfig $config): Expression
+    private static function decorate(Expression $node, ExpressionTreeConfig $config): Expression
     {
         if ($config->decorator === null) {
             return $node;
@@ -29,7 +29,7 @@ trait DecoratesNodes
      * decorator only implements the generic `Decorator extends Expression` contract, which would
      * otherwise break the narrowed constructor of the next arithmetic operator in the chain.
      */
-    private static function decorateNumber(Expression $node, PipelineConfig $config): NumberValue
+    private static function decorateNumber(Expression $node, ExpressionTreeConfig $config): NumberValue
     {
         $decorated = self::decorate($node, $config);
 
@@ -39,7 +39,7 @@ trait DecoratesNodes
     /**
      * Same as decorate(), but re-exposes the result as IntegerValue (see decorateNumber()).
      */
-    private static function decorateInteger(Expression $node, PipelineConfig $config): IntegerValue
+    private static function decorateInteger(Expression $node, ExpressionTreeConfig $config): IntegerValue
     {
         $decorated = self::decorate($node, $config);
 
@@ -49,7 +49,7 @@ trait DecoratesNodes
     /**
      * Same as decorate(), but re-exposes the result as BooleanValue (see decorateNumber()).
      */
-    private static function decorateBoolean(Expression $node, PipelineConfig $config): BooleanValue
+    private static function decorateBoolean(Expression $node, ExpressionTreeConfig $config): BooleanValue
     {
         $decorated = self::decorate($node, $config);
 
@@ -59,7 +59,7 @@ trait DecoratesNodes
     /**
      * Same as decorate(), but re-exposes the result as StringValue (see decorateNumber()).
      */
-    private static function decorateString(Expression $node, PipelineConfig $config): StringValue
+    private static function decorateString(Expression $node, ExpressionTreeConfig $config): StringValue
     {
         $decorated = self::decorate($node, $config);
 

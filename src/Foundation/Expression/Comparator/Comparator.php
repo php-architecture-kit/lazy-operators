@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Foundation\Expression\Comparator;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
-use PhpArchitecture\LazyOperators\Foundation\Expression\PipelineConfig;
+use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\DecoratesNodes;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\WrapsRawValues;
 
@@ -16,13 +16,13 @@ class Comparator
 
     private function __construct(
         private readonly Expression $current,
-        private readonly PipelineConfig $config,
+        private readonly ExpressionTreeConfig $config,
     ) {
     }
 
-    public static function of(mixed $value, ?PipelineConfig $config = null): self
+    public static function of(mixed $value, ?ExpressionTreeConfig $config = null): self
     {
-        $config ??= new PipelineConfig();
+        $config ??= new ExpressionTreeConfig();
 
         return new self(self::decorate(self::wrap($value), $config), $config);
     }

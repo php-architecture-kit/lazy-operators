@@ -6,7 +6,7 @@ namespace PhpArchitecture\LazyOperators\Foundation\Expression\Conditional;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Exception\IncompleteIfBuilderException;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
-use PhpArchitecture\LazyOperators\Foundation\Expression\PipelineConfig;
+use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\DecoratesNodes;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\WrapsRawValues;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\BooleanValue;
@@ -18,15 +18,15 @@ class IfBuilder
 
     private function __construct(
         private readonly BooleanValue $condition,
-        private readonly PipelineConfig $config,
+        private readonly ExpressionTreeConfig $config,
         private readonly ?Expression $then = null,
         private readonly ?Expression $else = null,
     ) {
     }
 
-    public static function of(bool|BooleanValue $condition, ?PipelineConfig $config = null): self
+    public static function of(bool|BooleanValue $condition, ?ExpressionTreeConfig $config = null): self
     {
-        $config ??= new PipelineConfig();
+        $config ??= new ExpressionTreeConfig();
 
         return new self(self::decorateBoolean(self::wrapAs(BooleanValue::class, $condition), $config), $config);
     }

@@ -8,7 +8,7 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Allocation\Exc
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\IntegerValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
-use PhpArchitecture\LazyOperators\Foundation\Expression\PipelineConfig;
+use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\DecoratesNodes;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\WrapsRawValues;
 
@@ -25,13 +25,13 @@ class Allocation
         array $shares,
         int|IntegerValue $precision,
         AllocationRemainderTarget $remainderTarget = AllocationRemainderTarget::First,
-        ?PipelineConfig $config = null,
+        ?ExpressionTreeConfig $config = null,
     ): Expression {
         if ($shares === []) {
             throw EmptySharesException::create();
         }
 
-        $config ??= new PipelineConfig();
+        $config ??= new ExpressionTreeConfig();
 
         $decorated = array_map(
             static fn (int|float|NumberValue $share) => self::decorateNumeric($share, $config),
@@ -52,7 +52,7 @@ class Allocation
         );
     }
 
-    private static function decorateNumeric(int|float|NumberValue $value, PipelineConfig $config): NumberValue
+    private static function decorateNumeric(int|float|NumberValue $value, ExpressionTreeConfig $config): NumberValue
     {
         return self::decorateNumber(self::wrapAs(NumberValue::class, $value), $config);
     }

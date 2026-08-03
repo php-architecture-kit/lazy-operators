@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
-use PhpArchitecture\LazyOperators\Foundation\Expression\PipelineConfig;
+use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\DecoratesNodes;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\WrapsRawValues;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
@@ -17,13 +17,13 @@ class Arithmetic
 
     private function __construct(
         private readonly NumberValue $current,
-        private readonly PipelineConfig $config,
+        private readonly ExpressionTreeConfig $config,
     ) {
     }
 
-    public static function of(int|float|NumberValue $value, ?PipelineConfig $config = null): self
+    public static function of(int|float|NumberValue $value, ?ExpressionTreeConfig $config = null): self
     {
-        $config ??= new PipelineConfig();
+        $config ??= new ExpressionTreeConfig();
 
         return new self(self::decorateNumeric($value, $config), $config);
     }
@@ -81,12 +81,12 @@ class Arithmetic
         return $this->current;
     }
 
-    private static function decorateNumeric(int|float|NumberValue $value, PipelineConfig $config): NumberValue
+    private static function decorateNumeric(int|float|NumberValue $value, ExpressionTreeConfig $config): NumberValue
     {
         return self::decorateNumber(self::wrapAs(NumberValue::class, $value), $config);
     }
 
-    private static function decorateOperator(NumberValue $node, PipelineConfig $config): NumberValue
+    private static function decorateOperator(NumberValue $node, ExpressionTreeConfig $config): NumberValue
     {
         return self::decorateNumber($node, $config);
     }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Foundation\Expression\Logical;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
-use PhpArchitecture\LazyOperators\Foundation\Expression\PipelineConfig;
+use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\DecoratesNodes;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\WrapsRawValues;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\BooleanValue;
@@ -17,12 +17,12 @@ class Logical
 
     private function __construct(
         private readonly BooleanValue $current,
-        private readonly PipelineConfig $config,
+        private readonly ExpressionTreeConfig $config,
     ) {}
 
-    public static function of(bool|BooleanValue $value, ?PipelineConfig $config = null): self
+    public static function of(bool|BooleanValue $value, ?ExpressionTreeConfig $config = null): self
     {
-        $config ??= new PipelineConfig();
+        $config ??= new ExpressionTreeConfig();
 
         return new self(self::wrapDecorate($value, $config), $config);
     }
@@ -61,7 +61,7 @@ class Logical
         return $this->current;
     }
 
-    private static function wrapDecorate(bool|BooleanValue $value, PipelineConfig $config): BooleanValue
+    private static function wrapDecorate(bool|BooleanValue $value, ExpressionTreeConfig $config): BooleanValue
     {
         return self::decorateBoolean(self::wrapAs(BooleanValue::class, $value), $config);
     }

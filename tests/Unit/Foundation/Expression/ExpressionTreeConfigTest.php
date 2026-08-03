@@ -6,12 +6,12 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic\Arithmetic;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Conditional;
-use PhpArchitecture\LazyOperators\Foundation\Expression\PipelineConfig;
+use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
 use PhpArchitecture\LazyOperators\Tests\Support\RecordingExpression;
 use PHPUnit\Framework\TestCase;
 
-final class PipelineConfigTest extends TestCase
+final class ExpressionTreeConfigTest extends TestCase
 {
     protected function setUp(): void
     {
@@ -20,14 +20,14 @@ final class PipelineConfigTest extends TestCase
 
     public function testDecoratorDefaultsToNull(): void
     {
-        self::assertNull((new PipelineConfig())->decorator);
+        self::assertNull((new ExpressionTreeConfig())->decorator);
     }
 
     public function testDecoratorHoldsTheGivenPrototype(): void
     {
         $decorator = new RecordingExpression(new IntLiteral(0));
 
-        self::assertSame($decorator, (new PipelineConfig($decorator))->decorator);
+        self::assertSame($decorator, (new ExpressionTreeConfig($decorator))->decorator);
     }
 
     public function testDecoratedNodeUnwrapsBackToTheOriginalInner(): void
@@ -39,7 +39,7 @@ final class PipelineConfigTest extends TestCase
 
     public function testArithmeticDecoratesEveryNodeInEvaluationOrder(): void
     {
-        $config = new PipelineConfig(new RecordingExpression(new IntLiteral(0)));
+        $config = new ExpressionTreeConfig(new RecordingExpression(new IntLiteral(0)));
 
         $expr = Arithmetic::of(2, $config)->add(3)->multiply(10)->build();
 
@@ -49,7 +49,7 @@ final class PipelineConfigTest extends TestCase
 
     public function testIfDecoratesConditionTakenBranchAndTopNode(): void
     {
-        $config = new PipelineConfig(new RecordingExpression(new IntLiteral(0)));
+        $config = new ExpressionTreeConfig(new RecordingExpression(new IntLiteral(0)));
 
         $expr = Conditional::if(true, $config)->then('yes')->else('no')->build();
 
@@ -59,7 +59,7 @@ final class PipelineConfigTest extends TestCase
 
     public function testSwitchDecoratesSubjectEvaluatedCasesMatchedValueAndTopNode(): void
     {
-        $config = new PipelineConfig(new RecordingExpression(new IntLiteral(0)));
+        $config = new ExpressionTreeConfig(new RecordingExpression(new IntLiteral(0)));
 
         $expr = Conditional::switch(2, $config)
             ->case(1, 'a')

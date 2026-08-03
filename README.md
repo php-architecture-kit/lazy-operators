@@ -74,7 +74,7 @@ You rarely construct these node classes directly. Every operator accepts either 
 you. This is why `Arithmetic::of(2)->add(3)` and `Arithmetic::of(2)->add(SomeExpression)` both
 work.
 
-Each facade also accepts an optional `PipelineConfig` with a decorator. When set, every node the
+Each facade also accepts an optional `ExpressionTreeConfig` with a decorator. When set, every node the
 facade builds gets wrapped in your decorator. This is a plain way to add logging, caching, or
 tracing around every operation, without changing any operator code.
 

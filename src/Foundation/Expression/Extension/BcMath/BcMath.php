@@ -9,7 +9,7 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\BcMath\Arithme
 use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\BcMath\Arithmetic\BcMulFunction;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\BcMath\Arithmetic\BcSubFunction;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\BcMath\Comparison\BcCompFunction;
-use PhpArchitecture\LazyOperators\Foundation\Expression\PipelineConfig;
+use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Static\FloatLiteral;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\DecoratesNodes;
@@ -31,11 +31,11 @@ final class BcMath
         int|float|string|NumberValue $left,
         int|float|string|NumberValue $right,
         null|int|IntegerValue $scale = null,
-        ?PipelineConfig $config = null,
+        ?ExpressionTreeConfig $config = null,
     ): NumberValue {
         return self::decorateNumber(
             new BcAddFunction(self::wrapRawScalar($left), self::wrapRawScalar($right), self::wrapScale($scale)),
-            $config ?? new PipelineConfig(),
+            $config ?? new ExpressionTreeConfig(),
         );
     }
 
@@ -43,11 +43,11 @@ final class BcMath
         int|float|string|NumberValue $left,
         int|float|string|NumberValue $right,
         null|int|IntegerValue $scale = null,
-        ?PipelineConfig $config = null,
+        ?ExpressionTreeConfig $config = null,
     ): NumberValue {
         return self::decorateNumber(
             new BcSubFunction(self::wrapRawScalar($left), self::wrapRawScalar($right), self::wrapScale($scale)),
-            $config ?? new PipelineConfig(),
+            $config ?? new ExpressionTreeConfig(),
         );
     }
 
@@ -55,11 +55,11 @@ final class BcMath
         int|float|string|NumberValue $left,
         int|float|string|NumberValue $right,
         null|int|IntegerValue $scale = null,
-        ?PipelineConfig $config = null,
+        ?ExpressionTreeConfig $config = null,
     ): NumberValue {
         return self::decorateNumber(
             new BcMulFunction(self::wrapRawScalar($left), self::wrapRawScalar($right), self::wrapScale($scale)),
-            $config ?? new PipelineConfig(),
+            $config ?? new ExpressionTreeConfig(),
         );
     }
 
@@ -67,11 +67,11 @@ final class BcMath
         int|float|string|NumberValue $dividend,
         int|float|string|NumberValue $divisor,
         null|int|IntegerValue $scale = null,
-        ?PipelineConfig $config = null,
+        ?ExpressionTreeConfig $config = null,
     ): NumberValue {
         return self::decorateNumber(
             new BcDivFunction(self::wrapRawScalar($dividend), self::wrapRawScalar($divisor), self::wrapScale($scale)),
-            $config ?? new PipelineConfig(),
+            $config ?? new ExpressionTreeConfig(),
         );
     }
 
@@ -79,11 +79,11 @@ final class BcMath
         int|float|string|NumberValue $left,
         int|float|string|NumberValue $right,
         null|int|IntegerValue $scale = null,
-        ?PipelineConfig $config = null,
+        ?ExpressionTreeConfig $config = null,
     ): NumberValue {
         return self::decorateNumber(
             new BcCompFunction(self::wrapRawScalar($left), self::wrapRawScalar($right), self::wrapScale($scale)),
-            $config ?? new PipelineConfig(),
+            $config ?? new ExpressionTreeConfig(),
         );
     }
 

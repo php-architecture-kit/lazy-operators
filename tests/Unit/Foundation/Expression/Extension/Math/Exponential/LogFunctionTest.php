@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Exponential;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Extension\Math\Exponential;
 
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential\LogFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Exponential\LogFunction;
 use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 use PHPUnit\Framework\TestCase;
 

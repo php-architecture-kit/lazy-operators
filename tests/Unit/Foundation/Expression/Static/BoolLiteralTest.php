@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Static;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Static;
 
-use PhpArchitecture\LazyOperators\Foundation\Static\BoolLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\BoolLiteral;
 use PHPUnit\Framework\TestCase;
 
 final class BoolLiteralTest extends TestCase

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression;
 
 class PipelineConfig
 {

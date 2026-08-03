@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Conditional;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Conditional;
 
-use PhpArchitecture\LazyOperators\Foundation\Conditional\Exception\IncompleteIfBuilderException;
-use PhpArchitecture\LazyOperators\Foundation\Expression;
-use PhpArchitecture\LazyOperators\Foundation\PipelineConfig;
-use PhpArchitecture\LazyOperators\Foundation\Support\DecoratesNodes;
-use PhpArchitecture\LazyOperators\Foundation\Support\WrapsRawValues;
-use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Exception\IncompleteIfBuilderException;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Expression\PipelineConfig;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Support\DecoratesNodes;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Support\WrapsRawValues;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\BooleanValue;
 
 class IfBuilder
 {

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Support;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Support;
 
-use PhpArchitecture\LazyOperators\Foundation\Exception\UnwrappableValueException;
-use PhpArchitecture\LazyOperators\Foundation\Expression;
-use PhpArchitecture\LazyOperators\Foundation\Static\ArrayLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Static\BoolLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Static\FloatLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Static\StringLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Exception\UnwrappableValueException;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\ArrayLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\BoolLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\FloatLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\StringLiteral;
 
 trait WrapsRawValues
 {

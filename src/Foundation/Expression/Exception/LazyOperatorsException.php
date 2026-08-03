@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Exception;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Exception;
 
 use Throwable;
 

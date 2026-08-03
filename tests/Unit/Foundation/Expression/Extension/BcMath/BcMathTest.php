@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\BcMath;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Extension\BcMath;
 
 use BcMath\Number;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcAddFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\BcMath;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Comparison\BcCompFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\BcMath\Arithmetic\BcAddFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\BcMath\BcMath;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\BcMath\Comparison\BcCompFunction;
 use PHPUnit\Framework\TestCase;
 
 final class BcMathTest extends TestCase

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Exception;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Exception;
 
 use LogicException;
-use PhpArchitecture\LazyOperators\Foundation\Runtime\Port;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Runtime\Port;
 
 final class PortNotBoundException extends LogicException implements LazyOperatorsException
 {

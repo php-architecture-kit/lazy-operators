@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Numeric;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Numeric;
 
-use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Group;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Name;
 
 #[Group('Math | Numeric')]
 #[Name('Abs')]

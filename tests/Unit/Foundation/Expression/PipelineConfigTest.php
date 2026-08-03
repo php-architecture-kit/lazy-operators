@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation;
 
-use PhpArchitecture\LazyOperators\Foundation\Arithmetic\Arithmetic;
-use PhpArchitecture\LazyOperators\Foundation\Conditional\Conditional;
-use PhpArchitecture\LazyOperators\Foundation\PipelineConfig;
-use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic\Arithmetic;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Conditional;
+use PhpArchitecture\LazyOperators\Foundation\Expression\PipelineConfig;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
 use PhpArchitecture\LazyOperators\Tests\Support\RecordingExpression;
 use PHPUnit\Framework\TestCase;
 

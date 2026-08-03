@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Conversion;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Extension\Math\Conversion;
 
 use PHPUnit\Framework\TestCase;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion\DecBinFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Conversion\DecBinFunction;
 use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class DecBinFunctionTest extends TestCase

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Application\Registry\Entry;
+namespace PhpArchitecture\LazyOperators\Foundation\Registry\Entry;
 
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Description;
 
 readonly class ExpressionArgument
 {

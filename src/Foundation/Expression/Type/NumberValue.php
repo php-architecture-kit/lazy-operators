@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Type;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Type;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
 
 interface NumberValue extends Expression
 {

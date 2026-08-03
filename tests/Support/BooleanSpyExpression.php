@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Tests\Support;
 
-use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\BooleanValue;
 
 final class BooleanSpyExpression implements BooleanValue
 {

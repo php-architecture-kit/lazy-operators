@@ -26,7 +26,7 @@
     },
     "suggest": {
         "ext-math": "For additional math functions (e.g. gcd, factorial) usable with the arithmetic operators.",
-        "ext-bcmath": "For arbitrary-precision arithmetic (bcadd, bcsub, bcmul, bcdiv, bccomp) usable via Foundation\\Extension\\BcMath."
+        "ext-bcmath": "For arbitrary-precision arithmetic (bcadd, bcsub, bcmul, bcdiv, bccomp) usable via Foundation\\Expression\\Extension\\BcMath."
     },
     "autoload": {
         "psr-4": {

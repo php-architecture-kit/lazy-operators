@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Meta\Attribute;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute;
 
 use Attribute;
 

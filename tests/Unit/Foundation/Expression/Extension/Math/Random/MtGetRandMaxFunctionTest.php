@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Random;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Extension\Math\Random;
 
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Random\MtGetRandMaxFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Random\MtGetRandMaxFunction;
 use PHPUnit\Framework\TestCase;
 
 final class MtGetRandMaxFunctionTest extends TestCase

@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Arithmetic;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Arithmetic;
 
-use PhpArchitecture\LazyOperators\Foundation\Arithmetic\AdditionOperator;
-use PhpArchitecture\LazyOperators\Foundation\Arithmetic\Arithmetic;
-use PhpArchitecture\LazyOperators\Foundation\Arithmetic\DivisionOperator;
-use PhpArchitecture\LazyOperators\Foundation\Arithmetic\ExponentiationOperator;
-use PhpArchitecture\LazyOperators\Foundation\Arithmetic\ModuloOperator;
-use PhpArchitecture\LazyOperators\Foundation\Arithmetic\MultiplicationOperator;
-use PhpArchitecture\LazyOperators\Foundation\Arithmetic\SubtractionOperator;
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic\AdditionOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic\Arithmetic;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic\DivisionOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic\ExponentiationOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic\ModuloOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic\MultiplicationOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic\SubtractionOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
 use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 use PHPUnit\Framework\TestCase;
 

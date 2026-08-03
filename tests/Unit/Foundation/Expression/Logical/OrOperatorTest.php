@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Logical;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Logical;
 
-use PhpArchitecture\LazyOperators\Foundation\Logical\OrOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Logical\OrOperator;
 use PhpArchitecture\LazyOperators\Tests\Support\BooleanSpyExpression;
 use PHPUnit\Framework\TestCase;
 

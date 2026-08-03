@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Support;
 
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exception\MathFunctionUnavailableException;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Exception\MathFunctionUnavailableException;
 
 trait GuardsNativeFunction
 {

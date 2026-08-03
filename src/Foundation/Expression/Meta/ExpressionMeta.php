@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Meta;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Meta;
 
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Exception\MissingMetaAttributeException;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Name;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Exception\MissingMetaAttributeException;
 use ReflectionClass;
 
 final class ExpressionMeta

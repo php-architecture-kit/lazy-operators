@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Conditional;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Conditional;
 
-use PhpArchitecture\LazyOperators\Foundation\Conditional\Exception\NoMatchedCaseException;
-use PhpArchitecture\LazyOperators\Foundation\Expression;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\ItemTypeOf;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Exception\NoMatchedCaseException;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\ItemTypeOf;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Group;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Name;
 
 #[Group('Conditional')]
 #[Name('Switch Case')]

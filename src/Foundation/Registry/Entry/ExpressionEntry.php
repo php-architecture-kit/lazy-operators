@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Application\Registry\Entry;
+namespace PhpArchitecture\LazyOperators\Foundation\Registry\Entry;
 
 readonly class ExpressionEntry
 {

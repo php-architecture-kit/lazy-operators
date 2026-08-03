@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\BcMath\Arithmetic;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Extension\BcMath\Arithmetic;
 
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcMulFunction;
-use PhpArchitecture\LazyOperators\Foundation\Static\FloatLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\BcMath\Arithmetic\BcMulFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\FloatLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
 use PHPUnit\Framework\TestCase;
 
 final class BcMulFunctionTest extends TestCase

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Custom;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Custom;
 
-use PhpArchitecture\LazyOperators\Foundation\Custom\CallbackOperator;
-use PhpArchitecture\LazyOperators\Foundation\Custom\Custom;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Custom\CallbackOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Custom\Custom;
 use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
 use PHPUnit\Framework\TestCase;
 

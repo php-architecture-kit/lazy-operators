@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Classification;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Extension\Math\Classification;
 
 use PHPUnit\Framework\TestCase;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Classification\IsInfiniteFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Classification\IsInfiniteFunction;
 use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class IsInfiniteFunctionTest extends TestCase

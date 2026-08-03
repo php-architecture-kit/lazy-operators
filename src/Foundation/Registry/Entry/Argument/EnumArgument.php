@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Application\Registry\Entry\Argument;
+namespace PhpArchitecture\LazyOperators\Foundation\Registry\Entry\Argument;
 
-use PhpArchitecture\LazyOperators\Application\Registry\Entry\ExpressionArgument;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Registry\Entry\ExpressionArgument;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Description;
 
 readonly class EnumArgument extends ExpressionArgument
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Support;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Extension\Math\Support;
 
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exception\MathFunctionUnavailableException;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Exception\MathFunctionUnavailableException;
 use PhpArchitecture\LazyOperators\Tests\Support\UnavailableNativeFunctionExpression;
 use PHPUnit\Framework\TestCase;
 

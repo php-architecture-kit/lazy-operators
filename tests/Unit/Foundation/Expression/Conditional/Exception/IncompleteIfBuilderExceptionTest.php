@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Conditional\Exception;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Conditional\Exception;
 
 use LogicException;
-use PhpArchitecture\LazyOperators\Foundation\Conditional\Exception\IncompleteIfBuilderException;
-use PhpArchitecture\LazyOperators\Foundation\Conditional\Exception\LazyOperatorsConditionalException;
-use PhpArchitecture\LazyOperators\Foundation\Exception\LazyOperatorsException;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Exception\IncompleteIfBuilderException;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Exception\LazyOperatorsConditionalException;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Exception\LazyOperatorsException;
 use PHPUnit\Framework\TestCase;
 
 final class IncompleteIfBuilderExceptionTest extends TestCase

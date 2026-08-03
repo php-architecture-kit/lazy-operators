@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Application\Registry;
+namespace PhpArchitecture\LazyOperators\Foundation\Registry;
 
-use PhpArchitecture\LazyOperators\Application\Registry\Entry\ExpressionEntry;
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Registry\Entry\ExpressionEntry;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
 
 interface ExpressionRegistryInterface
 {

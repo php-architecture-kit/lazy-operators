@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Exponential;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Extension\Math\Exponential;
 
 use PHPUnit\Framework\TestCase;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential\Log1pFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Exponential\Log1pFunction;
 use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class Log1pFunctionTest extends TestCase

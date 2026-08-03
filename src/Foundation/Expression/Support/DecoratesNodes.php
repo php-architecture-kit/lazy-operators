@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Support;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Support;
 
-use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
-use PhpArchitecture\LazyOperators\Foundation\Expression;
-use PhpArchitecture\LazyOperators\Foundation\PipelineConfig;
-use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
-use PhpArchitecture\LazyOperators\Foundation\Type\IntegerValue;
-use PhpArchitecture\LazyOperators\Foundation\Type\StringValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Expression\PipelineConfig;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\BooleanValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\IntegerValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\StringValue;
 
 trait DecoratesNodes
 {

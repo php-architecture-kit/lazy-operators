@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Meta\Exception;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Exception;
 
 use LogicException;
-use PhpArchitecture\LazyOperators\Foundation\Exception\LazyOperatorsException;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Exception\LazyOperatorsException;
 
 final class MissingMetaAttributeException extends LogicException implements LazyOperatorsException
 {

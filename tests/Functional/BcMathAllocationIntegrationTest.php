@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Tests\Functional;
 
-use PhpArchitecture\LazyOperators\Foundation\Comparator\SpaceshipOperator;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\Allocation;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationRemainderTarget;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\BcMath;
-use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Comparator\SpaceshipOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Allocation\Allocation;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Allocation\AllocationRemainderTarget;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\BcMath\BcMath;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
 use PHPUnit\Framework\TestCase;
 
 /**

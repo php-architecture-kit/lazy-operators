@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Cast;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Cast;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
-use PhpArchitecture\LazyOperators\Foundation\Type\IntegerValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Group;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Name;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\IntegerValue;
 
 #[Group('Cast')]
 #[Name('Integer Cast')]

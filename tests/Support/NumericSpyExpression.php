@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Tests\Support;
 
-use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
 
 final class NumericSpyExpression implements NumberValue
 {

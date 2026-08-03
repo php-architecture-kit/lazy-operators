@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Extension\BcMath;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Extension\BcMath;
 
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcAddFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcDivFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcMulFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Arithmetic\BcSubFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Comparison\BcCompFunction;
-use PhpArchitecture\LazyOperators\Foundation\PipelineConfig;
-use PhpArchitecture\LazyOperators\Foundation\Static\FloatLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Support\DecoratesNodes;
-use PhpArchitecture\LazyOperators\Foundation\Support\WrapsRawValues;
-use PhpArchitecture\LazyOperators\Foundation\Type\IntegerValue;
-use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\BcMath\Arithmetic\BcAddFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\BcMath\Arithmetic\BcDivFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\BcMath\Arithmetic\BcMulFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\BcMath\Arithmetic\BcSubFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\BcMath\Comparison\BcCompFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\PipelineConfig;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\FloatLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Support\DecoratesNodes;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Support\WrapsRawValues;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\IntegerValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
 
 /**
  * Static factories for the ext-bcmath arbitrary-precision functions (https://www.php.net/manual/en/book.bc.php).

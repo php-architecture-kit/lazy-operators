@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Rounding;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Rounding;
 
-use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Support\GuardsNativeFunction;
-use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Support\GuardsNativeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
 use RoundingMode;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Group;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Name;
 
 #[Group('Math | Rounding')]
 #[Name('Round')]

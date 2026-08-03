@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\BcMath\Support;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Extension\BcMath\Support;
 
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Exception\BcMathFunctionUnavailableException;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\BcMath\Exception\BcMathFunctionUnavailableException;
 use PhpArchitecture\LazyOperators\Tests\Support\UnavailableNativeBcMathFunctionExpression;
 use PHPUnit\Framework\TestCase;
 

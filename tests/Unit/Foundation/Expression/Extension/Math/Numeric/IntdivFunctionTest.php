@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Numeric;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Extension\Math\Numeric;
 
 use DivisionByZeroError;
 use PHPUnit\Framework\TestCase;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Numeric\IntdivFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Numeric\IntdivFunction;
 use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class IntdivFunctionTest extends TestCase

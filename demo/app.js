@@ -9,14 +9,6 @@
         catalogByKey[entry.key] = entry;
     });
 
-    var callbacksElement = document.getElementById('callbacks-data');
-    var callbacks = JSON.parse(callbacksElement.textContent);
-
-    var callbacksByName = {};
-    callbacks.forEach(function (callback) {
-        callbacksByName[callback.name] = callback;
-    });
-
     var detail = document.getElementById('detail');
     var detailGroup = document.getElementById('detail-group');
     var detailType = document.getElementById('detail-type');
@@ -31,7 +23,6 @@
     var draggingKey = null;
     var lastHoverLi = null;
     var openDropdownLi = null;
-    var openCallbackPopoverTile = null;
 
     var TYPE_HIERARCHY = {
         IntegerValue: ['IntegerValue', 'NumberValue', 'Expression'],
@@ -111,11 +102,6 @@
     }
 
     function assignEnumArgument(argumentName, value) {
-        assignments[argumentName] = { value: value };
-        renderArguments(currentArguments);
-    }
-
-    function assignCallbackArgument(argumentName, value) {
         assignments[argumentName] = { value: value };
         renderArguments(currentArguments);
     }
@@ -228,42 +214,6 @@
                     enumChoose.className = 'argument-choose';
                     enumChoose.textContent = 'choose ▾';
                     enumHint.appendChild(enumChoose);
-                }
-            }
-
-            if (argument.kind === 'callback') {
-                var assignedCallback = assignments[argument.name];
-
-                if (assignedCallback) {
-                    item.classList.add('argument-assigned');
-
-                    var assignedCallbackValue = document.createElement('span');
-                    assignedCallbackValue.className = 'argument-assigned-value';
-                    assignedCallbackValue.textContent = assignedCallback.value;
-                    item.appendChild(assignedCallbackValue);
-
-                    var unassignCallback = document.createElement('button');
-                    unassignCallback.type = 'button';
-                    unassignCallback.className = 'argument-unassign';
-                    unassignCallback.title = 'Unassign';
-                    unassignCallback.textContent = '×';
-                    item.appendChild(unassignCallback);
-                } else if (!callbacks.length) {
-                    var noCallbacks = document.createElement('span');
-                    noCallbacks.className = 'argument-no-targets';
-                    noCallbacks.textContent = 'no options available';
-                    item.appendChild(noCallbacks);
-                } else {
-                    var callbackHint = document.createElement('span');
-                    callbackHint.className = 'argument-options argument-assign-hint';
-                    callbackHint.textContent = 'pick a callback:';
-                    item.appendChild(callbackHint);
-
-                    var callbackChoose = document.createElement('button');
-                    callbackChoose.type = 'button';
-                    callbackChoose.className = 'argument-choose';
-                    callbackChoose.textContent = 'choose ▾';
-                    callbackHint.appendChild(callbackChoose);
                 }
             }
 
@@ -443,24 +393,6 @@
 
                 dropdown.appendChild(item);
             });
-        } else if (argument.kind === 'callback') {
-            callbacks.forEach(function (callback) {
-                var item = document.createElement('button');
-                item.type = 'button';
-                item.className = 'arg-dropdown-item';
-                item.dataset.callbackValue = callback.name;
-
-                var itemName = document.createElement('span');
-                itemName.textContent = callback.name;
-                item.appendChild(itemName);
-
-                var itemSignature = document.createElement('span');
-                itemSignature.className = 'arg-dropdown-item-type';
-                itemSignature.textContent = callback.signature;
-                item.appendChild(itemSignature);
-
-                dropdown.appendChild(item);
-            });
         } else {
             var entries = getCompatibleEntries(argument);
             var previousGroup = null;
@@ -560,8 +492,6 @@
 
             if (dropdownItem.dataset.enumValue !== undefined) {
                 assignEnumArgument(li.dataset.argumentName, dropdownItem.dataset.enumValue);
-            } else if (dropdownItem.dataset.callbackValue !== undefined) {
-                assignCallbackArgument(li.dataset.argumentName, dropdownItem.dataset.callbackValue);
             } else {
                 assignArgument(li.dataset.argumentName, dropdownItem.dataset.entryKey);
             }
@@ -624,77 +554,4 @@
         });
     });
 
-    function closeCallbackPopover() {
-        if (!openCallbackPopoverTile) {
-            return;
-        }
-
-        var popover = openCallbackPopoverTile.querySelector('.callback-popover');
-
-        if (popover) {
-            popover.remove();
-        }
-
-        openCallbackPopoverTile.classList.remove('is-selected');
-        openCallbackPopoverTile = null;
-        document.removeEventListener('click', onDocumentClickWhileCallbackPopoverOpen, true);
-        document.removeEventListener('keydown', onKeydownWhileCallbackPopoverOpen, true);
-    }
-
-    function onDocumentClickWhileCallbackPopoverOpen(event) {
-        if (event.target.closest('.callback-popover') || event.target.closest('.callback-tile')) {
-            return;
-        }
-
-        closeCallbackPopover();
-    }
-
-    function onKeydownWhileCallbackPopoverOpen(event) {
-        if (event.key === 'Escape') {
-            closeCallbackPopover();
-        }
-    }
-
-    function openCallbackPopover(tile) {
-        if (openCallbackPopoverTile === tile) {
-            closeCallbackPopover();
-
-            return;
-        }
-
-        closeCallbackPopover();
-
-        var callback = callbacksByName[tile.dataset.callbackName];
-
-        if (!callback) {
-            return;
-        }
-
-        var popover = document.createElement('div');
-        popover.className = 'callback-popover';
-
-        var signature = document.createElement('code');
-        signature.className = 'callback-popover-signature';
-        signature.textContent = callback.name + callback.signature;
-        popover.appendChild(signature);
-
-        callback.parameters.forEach(function (parameter) {
-            var param = document.createElement('span');
-            param.className = 'callback-popover-param';
-            param.textContent = parameter.type + ' $' + parameter.name;
-            popover.appendChild(param);
-        });
-
-        tile.appendChild(popover);
-        tile.classList.add('is-selected');
-        openCallbackPopoverTile = tile;
-        document.addEventListener('click', onDocumentClickWhileCallbackPopoverOpen, true);
-        document.addEventListener('keydown', onKeydownWhileCallbackPopoverOpen, true);
-    }
-
-    document.querySelectorAll('.callback-tile').forEach(function (tile) {
-        tile.addEventListener('click', function () {
-            openCallbackPopover(tile);
-        });
-    });
 }());

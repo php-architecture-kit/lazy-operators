@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Custom;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Custom;
 
 use Closure;
-use PhpArchitecture\LazyOperators\Foundation\Support\WrapsRawValues;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Support\WrapsRawValues;
 
 class Custom
 {

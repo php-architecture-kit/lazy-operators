@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exception;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Exception;
 
 use RuntimeException;
 

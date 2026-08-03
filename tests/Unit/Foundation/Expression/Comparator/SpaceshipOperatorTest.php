@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Comparator;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Comparator;
 
-use PhpArchitecture\LazyOperators\Foundation\Comparator\SpaceshipOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Comparator\SpaceshipOperator;
 use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
 use PHPUnit\Framework\TestCase;
 

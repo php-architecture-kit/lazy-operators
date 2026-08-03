@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Logical;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Logical;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression;
-use PhpArchitecture\LazyOperators\Foundation\Logical\AndOperator;
-use PhpArchitecture\LazyOperators\Foundation\Logical\Logical;
-use PhpArchitecture\LazyOperators\Foundation\Logical\NotOperator;
-use PhpArchitecture\LazyOperators\Foundation\Logical\OrOperator;
-use PhpArchitecture\LazyOperators\Foundation\Logical\XorOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Logical\AndOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Logical\Logical;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Logical\NotOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Logical\OrOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Logical\XorOperator;
 use PhpArchitecture\LazyOperators\Tests\Support\BooleanSpyExpression;
 use PHPUnit\Framework\TestCase;
 

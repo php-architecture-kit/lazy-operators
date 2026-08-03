@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Arithmetic;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Arithmetic;
 
-use PhpArchitecture\LazyOperators\Foundation\Arithmetic\AdditionOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic\AdditionOperator;
 use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 use PHPUnit\Framework\TestCase;
 

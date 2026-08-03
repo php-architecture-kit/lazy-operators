@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Conditional;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Conditional;
 
-use PhpArchitecture\LazyOperators\Foundation\Conditional\CaseOfSwitchCase;
-use PhpArchitecture\LazyOperators\Foundation\Conditional\Exception\NoMatchedCaseException;
-use PhpArchitecture\LazyOperators\Foundation\Conditional\SwitchCaseOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\CaseOfSwitchCase;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Exception\NoMatchedCaseException;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\SwitchCaseOperator;
 use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
 use PHPUnit\Framework\TestCase;
 

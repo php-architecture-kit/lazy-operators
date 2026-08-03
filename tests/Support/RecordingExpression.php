@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Tests\Support;
 
-use PhpArchitecture\LazyOperators\Foundation\Decorator;
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Decorator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
 
 final class RecordingExpression implements Decorator
 {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Allocation;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Extension\Allocation;
 
-use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationFunction;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\AllocationRemainderTarget;
-use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Allocation\AllocationFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Allocation\AllocationRemainderTarget;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
 use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 use PHPUnit\Framework\TestCase;
 

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Extension\Array;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Array;
 
-use PhpArchitecture\LazyOperators\Foundation\Type\ArrayValue;
-use PhpArchitecture\LazyOperators\Foundation\Type\StringValue;
-use PhpArchitecture\LazyOperators\Foundation\Expression;
-use PhpArchitecture\LazyOperators\Foundation\PipelineConfig;
-use PhpArchitecture\LazyOperators\Foundation\Support\DecoratesNodes;
-use PhpArchitecture\LazyOperators\Foundation\Support\WrapsRawValues;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\ArrayValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\StringValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Expression\PipelineConfig;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Support\DecoratesNodes;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Support\WrapsRawValues;
 
 /**
  * Static factories for genuinely array-shaped operations — array in, single value out.

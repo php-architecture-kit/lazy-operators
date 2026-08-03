@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Conditional;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Conditional;
 
-use PhpArchitecture\LazyOperators\Foundation\Conditional\Conditional;
-use PhpArchitecture\LazyOperators\Foundation\Conditional\Exception\IncompleteIfBuilderException;
-use PhpArchitecture\LazyOperators\Foundation\Conditional\Exception\NoMatchedCaseException;
-use PhpArchitecture\LazyOperators\Foundation\Conditional\IfElseOperator;
-use PhpArchitecture\LazyOperators\Foundation\Conditional\SwitchCaseOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Conditional;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Exception\IncompleteIfBuilderException;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Exception\NoMatchedCaseException;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\IfElseOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\SwitchCaseOperator;
 use PHPUnit\Framework\TestCase;
 
 final class ConditionalTest extends TestCase

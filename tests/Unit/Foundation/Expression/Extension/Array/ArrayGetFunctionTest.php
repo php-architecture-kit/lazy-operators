@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Array;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Extension\Array;
 
-use PhpArchitecture\LazyOperators\Foundation\Extension\Array\ArrayGetFunction;
-use PhpArchitecture\LazyOperators\Foundation\Static\ArrayLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Static\StringLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Array\ArrayGetFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\ArrayLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\StringLiteral;
 use PHPUnit\Framework\TestCase;
 
 final class ArrayGetFunctionTest extends TestCase

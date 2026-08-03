@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Cast;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Cast;
 
-use PhpArchitecture\LazyOperators\Foundation\Cast\StringCast;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Cast\StringCast;
 use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
 use PHPUnit\Framework\TestCase;
 

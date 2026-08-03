@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Static;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Static;
 
-use PhpArchitecture\LazyOperators\Foundation\Type\StringValue;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\StringValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Group;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Name;
 
 #[Group('Static')]
 #[Name('String Literal')]

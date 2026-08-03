@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Comparison;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Comparison;
 
-use PhpArchitecture\LazyOperators\Foundation\Comparison\NotEqualOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Comparison\NotEqualOperator;
 use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
 use PHPUnit\Framework\TestCase;
 

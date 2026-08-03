@@ -5,41 +5,41 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Infrastructure\Registry;
 
 use Closure;
-use PhpArchitecture\LazyOperators\Application\Registry\Entry\Argument\CallbackArgument;
-use PhpArchitecture\LazyOperators\Application\Registry\Entry\Argument\CaseArgument;
-use PhpArchitecture\LazyOperators\Application\Registry\Entry\Argument\EnumArgument;
-use PhpArchitecture\LazyOperators\Application\Registry\Entry\ExpressionArgument;
-use PhpArchitecture\LazyOperators\Application\Registry\Entry\ExpressionAttributes;
-use PhpArchitecture\LazyOperators\Application\Registry\Entry\ExpressionEntry;
-use PhpArchitecture\LazyOperators\Application\Registry\ExpressionRegistryInterface;
-use PhpArchitecture\LazyOperators\Foundation\Arithmetic;
-use PhpArchitecture\LazyOperators\Foundation\Cast;
-use PhpArchitecture\LazyOperators\Foundation\Comparator;
-use PhpArchitecture\LazyOperators\Foundation\Comparison;
-use PhpArchitecture\LazyOperators\Foundation\Conditional\CaseOfSwitchCase;
-use PhpArchitecture\LazyOperators\Foundation\Conditional;
-use PhpArchitecture\LazyOperators\Foundation\Custom;
-use PhpArchitecture\LazyOperators\Foundation\Expression;
-use PhpArchitecture\LazyOperators\Foundation\Extension;
-use PhpArchitecture\LazyOperators\Foundation\Logical;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Description;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Formula;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Group;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\ItemTypeOf;
-use PhpArchitecture\LazyOperators\Foundation\Meta\Attribute\Name;
-use PhpArchitecture\LazyOperators\Foundation\Runtime\Port;
-use PhpArchitecture\LazyOperators\Foundation\Static\ArrayLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Static\BoolLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Static\FloatLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Static\IntLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Static\StringLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Type\ArrayValue;
-use PhpArchitecture\LazyOperators\Foundation\Type\BooleanValue;
-use PhpArchitecture\LazyOperators\Foundation\Type\FloatValue;
-use PhpArchitecture\LazyOperators\Foundation\Type\IntegerValue;
-use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
-use PhpArchitecture\LazyOperators\Foundation\Type\ObjectValue;
-use PhpArchitecture\LazyOperators\Foundation\Type\StringValue;
+use PhpArchitecture\LazyOperators\Foundation\Registry\Entry\Argument\CallbackArgument;
+use PhpArchitecture\LazyOperators\Foundation\Registry\Entry\Argument\CaseArgument;
+use PhpArchitecture\LazyOperators\Foundation\Registry\Entry\Argument\EnumArgument;
+use PhpArchitecture\LazyOperators\Foundation\Registry\Entry\ExpressionArgument;
+use PhpArchitecture\LazyOperators\Foundation\Registry\Entry\ExpressionAttributes;
+use PhpArchitecture\LazyOperators\Foundation\Registry\Entry\ExpressionEntry;
+use PhpArchitecture\LazyOperators\Foundation\Registry\ExpressionRegistryInterface;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Cast;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Comparator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Comparison;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\CaseOfSwitchCase;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Custom;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Logical;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Description;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Formula;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Group;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\ItemTypeOf;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Name;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Runtime\Port;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\ArrayLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\BoolLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\FloatLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\StringLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\ArrayValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\BooleanValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\FloatValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\IntegerValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\ObjectValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\StringValue;
 use ReflectionClass;
 use ReflectionNamedType;
 use ReflectionParameter;
@@ -389,7 +389,7 @@ class ExpressionRegistry implements ExpressionRegistryInterface
 
     /**
      * Strips namespaces from a reflection type string for UI display (e.g. the FQCN
-     * "PhpArchitecture\LazyOperators\Foundation\Type\NumberValue" becomes "NumberValue"), while
+     * "PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue" becomes "NumberValue"), while
      * leaving union separators ("|"), the nullable "?" prefix, and unqualified builtin names
      * (int, string, array, ...) untouched.
      */

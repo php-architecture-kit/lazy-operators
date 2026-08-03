@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Exception;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Extension\BcMath\Exception;
 
 use RuntimeException;
 

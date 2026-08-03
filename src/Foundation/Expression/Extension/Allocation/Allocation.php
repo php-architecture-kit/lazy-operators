@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Extension\Allocation;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Allocation;
 
-use PhpArchitecture\LazyOperators\Foundation\Extension\Allocation\Exception\EmptySharesException;
-use PhpArchitecture\LazyOperators\Foundation\Type\IntegerValue;
-use PhpArchitecture\LazyOperators\Foundation\Type\NumberValue;
-use PhpArchitecture\LazyOperators\Foundation\Expression;
-use PhpArchitecture\LazyOperators\Foundation\PipelineConfig;
-use PhpArchitecture\LazyOperators\Foundation\Support\DecoratesNodes;
-use PhpArchitecture\LazyOperators\Foundation\Support\WrapsRawValues;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Allocation\Exception\EmptySharesException;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\IntegerValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Expression\PipelineConfig;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Support\DecoratesNodes;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Support\WrapsRawValues;
 
 class Allocation
 {

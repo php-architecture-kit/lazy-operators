@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Type;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Type;
 
 interface FloatValue extends NumberValue
 {

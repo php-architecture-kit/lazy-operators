@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\List\Aggregate;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Extension\List\Aggregate;
 
-use PhpArchitecture\LazyOperators\Foundation\Extension\List\Aggregate\ProductFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\List\Aggregate\ProductFunction;
 use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 use PHPUnit\Framework\TestCase;
 

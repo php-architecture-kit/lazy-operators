@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Arithmetic;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Arithmetic;
 
 use DivisionByZeroError;
-use PhpArchitecture\LazyOperators\Foundation\Arithmetic\ModuloOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic\ModuloOperator;
 use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 use PHPUnit\Framework\TestCase;
 

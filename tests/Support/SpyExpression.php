@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Tests\Support;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
 
 final class SpyExpression implements Expression
 {

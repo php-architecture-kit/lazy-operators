@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Static;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Static;
 
-use PhpArchitecture\LazyOperators\Foundation\Static\ArrayLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\ArrayLiteral;
 use PHPUnit\Framework\TestCase;
 
 final class ArrayLiteralTest extends TestCase

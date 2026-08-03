@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Conditional;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Conditional;
 
-use PhpArchitecture\LazyOperators\Foundation\Conditional\IfElseOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\IfElseOperator;
 use PhpArchitecture\LazyOperators\Tests\Support\BooleanSpyExpression;
 use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
 use PHPUnit\Framework\TestCase;

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Exponential;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Extension\Math\Exponential;
 
 use PHPUnit\Framework\TestCase;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Exponential\Expm1Function;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Exponential\Expm1Function;
 use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class Expm1FunctionTest extends TestCase

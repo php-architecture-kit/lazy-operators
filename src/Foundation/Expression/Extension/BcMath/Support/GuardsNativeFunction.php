@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Support;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Extension\BcMath\Support;
 
-use PhpArchitecture\LazyOperators\Foundation\Extension\BcMath\Exception\BcMathFunctionUnavailableException;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\BcMath\Exception\BcMathFunctionUnavailableException;
 
 trait GuardsNativeFunction
 {

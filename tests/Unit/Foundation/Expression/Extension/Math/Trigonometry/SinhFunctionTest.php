@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Trigonometry;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Extension\Math\Trigonometry;
 
 use PHPUnit\Framework\TestCase;
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Trigonometry\SinhFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Trigonometry\SinhFunction;
 use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 
 final class SinhFunctionTest extends TestCase

@@ -4,47 +4,10 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use PhpArchitecture\LazyOperators\Application\Registry\Entry\Argument\CallbackArgument;
-use PhpArchitecture\LazyOperators\Application\Registry\Entry\Argument\CaseArgument;
-use PhpArchitecture\LazyOperators\Application\Registry\Entry\Argument\EnumArgument;
-use PhpArchitecture\LazyOperators\Infrastructure\Persistence\CallbackRegistry;
+use PhpArchitecture\LazyOperators\Foundation\Registry\Entry\Argument\CallbackArgument;
+use PhpArchitecture\LazyOperators\Foundation\Registry\Entry\Argument\CaseArgument;
+use PhpArchitecture\LazyOperators\Foundation\Registry\Entry\Argument\EnumArgument;
 use PhpArchitecture\LazyOperators\Infrastructure\Registry\ExpressionRegistry;
-
-$callbacks = new CallbackRegistry();
-$callbacks->register('round2', static fn (float $value): float => round($value, 2));
-$callbacks->register('clampPercentage', static fn (float $value): float => max(0.0, min(100.0, $value)));
-$callbacks->register('titleCase', static fn (string $value): string => ucwords(strtolower($value)));
-
-$callbackDetailsList = array_map(
-    static fn (string $name) => $callbacks->getCallbackDetails($name),
-    $callbacks->names(),
-);
-
-$callbackTiles = '';
-
-foreach ($callbackDetailsList as $details) {
-    $callbackTiles .= sprintf(
-        '<button class="callback-tile" type="button" data-callback-name="%s"><span class="callback-tile-name">%s</span></button>' . "\n",
-        htmlspecialchars($details->name, ENT_QUOTES, 'UTF-8'),
-        htmlspecialchars($details->name, ENT_QUOTES, 'UTF-8'),
-    );
-}
-
-$callbacksJson = json_encode(
-    array_map(
-        static fn ($details): array => [
-            'name' => $details->name,
-            'signature' => $details->signature,
-            'parameters' => array_map(
-                static fn ($parameter): array => ['name' => $parameter->name, 'type' => $parameter->type],
-                $details->parameters,
-            ),
-            'returnType' => $details->returnType,
-        ],
-        $callbackDetailsList,
-    ),
-    JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT,
-);
 
 $registry = ExpressionRegistry::default();
 $entries = $registry->getAll();
@@ -142,10 +105,8 @@ $script = file_get_contents(__DIR__ . '/app.js');
 $html = strtr($template, [
     '{{TITLE}}' => 'Lazy Operators — Builder Demo',
     '{{STYLE}}' => $style,
-    '{{CALLBACK_TILES}}' => $callbackTiles,
     '{{SIDEBAR_TILES}}' => $tiles,
     '{{CATALOG_JSON}}' => $catalogJson,
-    '{{CALLBACKS_JSON}}' => $callbacksJson,
     '{{SCRIPT}}' => $script,
 ]);
 

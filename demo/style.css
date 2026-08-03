@@ -36,63 +36,6 @@ body {
     margin-top: 20px;
 }
 
-.callbacks {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-}
-
-.callback-tile {
-    position: relative;
-    padding: 4px 8px;
-    background: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 999px;
-    color: inherit;
-    cursor: pointer;
-    font: inherit;
-}
-
-.callback-tile:hover,
-.callback-tile.is-selected {
-    border-color: #6366f1;
-}
-
-.callback-tile-name {
-    font-size: 12px;
-    font-family: "SFMono-Regular", Consolas, monospace;
-    color: #86efac;
-}
-
-.callback-popover {
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    z-index: 10;
-    min-width: 220px;
-    background: #1f2937;
-    border: 1px solid #374151;
-    border-radius: 6px;
-    padding: 10px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-    text-align: left;
-    white-space: normal;
-}
-
-.callback-popover-signature {
-    display: block;
-    font-family: "SFMono-Regular", Consolas, monospace;
-    font-size: 12px;
-    color: #86efac;
-    margin-bottom: 6px;
-}
-
-.callback-popover-param {
-    display: block;
-    font-size: 11px;
-    color: #9ca3af;
-}
-
 .tiles {
     display: flex;
     flex-direction: column;

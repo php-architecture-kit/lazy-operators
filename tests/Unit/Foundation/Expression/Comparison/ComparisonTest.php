@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Comparison;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Comparison;
 
-use PhpArchitecture\LazyOperators\Foundation\Comparison\Comparison;
-use PhpArchitecture\LazyOperators\Foundation\Comparison\EqualOperator;
-use PhpArchitecture\LazyOperators\Foundation\Comparison\GreaterThanOperator;
-use PhpArchitecture\LazyOperators\Foundation\Comparison\GreaterThanOrEqualOperator;
-use PhpArchitecture\LazyOperators\Foundation\Comparison\IdenticalOperator;
-use PhpArchitecture\LazyOperators\Foundation\Comparison\LessThanOperator;
-use PhpArchitecture\LazyOperators\Foundation\Comparison\LessThanOrEqualOperator;
-use PhpArchitecture\LazyOperators\Foundation\Comparison\NotEqualOperator;
-use PhpArchitecture\LazyOperators\Foundation\Comparison\NotIdenticalOperator;
-use PhpArchitecture\LazyOperators\Foundation\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Comparison\Comparison;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Comparison\EqualOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Comparison\GreaterThanOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Comparison\GreaterThanOrEqualOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Comparison\IdenticalOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Comparison\LessThanOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Comparison\LessThanOrEqualOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Comparison\NotEqualOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Comparison\NotIdenticalOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
 use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
 use PHPUnit\Framework\TestCase;
 

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Extension\Math\Conversion;
+namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Extension\Math\Conversion;
 
-use PhpArchitecture\LazyOperators\Foundation\Extension\Math\Conversion\BaseConvertFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Conversion\BaseConvertFunction;
 use PhpArchitecture\LazyOperators\Tests\Support\NumericSpyExpression;
 use PhpArchitecture\LazyOperators\Tests\Support\StringSpyExpression;
 use PHPUnit\Framework\TestCase;

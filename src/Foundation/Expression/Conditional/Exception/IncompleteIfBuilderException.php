@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Conditional\Exception;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Exception;
 
 use LogicException;
 

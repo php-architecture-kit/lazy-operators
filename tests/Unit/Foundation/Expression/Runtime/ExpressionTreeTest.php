@@ -7,8 +7,8 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Runtime
 use PhpArchitecture\LazyOperators\Foundation\Expression\Custom\CallbackOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Exception\PortNotBoundException;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Exception\UnknownExpressionTreeInputException;
-use PhpArchitecture\LazyOperators\Foundation\Expression\Runtime\ExpressionTree;
-use PhpArchitecture\LazyOperators\Foundation\Expression\Runtime\Port;
+use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTree;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Port;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
 use PHPUnit\Framework\TestCase;
 

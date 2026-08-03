@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpArchitecture\LazyOperators\Foundation\Expression\Runtime;
+namespace PhpArchitecture\LazyOperators\Foundation\Expression;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression\Exception\UnknownExpressionTreeInputException;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Runtime;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression\Exception\PortNotBoundException;
-use PhpArchitecture\LazyOperators\Foundation\Expression\Runtime\Port;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Port;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Static\StringLiteral;
 use PHPUnit\Framework\TestCase;

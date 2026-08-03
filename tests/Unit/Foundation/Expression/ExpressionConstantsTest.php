@@ -94,7 +94,7 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Descripti
 use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Formula;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Name;
-use PhpArchitecture\LazyOperators\Foundation\Expression\Runtime\Port;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Port;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Static\ArrayLiteral;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Static\BoolLiteral;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Static\FloatLiteral;

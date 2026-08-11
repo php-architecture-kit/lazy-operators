@@ -10,6 +10,7 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Descripti
 use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Formula;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Name;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\RequiresExtension;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\IntegerValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
 
@@ -18,6 +19,7 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
 #[Formula('f(dividend, divisor, scale) = dividend / divisor, computed to scale decimal digits via bcdiv; '
             . 'throws DivisionByZeroError natively when divisor is zero')]
 #[Description('BC Div returns the quotient of two arbitrary-precision numbers, computed to the given scale via bcdiv.')]
+#[RequiresExtension('bcmath')]
 class BcDivFunction implements NumberValue
 {
     use GetScaleFunction;

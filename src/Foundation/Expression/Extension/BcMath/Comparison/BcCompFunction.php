@@ -11,11 +11,13 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Descripti
 use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Formula;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Name;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\RequiresExtension;
 
 #[Group('BcMath')]
 #[Name('BC Comp')]
 #[Formula('f(left, right, scale) = -1|0|1 comparing left and right to scale decimal digits via bccomp')]
 #[Description('BC Comp compares two arbitrary-precision numbers to the given scale via bccomp, returning -1, 0, or 1.')]
+#[RequiresExtension('bcmath')]
 class BcCompFunction implements IntegerValue
 {
     use GuardsNativeFunction;

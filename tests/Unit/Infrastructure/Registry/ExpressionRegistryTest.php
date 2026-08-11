@@ -20,6 +20,7 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Logical\AndOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Description;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
 use PhpArchitecture\LazyOperators\Infrastructure\Registry\ExpressionRegistry;
+use PhpArchitecture\LazyOperators\Tests\Support\UnavailableExtensionExpression;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionParameter;
@@ -286,5 +287,39 @@ final class ExpressionRegistryTest extends TestCase
         $registry->register(AndOperator::class);
 
         self::assertInstanceOf(ExpressionEntry::class, $registry->getAll()[0]);
+    }
+
+    public function testExpressionWithoutARequiresExtensionAttributeIsAvailable(): void
+    {
+        $registry = new ExpressionRegistry();
+        $registry->register(AndOperator::class);
+
+        $entry = $registry->getAll()[0];
+
+        self::assertTrue($entry->available);
+        self::assertNull($entry->unavailableReason);
+    }
+
+    public function testExpressionRequiringALoadedExtensionIsAvailable(): void
+    {
+        $registry = new ExpressionRegistry();
+        $registry->register(BcAddFunction::class);
+
+        $entry = $registry->getAll()[0];
+
+        self::assertTrue($entry->available, 'ext-bcmath is expected to be loaded in the test environment');
+        self::assertNull($entry->unavailableReason);
+    }
+
+    public function testExpressionRequiringAMissingExtensionStaysRegisteredButIsMarkedUnavailable(): void
+    {
+        $registry = new ExpressionRegistry();
+        $registry->register(UnavailableExtensionExpression::class);
+
+        $entry = $registry->getAll()[0];
+
+        self::assertSame(UnavailableExtensionExpression::class, $entry->fqcn, 'unavailable expressions are still returned by getAll()');
+        self::assertFalse($entry->available);
+        self::assertSame('Missing ext-definitely_not_a_real_extension in your PHP server.', $entry->unavailableReason);
     }
 }

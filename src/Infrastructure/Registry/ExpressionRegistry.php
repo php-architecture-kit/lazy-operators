@@ -27,6 +27,7 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Formula;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\ItemTypeOf;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Name;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\RequiresExtension;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Port;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Static\ArrayLiteral;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Static\BoolLiteral;
@@ -199,6 +200,7 @@ class ExpressionRegistry implements ExpressionRegistryInterface
             $reflection,
             $this->createExpressionAttributes($reflection),
             $this->createArguments($reflection),
+            $this->resolveUnavailableReason($reflection),
         );
     }
 
@@ -212,6 +214,7 @@ class ExpressionRegistry implements ExpressionRegistryInterface
         ReflectionClass $reflection,
         ExpressionAttributes $attributes,
         array $arguments,
+        ?string $unavailableReason,
     ): ExpressionEntry {
         return new ExpressionEntry(
             key: $this->readStringConstant($reflection, 'KEY'),
@@ -221,7 +224,27 @@ class ExpressionRegistry implements ExpressionRegistryInterface
             type: $this->resolveType($reflection),
             attributes: $attributes,
             arguments: $arguments,
+            available: $unavailableReason === null,
+            unavailableReason: $unavailableReason,
         );
+    }
+
+    /**
+     * A class stays registered (and discoverable) even when its required extension is missing;
+     * only its usability is affected, reported here instead of via the constructor-time exception
+     * GuardsNativeFunction throws once someone actually tries to build an instance.
+     *
+     * @param ReflectionClass<Expression> $reflection
+     */
+    protected function resolveUnavailableReason(ReflectionClass $reflection): ?string
+    {
+        $requirement = $this->readAttribute($reflection, RequiresExtension::class);
+
+        if ($requirement === null || extension_loaded($requirement->name)) {
+            return null;
+        }
+
+        return sprintf('Missing ext-%s in your PHP server.', $requirement->name);
     }
 
     /**

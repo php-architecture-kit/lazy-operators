@@ -10,6 +10,7 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Descripti
 use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Formula;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Name;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\RequiresExtension;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\IntegerValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
 
@@ -17,6 +18,7 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
 #[Name('BC Mul')]
 #[Formula('f(left, right, scale) = left * right, computed to scale decimal digits via bcmul')]
 #[Description('BC Mul returns the product of two arbitrary-precision numbers, computed to the given scale via bcmul.')]
+#[RequiresExtension('bcmath')]
 class BcMulFunction implements NumberValue
 {
     use GetScaleFunction;

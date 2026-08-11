@@ -10,6 +10,7 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Descripti
 use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Formula;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Group;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\Name;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Meta\Attribute\RequiresExtension;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\IntegerValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
 
@@ -17,6 +18,7 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
 #[Name('BC Sub')]
 #[Formula('f(left, right, scale) = left - right, computed to scale decimal digits via bcsub')]
 #[Description('BC Sub returns the difference of two arbitrary-precision numbers, computed to the given scale via bcsub.')]
+#[RequiresExtension('bcmath')]
 class BcSubFunction implements NumberValue
 {
     use GetScaleFunction;

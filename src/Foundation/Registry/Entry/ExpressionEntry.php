@@ -17,5 +17,7 @@ readonly class ExpressionEntry
         public string $type,
         public ExpressionAttributes $attributes,
         public array $arguments,
+        public bool $available,
+        public ?string $unavailableReason,
     ) {}
 }

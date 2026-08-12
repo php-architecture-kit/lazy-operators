@@ -17,24 +17,30 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Logical\Logical;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
 use PhpArchitecture\LazyOperators\Tests\Support\LoggerDecorator;
 use PHPUnit\Framework\TestCase;
+use TypeError;
 
 /**
- * PR #5 (github.com/php-architecture-kit/lazy-operators/pull/5) proposed narrowing
- * Comparator/Conditional builders so their output stays typed after decoration, to avoid an
- * explicit Cast. The reviewer's pushback: "Proponowane rozwiązania są nadmiarowe względem
- * odpowiedzialności biblioteki" (the proposed solutions are excessive relative to the library's
- * responsibility) — i.e. requiring the caller to Cast is fine, the library shouldn't grow
- * per-type Operator subclasses just to avoid it.
+ * PR #5 (github.com/php-architecture-kit/lazy-operators/pull/5) originally proposed narrowing
+ * both Comparator::spaceship() and Conditional::if()/switch() so their output stays typed after
+ * decoration, avoiding an explicit Cast. Review feedback rejected doing this for Conditional as
+ * excessive for the library's responsibility ("to nie jest zadanie biblioteki... jego
+ * obowiązkiem jest dostarczyć cast do typu") and was later confirmed as final for both the
+ * decorated and undecorated case: Conditional if()/switch() results MUST always be Cast
+ * explicitly by the caller before they can feed Arithmetic/Logical, by design.
+ *
+ * PR #5 was reworked to fix only the part that was an actual regression: decorating an
+ * already-narrowly-typed node (e.g. SpaceshipOperator, which unconditionally implements
+ * IntegerValue) used to silently downgrade it to a bare Expression the moment ANY Decorator got
+ * configured, even though an undecorated spaceship() result never had that problem. Conditional
+ * never had a narrower type to lose in the first place — decorated or not, it stays generic.
  *
  * This test class plugs in the single most obvious real-world Decorator (LoggerDecorator — logs
- * every stage, nothing fancier) against *current master* (without PR #5's fix) and drives it the
- * way a caller naturally would: build a Comparator/Conditional result under a decorated config,
- * then feed it straight into Arithmetic/Logical, the same as an undecorated result already could
- * be. The tests below that don't apply an explicit Cast are EXPECTED TO ERROR (a real, uncaught
- * TypeError, not an expectException() assertion) — that's the point: this is what "the caller
- * casts it themselves" looks like in practice the moment ANY decorator is configured, not just a
- * contrived one. The paired *WithExplicitCast tests show the reviewer-endorsed workaround, and
- * pass.
+ * every stage, nothing fancier) and drives it the way a caller naturally would: build a
+ * Comparator/Conditional result under a decorated config, then feed it straight into
+ * Arithmetic/Logical. It documents both confirmed outcomes:
+ * - Comparator::spaceship() now works under decoration without a Cast (the fix).
+ * - Conditional::if()/switch() still require an explicit Cast under decoration — confirmed as
+ *   permanent, expected behavior, not a bug to track.
  */
 final class LoggerDecoratorTypeNarrowingGapTest extends TestCase
 {
@@ -50,19 +56,19 @@ final class LoggerDecoratorTypeNarrowingGapTest extends TestCase
         $this->config = new ExpressionTreeConfig(new LoggerDecorator(new IntLiteral(0)));
     }
 
-    public function testDecoratedComparatorSpaceshipResultCannotBeFedIntoArithmeticWithoutAnExplicitCast(): void
+    public function testDecoratedComparatorSpaceshipResultIsUsableByArithmeticWithoutAnExplicitCast(): void
     {
+        // Regression guard: DecoratesNodes::decorate() re-exposes the decorated result using
+        // whichever typed interface the undecorated SpaceshipOperator already had (IntegerValue),
+        // so this works the same decorated as undecorated — no Cast needed.
         $rank = Comparator::of(5, $this->config)->spaceship(3)->build();
 
-        // Naive usage: an undecorated spaceship() result could be handed to Arithmetic::add()
-        // directly (SpaceshipOperator always implements IntegerValue). Under a decorated config,
-        // build() hands back the generic Decorator instead, so this is a real TypeError.
         $expr = Arithmetic::of(10, $this->config)->add($rank)->build();
 
         self::assertSame(11, $expr());
     }
 
-    public function testExplicitIntegerCastRestoresCompatibilityAfterDecoratingASpaceshipResult(): void
+    public function testExplicitIntegerCastOnADecoratedSpaceshipResultIsHarmlessButUnnecessary(): void
     {
         $rank = Comparator::of(5, $this->config)->spaceship(3)->build();
 
@@ -71,16 +77,16 @@ final class LoggerDecoratorTypeNarrowingGapTest extends TestCase
         self::assertSame(11, $expr());
     }
 
-    public function testDecoratedConditionalIfResultCannotBeFedIntoArithmeticWithoutAnExplicitCast(): void
+    public function testDecoratedConditionalIfResultRequiresAnExplicitCastToBeFedIntoArithmeticByDesign(): void
     {
         $bonus = Conditional::if(true, $this->config)->then(5)->else(0)->build();
 
-        // Naive usage again: both branches are NumberValue, so an undecorated if() result could
-        // be handed to Arithmetic::add() directly. Decorated, build() falls back to the generic
-        // Expression contract — a real TypeError, not a contrived one.
-        $expr = Arithmetic::of(100, $this->config)->add($bonus)->build();
+        // Confirmed as permanent, by design: IfElseOperator only ever implements the generic
+        // Expression contract (branches may differ in type), decorated or not, so this always
+        // needs a Cast — see the class docblock and DecoratesNodes::decorate().
+        $this->expectException(TypeError::class);
 
-        self::assertSame(105, $expr());
+        Arithmetic::of(100, $this->config)->add($bonus)->build();
     }
 
     public function testExplicitFloatCastRestoresCompatibilityAfterDecoratingAConditionalIfResult(): void
@@ -92,7 +98,7 @@ final class LoggerDecoratorTypeNarrowingGapTest extends TestCase
         self::assertSame(105.0, $expr());
     }
 
-    public function testDecoratedConditionalSwitchResultCannotBeFedIntoLogicalWithoutAnExplicitCast(): void
+    public function testDecoratedConditionalSwitchResultRequiresAnExplicitCastToBeFedIntoLogicalByDesign(): void
     {
         $flag = Conditional::switch(2, $this->config)
             ->case(1, false)
@@ -100,11 +106,10 @@ final class LoggerDecoratorTypeNarrowingGapTest extends TestCase
             ->default(false)
             ->build();
 
-        // Both matched-value slots (and default) are BooleanValue, so an undecorated switch()
-        // result could feed Logical::and() directly. Decorated, it can't — real TypeError.
-        $expr = Logical::of(true, $this->config)->and($flag)->build();
+        // Same confirmed-by-design boundary as the If case above, for SwitchCaseOperator.
+        $this->expectException(TypeError::class);
 
-        self::assertTrue($expr());
+        Logical::of(true, $this->config)->and($flag)->build();
     }
 
     public function testExplicitBooleanCastRestoresCompatibilityAfterDecoratingAConditionalSwitchResult(): void

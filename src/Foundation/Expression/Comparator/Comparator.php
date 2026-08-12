@@ -30,7 +30,13 @@ class Comparator
     public function spaceship(mixed $value): self
     {
         return new self(
-            self::decorate(new SpaceshipOperator($this->current, self::decorate(self::wrap($value), $this->config)), $this->config),
+            // spaceship's result is always int, so re-expose it as IntegerValue (same as
+            // decorateNumber() does for Arithmetic) instead of the generic Expression a plain
+            // decorate() would produce once a Decorator is configured. Without this, a decorated
+            // spaceship() result could not be fed back into Arithmetic/Logical without a Cast,
+            // even though an undecorated one always could (SpaceshipOperator implements
+            // IntegerValue unconditionally).
+            self::decorateInteger(new SpaceshipOperator($this->current, self::decorate(self::wrap($value), $this->config)), $this->config),
             $this->config,
         );
     }

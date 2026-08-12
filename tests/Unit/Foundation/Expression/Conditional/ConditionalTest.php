@@ -9,6 +9,12 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Exception\In
 use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Exception\NoMatchedCaseException;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\IfElseOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\SwitchCaseOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\BooleanValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\StringValue;
+use PhpArchitecture\LazyOperators\Tests\Support\RecordingExpression;
 use PHPUnit\Framework\TestCase;
 
 final class ConditionalTest extends TestCase
@@ -84,5 +90,49 @@ final class ConditionalTest extends TestCase
         $this->expectException(NoMatchedCaseException::class);
 
         $expr();
+    }
+
+    /**
+     * IfElseOperator/SwitchCaseOperator only ever implement the generic Expression contract —
+     * their branches may differ in type, so build() can't guarantee anything narrower, whether or
+     * not a Decorator is configured. Feeding a numeric/boolean-branched if()/switch() result into
+     * Arithmetic/Logical always needs an explicit Cast; that's a deliberate design choice (see
+     * DecoratesNodes::decorate()'s docblock), not a gap decoration introduces.
+     */
+    public function testIfWithTypedBranchesStillStaysAGenericExpression(): void
+    {
+        $rate = Conditional::if(true)->then(0.9)->else(1.0)->build();
+
+        self::assertInstanceOf(IfElseOperator::class, $rate);
+        self::assertNotInstanceOf(NumberValue::class, $rate);
+        self::assertNotInstanceOf(BooleanValue::class, $rate);
+        self::assertNotInstanceOf(StringValue::class, $rate);
+    }
+
+    public function testIfWithADecoratorAlsoStaysAGenericExpressionJustLikeUndecorated(): void
+    {
+        RecordingExpression::reset();
+        $config = new ExpressionTreeConfig(new RecordingExpression(new IntLiteral(0)));
+
+        $rate = Conditional::if(true, $config)->then(0.9)->else(1.0)->build();
+
+        self::assertNotInstanceOf(NumberValue::class, $rate);
+        self::assertSame(0.9, $rate());
+    }
+
+    public function testSwitchWithTypedCasesStillStaysAGenericExpression(): void
+    {
+        $tier = Conditional::switch(2)->case(1, 10.0)->case(2, 20.0)->default(0.0)->build();
+
+        self::assertInstanceOf(SwitchCaseOperator::class, $tier);
+        self::assertNotInstanceOf(NumberValue::class, $tier);
+    }
+
+    public function testEmptySwitchStillBuildsAPlainSwitchCaseOperator(): void
+    {
+        $expr = Conditional::switch(1)->build();
+
+        self::assertInstanceOf(SwitchCaseOperator::class, $expr);
+        self::assertSame(SwitchCaseOperator::class, $expr::class);
     }
 }

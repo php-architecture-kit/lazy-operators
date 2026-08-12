@@ -4,9 +4,14 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Comparator;
 
+use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic\Arithmetic;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Comparator\Comparator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Comparator\SpaceshipOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Type\IntegerValue;
+use PhpArchitecture\LazyOperators\Tests\Support\RecordingExpression;
 use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
 use PHPUnit\Framework\TestCase;
 
@@ -50,5 +55,28 @@ final class ComparatorTest extends TestCase
 
         self::assertSame(-1, $expr());
         self::assertSame(1, $right->invocations);
+    }
+
+    public function testSpaceshipResultIsUsableDirectlyByArithmeticWithoutACast(): void
+    {
+        $spaceship = Comparator::of(5)->spaceship(3)->build();
+
+        self::assertInstanceOf(IntegerValue::class, $spaceship);
+        self::assertSame(10, Arithmetic::of($spaceship)->multiply(10)->build()());
+    }
+
+    public function testSpaceshipResultWithADecoratorIsStillUsableDirectlyByArithmetic(): void
+    {
+        // Regression guard: a plain decorate() call only re-instantiates the configured
+        // Decorator, which alone can't guarantee IntegerValue. DecoratesNodes::decorate() must
+        // re-expose the result as IntegerValue itself (because SpaceshipOperator, the node being
+        // decorated, already was one) — otherwise a decorated Comparator result would stop being
+        // usable by Arithmetic without a Cast, even though an undecorated one never was.
+        RecordingExpression::reset();
+        $config = new ExpressionTreeConfig(new RecordingExpression(new IntLiteral(0)));
+
+        $spaceship = Comparator::of(5, $config)->spaceship(3)->build();
+
+        self::assertSame(10, Arithmetic::of($spaceship)->multiply(10)->build()());
     }
 }

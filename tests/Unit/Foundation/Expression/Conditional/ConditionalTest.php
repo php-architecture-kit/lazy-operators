@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Conditional;
 
-use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic\Arithmetic;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Conditional;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Exception\IncompleteIfBuilderException;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Exception\NoMatchedCaseException;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\IfElseOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\SwitchCaseOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
-use PhpArchitecture\LazyOperators\Foundation\Expression\Logical\Logical;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\BooleanValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
@@ -94,44 +92,24 @@ final class ConditionalTest extends TestCase
         $expr();
     }
 
-    public function testIfWithNumericBranchesIsUsableDirectlyByArithmeticWithoutACast(): void
+    /**
+     * IfElseOperator/SwitchCaseOperator only ever implement the generic Expression contract —
+     * their branches may differ in type, so build() can't guarantee anything narrower, whether or
+     * not a Decorator is configured. Feeding a numeric/boolean-branched if()/switch() result into
+     * Arithmetic/Logical always needs an explicit Cast; that's a deliberate design choice (see
+     * DecoratesNodes::decorate()'s docblock), not a gap decoration introduces.
+     */
+    public function testIfWithTypedBranchesStillStaysAGenericExpression(): void
     {
         $rate = Conditional::if(true)->then(0.9)->else(1.0)->build();
 
         self::assertInstanceOf(IfElseOperator::class, $rate);
-        self::assertInstanceOf(NumberValue::class, $rate);
-        self::assertSame(90.0, Arithmetic::of(100)->multiply($rate)->build()());
+        self::assertNotInstanceOf(NumberValue::class, $rate);
+        self::assertNotInstanceOf(BooleanValue::class, $rate);
+        self::assertNotInstanceOf(StringValue::class, $rate);
     }
 
-    public function testIfWithBooleanBranchesIsUsableDirectlyByLogicalWithoutACast(): void
-    {
-        $flag = Conditional::if(true)->then(true)->else(false)->build();
-
-        self::assertInstanceOf(IfElseOperator::class, $flag);
-        self::assertInstanceOf(BooleanValue::class, $flag);
-        self::assertTrue(Logical::of($flag)->and(true)->build()());
-    }
-
-    public function testIfWithMixedTypeBranchesStaysAGenericExpression(): void
-    {
-        $mixed = Conditional::if(true)->then(1)->else('fallback')->build();
-
-        self::assertInstanceOf(IfElseOperator::class, $mixed);
-        self::assertNotInstanceOf(NumberValue::class, $mixed);
-        self::assertNotInstanceOf(BooleanValue::class, $mixed);
-    }
-
-    public function testIfWithStringBranchesIsAlsoNarrowedAndStaysAnIfElseOperator(): void
-    {
-        // Regression guard: string branches are the example used by testIfBuildsAnIfElseOperator()
-        // above — narrowing to StringIfElseOperator must not break `instanceof IfElseOperator`.
-        $expr = Conditional::if(true)->then('yes')->else('no')->build();
-
-        self::assertInstanceOf(IfElseOperator::class, $expr);
-        self::assertInstanceOf(StringValue::class, $expr);
-    }
-
-    public function testIfWithADecoratorFallsBackToGenericExpressionLikeArithmeticDoes(): void
+    public function testIfWithADecoratorAlsoStaysAGenericExpressionJustLikeUndecorated(): void
     {
         RecordingExpression::reset();
         $config = new ExpressionTreeConfig(new RecordingExpression(new IntLiteral(0)));
@@ -142,21 +120,12 @@ final class ConditionalTest extends TestCase
         self::assertSame(0.9, $rate());
     }
 
-    public function testSwitchWithNumericCasesIsUsableDirectlyByArithmeticWithoutACast(): void
+    public function testSwitchWithTypedCasesStillStaysAGenericExpression(): void
     {
         $tier = Conditional::switch(2)->case(1, 10.0)->case(2, 20.0)->default(0.0)->build();
 
         self::assertInstanceOf(SwitchCaseOperator::class, $tier);
-        self::assertInstanceOf(NumberValue::class, $tier);
-        self::assertSame(25.0, Arithmetic::of($tier)->add(5)->build()());
-    }
-
-    public function testSwitchWithMixedTypeCasesStaysAGenericExpression(): void
-    {
-        $mixed = Conditional::switch(1)->case(1, 10)->case(2, 'twenty')->build();
-
-        self::assertInstanceOf(SwitchCaseOperator::class, $mixed);
-        self::assertNotInstanceOf(NumberValue::class, $mixed);
+        self::assertNotInstanceOf(NumberValue::class, $tier);
     }
 
     public function testEmptySwitchStillBuildsAPlainSwitchCaseOperator(): void

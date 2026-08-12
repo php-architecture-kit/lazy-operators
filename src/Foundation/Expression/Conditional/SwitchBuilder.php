@@ -8,9 +8,6 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\DecoratesNodes;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\WrapsRawValues;
-use PhpArchitecture\LazyOperators\Foundation\Expression\Type\BooleanValue;
-use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
-use PhpArchitecture\LazyOperators\Foundation\Expression\Type\StringValue;
 
 class SwitchBuilder
 {
@@ -58,42 +55,6 @@ class SwitchBuilder
 
     public function build(): Expression
     {
-        $values = array_map(static fn (CaseOfSwitchCase $case): Expression => $case->value, $this->cases);
-        if ($this->default !== null) {
-            $values[] = $this->default;
-        }
-
-        // See IfBuilder::build() for the same reasoning: build the narrow subclass (still a genuine
-        // SwitchCaseOperator, via inheritance) when every possible branch — each case's value, plus
-        // default if present — already shares the same typed contract, so callers can feed the
-        // result straight into Arithmetic/Logical without an explicit Cast.
-        $node = match (true) {
-            $values !== [] && self::allInstanceOf($values, BooleanValue::class) => new BooleanSwitchCaseOperator($this->subject, $this->cases, $this->default),
-            $values !== [] && self::allInstanceOf($values, NumberValue::class) => new NumberSwitchCaseOperator($this->subject, $this->cases, $this->default),
-            $values !== [] && self::allInstanceOf($values, StringValue::class) => new StringSwitchCaseOperator($this->subject, $this->cases, $this->default),
-            default => new SwitchCaseOperator($this->subject, $this->cases, $this->default),
-        };
-
-        return match (true) {
-            $node instanceof BooleanSwitchCaseOperator => self::decorateBoolean($node, $this->config),
-            $node instanceof NumberSwitchCaseOperator => self::decorateNumber($node, $this->config),
-            $node instanceof StringSwitchCaseOperator => self::decorateString($node, $this->config),
-            default => self::decorate($node, $this->config),
-        };
-    }
-
-    /**
-     * @param Expression[] $values
-     * @param class-string  $type
-     */
-    private static function allInstanceOf(array $values, string $type): bool
-    {
-        foreach ($values as $value) {
-            if (!$value instanceof $type) {
-                return false;
-            }
-        }
-
-        return true;
+        return self::decorate(new SwitchCaseOperator($this->subject, $this->cases, $this->default), $this->config);
     }
 }

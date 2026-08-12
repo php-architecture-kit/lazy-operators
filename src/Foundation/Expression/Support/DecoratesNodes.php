@@ -13,56 +13,82 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Type\StringValue;
 
 trait DecoratesNodes
 {
+    /**
+     * $decorator is a prototype: its class is reinstantiated per node, so its constructor must
+     * accept a single Expression (the node being wrapped). A user-supplied decorator only
+     * implements the generic `Decorator extends Expression` contract, so on its own it can
+     * silently drop whatever narrower interface the wrapped node already guaranteed (e.g.
+     * SpaceshipOperator always implements IntegerValue). To avoid that, re-expose the decorated
+     * result as whichever typed interface the *original, undecorated* node already implemented —
+     * decorating a node should never make it less usable than it already was. A node that only
+     * ever implemented the generic Expression contract in the first place (e.g.
+     * IfElseOperator/SwitchCaseOperator, whose branches may differ in type) stays a bare
+     * Expression either way: decoration never took anything away from it, so there's nothing to
+     * restore, and it remains the caller's job to Cast if it needs a narrower type.
+     */
     private static function decorate(Expression $node, ExpressionTreeConfig $config): Expression
     {
         if ($config->decorator === null) {
             return $node;
         }
 
-        // $decorator is a prototype: its class is reinstantiated per node, so its
-        // constructor must accept a single Expression (the node being wrapped).
-        return new ($config->decorator::class)($node);
+        $decorated = new ($config->decorator::class)($node);
+
+        return match (true) {
+            $node instanceof IntegerValue && !$decorated instanceof IntegerValue => new DecoratedIntegerValue($decorated),
+            $node instanceof NumberValue && !$decorated instanceof NumberValue => new DecoratedNumberValue($decorated),
+            $node instanceof BooleanValue && !$decorated instanceof BooleanValue => new DecoratedBooleanValue($decorated),
+            $node instanceof StringValue && !$decorated instanceof StringValue => new DecoratedStringValue($decorated),
+            default => $decorated,
+        };
     }
 
     /**
-     * Same as decorate(), but re-exposes the result as NumberValue: a user-supplied
-     * decorator only implements the generic `Decorator extends Expression` contract, which would
-     * otherwise break the narrowed constructor of the next arithmetic operator in the chain.
+     * Same as decorate(), narrowed to NumberValue for callers that already know (statically) that
+     * $node is a NumberValue — decorate() guarantees the result is too.
      */
     private static function decorateNumber(Expression $node, ExpressionTreeConfig $config): NumberValue
     {
         $decorated = self::decorate($node, $config);
 
-        return $decorated instanceof NumberValue ? $decorated : new DecoratedNumberValue($decorated);
+        assert($decorated instanceof NumberValue);
+
+        return $decorated;
     }
 
     /**
-     * Same as decorate(), but re-exposes the result as IntegerValue (see decorateNumber()).
+     * Same as decorateNumber(), narrowed to IntegerValue.
      */
     private static function decorateInteger(Expression $node, ExpressionTreeConfig $config): IntegerValue
     {
         $decorated = self::decorate($node, $config);
 
-        return $decorated instanceof IntegerValue ? $decorated : new DecoratedIntegerValue($decorated);
+        assert($decorated instanceof IntegerValue);
+
+        return $decorated;
     }
 
     /**
-     * Same as decorate(), but re-exposes the result as BooleanValue (see decorateNumber()).
+     * Same as decorateNumber(), narrowed to BooleanValue.
      */
     private static function decorateBoolean(Expression $node, ExpressionTreeConfig $config): BooleanValue
     {
         $decorated = self::decorate($node, $config);
 
-        return $decorated instanceof BooleanValue ? $decorated : new DecoratedBooleanValue($decorated);
+        assert($decorated instanceof BooleanValue);
+
+        return $decorated;
     }
 
     /**
-     * Same as decorate(), but re-exposes the result as StringValue (see decorateNumber()).
+     * Same as decorateNumber(), narrowed to StringValue.
      */
     private static function decorateString(Expression $node, ExpressionTreeConfig $config): StringValue
     {
         $decorated = self::decorate($node, $config);
 
-        return $decorated instanceof StringValue ? $decorated : new DecoratedStringValue($decorated);
+        assert($decorated instanceof StringValue);
+
+        return $decorated;
     }
 }

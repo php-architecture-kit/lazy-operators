@@ -10,8 +10,6 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\DecoratesNodes;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Support\WrapsRawValues;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\BooleanValue;
-use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
-use PhpArchitecture\LazyOperators\Foundation\Expression\Type\StringValue;
 
 class IfBuilder
 {
@@ -49,28 +47,6 @@ class IfBuilder
             throw IncompleteIfBuilderException::create($this->then === null, $this->else === null);
         }
 
-        // A plain `new IfElseOperator(...)` can only ever implement the generic Expression contract:
-        // a single class can't conditionally implement NumberValue/BooleanValue/StringValue based on
-        // what a *given instance's* branches happen to be. But when both branches already share the
-        // same typed contract, building the matching narrow subclass instead (still a genuine
-        // IfElseOperator, via inheritance) lets callers feed the result straight into
-        // Arithmetic/Logical without an explicit Cast. Passing the result through decorateNumber()/
-        // decorateBoolean()/decorateString() afterwards keeps Decorator support working exactly as
-        // before: undecorated, they're a no-op since the node already implements the right interface;
-        // decorated, they fall back to re-exposing via the same DecoratedNumberValue-style wrapper
-        // Arithmetic already relies on.
-        $node = match (true) {
-            $this->then instanceof BooleanValue && $this->else instanceof BooleanValue => new BooleanIfElseOperator($this->condition, $this->then, $this->else),
-            $this->then instanceof NumberValue && $this->else instanceof NumberValue => new NumberIfElseOperator($this->condition, $this->then, $this->else),
-            $this->then instanceof StringValue && $this->else instanceof StringValue => new StringIfElseOperator($this->condition, $this->then, $this->else),
-            default => new IfElseOperator($this->condition, $this->then, $this->else),
-        };
-
-        return match (true) {
-            $node instanceof BooleanIfElseOperator => self::decorateBoolean($node, $this->config),
-            $node instanceof NumberIfElseOperator => self::decorateNumber($node, $this->config),
-            $node instanceof StringIfElseOperator => self::decorateString($node, $this->config),
-            default => self::decorate($node, $this->config),
-        };
+        return self::decorate(new IfElseOperator($this->condition, $this->then, $this->else), $this->config);
     }
 }

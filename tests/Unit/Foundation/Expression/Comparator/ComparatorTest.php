@@ -67,9 +67,11 @@ final class ComparatorTest extends TestCase
 
     public function testSpaceshipResultWithADecoratorIsStillUsableDirectlyByArithmetic(): void
     {
-        // Regression guard: before spaceship() used decorateInteger(), a decorated Comparator
-        // result stopped being an IntegerValue and needed a manual Cast even though an
-        // undecorated one never did (SpaceshipOperator implements IntegerValue unconditionally).
+        // Regression guard: a plain decorate() call only re-instantiates the configured
+        // Decorator, which alone can't guarantee IntegerValue. DecoratesNodes::decorate() must
+        // re-expose the result as IntegerValue itself (because SpaceshipOperator, the node being
+        // decorated, already was one) — otherwise a decorated Comparator result would stop being
+        // usable by Arithmetic without a Cast, even though an undecorated one never was.
         RecordingExpression::reset();
         $config = new ExpressionTreeConfig(new RecordingExpression(new IntLiteral(0)));
 

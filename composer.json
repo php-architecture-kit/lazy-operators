@@ -22,7 +22,9 @@
     "require-dev": {
         "phpunit/phpunit": "^10.5",
         "phpstan/phpstan": "*",
-        "friendsofphp/php-cs-fixer": "*"
+        "friendsofphp/php-cs-fixer": "*",
+        "monolog/monolog": "^3.0",
+        "psr/log": "^3.0"
     },
     "suggest": {
         "ext-math": "For additional math functions (e.g. gcd, factorial) usable with the arithmetic operators.",

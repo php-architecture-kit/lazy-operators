@@ -14,12 +14,20 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
 final readonly class ExpressionTree implements Expression
 {
     /**
-     * @param array<string, Port> $inputs
+     * @var array<string, Port>
+     */
+    private array $inputs;
+
+    /**
+     * @param array<string, Port>|Ports $inputs Pass a Ports instance built alongside the tree
+     * (via Ports::named()) to avoid keeping a second, hand-written name => Port map in sync with
+     * it; a plain array is still accepted for callers who already track their Ports another way.
      */
     public function __construct(
         private Expression $root,
-        private array $inputs,
+        array|Ports $inputs,
     ) {
+        $this->inputs = $inputs instanceof Ports ? $inputs->toArray() : $inputs;
     }
 
     /**

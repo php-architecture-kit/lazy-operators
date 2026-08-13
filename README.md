@@ -78,6 +78,27 @@ Each facade also accepts an optional `ExpressionTreeConfig` with a decorator. Wh
 facade builds gets wrapped in your decorator. This is a plain way to add logging, caching, or
 tracing around every operation, without changing any operator code.
 
+You supply a factory, called once per node with the node it wraps:
+
+```php
+use PhpArchitecture\LazyOperators\Foundation\Expression\Decorator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
+use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
+
+$config = ExpressionTreeConfig::decoratedBy(
+    static fn (Expression $node): Decorator => new TracingDecorator($node, $logger),
+);
+
+Arithmetic::of(2, $config)->multiply(3)->add(4)->build();
+```
+
+Because you construct the decorator yourself, it can take whatever else it needs — a logger, a cache
+pool, a channel name — alongside the node.
+
+Passing a `Decorator` instance directly (`new ExpressionTreeConfig($decorator)`) still works, but only
+its class is used: a fresh instance is built per node, so anything the instance was constructed with is
+discarded. Prefer `decoratedBy()`.
+
 ## Available operators
 
 The core namespaces have no dependency on any PHP extension.

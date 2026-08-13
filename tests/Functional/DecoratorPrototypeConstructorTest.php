@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace PhpArchitecture\LazyOperators\Tests\Functional;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic\Arithmetic;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Decorator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
 use PhpArchitecture\LazyOperators\Tests\Support\ChannelDecorator;
@@ -12,19 +14,19 @@ use PhpArchitecture\LazyOperators\Tests\Support\RequiredTagDecorator;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Evidence for #4, at the level a library consumer actually experiences it.
+ * The tests that were red in #8, now driven through `ExpressionTreeConfig::decoratedBy()`.
  *
- * `DecoratesNodes::decorate()` reads only the *class* of the Decorator handed to
- * `ExpressionTreeConfig` and builds a fresh instance per node (`new ($config->decorator::class)($node)`).
- * The instance the caller constructed is therefore a prototype: it exists to name a class, and is
- * discarded. That forces the caller to invent a throwaway `Expression` for it — the surface
- * complaint in #4 — but the throwaway argument is only the visible half of the problem. These
- * tests drive the other half: what happens to a decorator that carries anything *besides* the
- * node it wraps.
+ * `DecoratesNodes::decorate()` used to read only the *class* of the Decorator handed to
+ * `ExpressionTreeConfig` and build a fresh instance per node, which made the caller-supplied
+ * instance a prototype: it existed to name a class and was discarded. That forced a throwaway
+ * `Expression` argument (the surface complaint in #4) and, less visibly, left a decorator no
+ * route to any dependency besides the node it wraps.
  *
- * Two tests here are intentionally left red — a genuine assertion failure and a genuine uncaught
- * error, not `expectException()` wrappers — so the actual output is visible in CI rather than
- * described. The two green tests characterise the current mechanism and the workaround it forces.
+ * It now calls a `Closure(Expression): Decorator` instead, so the caller constructs the
+ * decorator themselves, with whatever it needs, at the one moment the node is known.
+ *
+ * The last two tests still use the prototype form, unchanged from #8: it keeps working exactly
+ * as it did, including its costs.
  */
 final class DecoratorPrototypeConstructorTest extends TestCase
 {
@@ -35,16 +37,14 @@ final class DecoratorPrototypeConstructorTest extends TestCase
     }
 
     /**
-     * RED. A decorator constructed with a dependency does not keep it.
-     *
-     * The caller writes the channel once, at the only place the API offers, and every node is
-     * nevertheless decorated with the constructor *default* — the per-node re-instantiation
-     * passes the node and nothing else. No exception, no warning, no static-analysis error: the
-     * configured value is simply gone, and the tree evaluates happily with the wrong one.
+     * Was red in #8: the configured channel was silently replaced by the constructor default,
+     * with no exception, no warning and nothing PHPStan could see.
      */
     public function testDecoratorKeepsTheDependencyItWasConstructedWith(): void
     {
-        $config = new ExpressionTreeConfig(new ChannelDecorator(new IntLiteral(0), 'audit'));
+        $config = ExpressionTreeConfig::decoratedBy(
+            static fn (Expression $node): Decorator => new ChannelDecorator($node, 'audit'),
+        );
 
         $expr = Arithmetic::of(2, $config)->add(3)->build();
 
@@ -53,16 +53,17 @@ final class DecoratorPrototypeConstructorTest extends TestCase
     }
 
     /**
-     * RED. A decorator whose dependency has no default cannot be used at all.
-     *
-     * `RequiredTagDecorator` is a legitimate implementation of `Decorator` — the interface cannot
-     * declare a constructor, so nothing rejects it statically. It fails at build time with an
-     * `ArgumentCountError` raised from inside the library (`DecoratesNodes` line 35), pointing at
-     * a call site the caller does not own and cannot fix.
+     * Was red in #8: a dependency with no default could not be used at all — it failed at build
+     * time with an ArgumentCountError raised from inside the library, at a call site the caller
+     * does not own. `Decorator` is an interface and cannot declare a constructor, so "the
+     * constructor takes exactly one Expression" was a convention no type could express; passing
+     * a factory removes the need to express it.
      */
     public function testDecoratorWithARequiredDependencyIsUsable(): void
     {
-        $config = new ExpressionTreeConfig(new RequiredTagDecorator(new IntLiteral(0), 'pricing'));
+        $config = ExpressionTreeConfig::decoratedBy(
+            static fn (Expression $node): Decorator => new RequiredTagDecorator($node, 'pricing'),
+        );
 
         $expr = Arithmetic::of(2, $config)->add(3)->build();
 
@@ -71,12 +72,36 @@ final class DecoratorPrototypeConstructorTest extends TestCase
     }
 
     /**
-     * GREEN, characterisation. Shows precisely what the prototype instance is worth.
-     *
-     * `Arithmetic::of(2)->add(3)` builds three nodes (two `IntLiteral`s and one
-     * `AdditionOperator`), so the decorator class is constructed four times: once for the
-     * prototype the caller wrote, three times for the nodes. The prototype is never evaluated —
-     * the `Expression` it was handed is unreachable from the moment `decorate()` runs.
+     * The thing the static-handle workaround could not do. #8's
+     * testStaticHandleIsTheOnlyRouteToAPerTreeDependency documented that reaching a real
+     * collaborator meant a process-global handle, which two trees needing two different channels
+     * cannot share. Each factory closes over its own, so they coexist.
+     */
+    public function testTwoTreesCanCarryDifferentDependenciesAtTheSameTime(): void
+    {
+        $audit = ExpressionTreeConfig::decoratedBy(
+            static fn (Expression $node): Decorator => new ChannelDecorator($node, 'audit'),
+        );
+        $debug = ExpressionTreeConfig::decoratedBy(
+            static fn (Expression $node): Decorator => new ChannelDecorator($node, 'debug'),
+        );
+
+        $audited = Arithmetic::of(2, $audit)->add(3)->build();
+        $debugged = Arithmetic::of(4, $debug)->add(1)->build();
+
+        self::assertSame(5, $audited());
+        self::assertSame(5, $debugged());
+        self::assertSame(
+            ['audit', 'audit', 'audit', 'debug', 'debug', 'debug'],
+            ChannelDecorator::$channels,
+        );
+    }
+
+    /**
+     * BC, unchanged from #8. The prototype form still builds a fresh instance per node from the
+     * prototype's class, so it still constructs the class once more than there are nodes and
+     * still never evaluates the prototype itself. Existing callers are unaffected — they simply
+     * keep paying for what the factory form no longer costs.
      */
     public function testPrototypeIsConstructedOnceMoreThanThereAreNodesAndIsNeverEvaluated(): void
     {
@@ -98,18 +123,13 @@ final class DecoratorPrototypeConstructorTest extends TestCase
     }
 
     /**
-     * GREEN, characterisation. The workaround the mechanism forces, and its cost.
-     *
-     * Because per-node instances cannot receive anything, the only route to a real collaborator
-     * is a static handle set once before the tree is built. `tests/Support/LoggerDecorator.php`
-     * already does exactly this to reach a Monolog instance, and says so in its docblock — the
-     * package's own test double had to be written around this constraint. It works, at the price
-     * of making every decorator process-global and its configuration non-nestable: two trees
-     * needing two different channels cannot coexist.
+     * BC, unchanged from #8. The prototype form still cannot carry a dependency — the fresh
+     * per-node instances still get the constructor default. This is now a choice the caller makes
+     * by using the older form, not the only behaviour available.
      */
-    public function testStaticHandleIsTheOnlyRouteToAPerTreeDependency(): void
+    public function testPrototypeFormStillDropsItsDependencyExactlyAsBefore(): void
     {
-        $config = new ExpressionTreeConfig(new ChannelDecorator(new IntLiteral(0)));
+        $config = new ExpressionTreeConfig(new ChannelDecorator(new IntLiteral(0), 'audit'));
 
         $expr = Arithmetic::of(2, $config)->add(3)->build();
 

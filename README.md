@@ -95,9 +95,24 @@ Arithmetic::of(2, $config)->multiply(3)->add(4)->build();
 Because you construct the decorator yourself, it can take whatever else it needs — a logger, a cache
 pool, a channel name — alongside the node.
 
-Passing a `Decorator` instance directly (`new ExpressionTreeConfig($decorator)`) still works, but only
-its class is used: a fresh instance is built per node, so anything the instance was constructed with is
-discarded. Prefer `decoratedBy()`.
+Passing a `Decorator` instance directly (`new ExpressionTreeConfig($decorator)`) is **deprecated since
+1.5.1** and will be removed in **1.6.0**. It still works and behaves exactly as it always has, but only the
+class of that instance is used: a fresh one is built per node, so anything the instance was constructed
+with is discarded — which is why it cannot give a decorator its dependencies. Move to `decoratedBy()`:
+
+```php
+// deprecated: the IntLiteral(0) is a throwaway, and $logger never arrives
+new ExpressionTreeConfig(new TracingDecorator(new IntLiteral(0), $logger));
+
+// current
+ExpressionTreeConfig::decoratedBy(
+    static fn (Expression $node): Decorator => new TracingDecorator($node, $logger),
+);
+```
+
+The `ExpressionTreeConfig::$decorator` property is deprecated on the same schedule. Nothing in the
+library reads it, and it is `null` whenever `decoratedBy()` was used — `$decoratorFactory` is the
+reliable answer to whether a config decorates.
 
 ## Available operators
 

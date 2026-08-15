@@ -43,11 +43,14 @@ final class ExpressionTreeConfigTest extends TestCase
 
         self::assertNotNull($config->decoratorFactory);
 
-        $inner = new IntLiteral(7);
-        $decorated = ($config->decoratorFactory)($inner);
+        $decorated = ($config->decoratorFactory)(new IntLiteral(7));
 
         self::assertInstanceOf(RecordingExpression::class, $decorated);
-        self::assertSame($inner, $decorated->unwrap());
+
+        // The factory wrapped the node it was handed, not the prototype's own inner Expression:
+        // evaluating the result yields 7, and records it.
+        self::assertSame(7, $decorated());
+        self::assertSame([7], RecordingExpression::$log);
     }
 
     public function testDecoratedByStoresTheFactoryAndLeavesThePrototypePropertyNull(): void
@@ -67,13 +70,6 @@ final class ExpressionTreeConfigTest extends TestCase
         self::assertNull($config->decoratorFactory);
         self::assertSame(5, Arithmetic::of(2, $config)->add(3)->build()());
         self::assertSame([], RecordingExpression::$log);
-    }
-
-    public function testDecoratedNodeUnwrapsBackToTheOriginalInner(): void
-    {
-        $inner = new IntLiteral(5);
-
-        self::assertSame($inner, (new RecordingExpression($inner))->unwrap());
     }
 
     public function testArithmeticDecoratesEveryNodeInEvaluationOrder(): void

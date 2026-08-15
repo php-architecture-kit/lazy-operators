@@ -98,10 +98,11 @@ final class DecoratorPrototypeConstructorTest extends TestCase
     }
 
     /**
-     * BC, unchanged from #8. The prototype form still builds a fresh instance per node from the
-     * prototype's class, so it still constructs the class once more than there are nodes and
-     * still never evaluates the prototype itself. Existing callers are unaffected — they simply
-     * keep paying for what the factory form no longer costs.
+     * BC, unchanged from #8. The prototype form — deprecated since 1.5.1, removal planned for
+     * 1.6.0 (#11) — still builds a fresh instance per node from the prototype's class, so it
+     * still constructs the class once more than there are nodes and still never evaluates the
+     * prototype itself. Deprecating it changed nothing at runtime: existing callers keep working,
+     * and keep paying for what the factory form no longer costs.
      */
     public function testPrototypeIsConstructedOnceMoreThanThereAreNodesAndIsNeverEvaluated(): void
     {
@@ -125,7 +126,8 @@ final class DecoratorPrototypeConstructorTest extends TestCase
     /**
      * BC, unchanged from #8. The prototype form still cannot carry a dependency — the fresh
      * per-node instances still get the constructor default. This is now a choice the caller makes
-     * by using the older form, not the only behaviour available.
+     * by using the older, deprecated form, not the only behaviour available. The deprecation is
+     * documentation only: no notice is emitted, so this test needs no suppression.
      */
     public function testPrototypeFormStillDropsItsDependencyExactlyAsBefore(): void
     {

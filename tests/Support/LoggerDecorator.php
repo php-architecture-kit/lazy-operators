@@ -47,8 +47,4 @@ final class LoggerDecorator implements Decorator
         return $result;
     }
 
-    public function unwrap(): Expression
-    {
-        return $this->inner;
-    }
 }

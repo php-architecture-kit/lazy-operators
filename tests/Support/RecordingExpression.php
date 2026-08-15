@@ -25,11 +25,6 @@ final class RecordingExpression implements Decorator
         return $result;
     }
 
-    public function unwrap(): Expression
-    {
-        return $this->inner;
-    }
-
     public static function reset(): void
     {
         self::$log = [];

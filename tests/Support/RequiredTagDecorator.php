@@ -32,11 +32,6 @@ final class RequiredTagDecorator implements Decorator
         return ($this->inner)();
     }
 
-    public function unwrap(): Expression
-    {
-        return $this->inner;
-    }
-
     public static function reset(): void
     {
         self::$tags = [];

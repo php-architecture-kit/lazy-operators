@@ -40,11 +40,6 @@ final class ChannelDecorator implements Decorator
         return ($this->inner)();
     }
 
-    public function unwrap(): Expression
-    {
-        return $this->inner;
-    }
-
     public static function reset(): void
     {
         self::$channels = [];

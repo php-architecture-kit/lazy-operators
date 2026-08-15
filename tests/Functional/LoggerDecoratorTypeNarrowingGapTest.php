@@ -12,9 +12,10 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Cast\FloatCast;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Cast\IntegerCast;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Comparator\Comparator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Conditional;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Decorator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Logical\Logical;
-use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
 use PhpArchitecture\LazyOperators\Tests\Support\LoggerDecorator;
 use PHPUnit\Framework\TestCase;
 use TypeError;
@@ -51,9 +52,10 @@ final class LoggerDecoratorTypeNarrowingGapTest extends TestCase
         $handler = new TestHandler();
         $logger = new Logger('lazy-operators');
         $logger->pushHandler($handler);
-        LoggerDecorator::useLogger($logger);
 
-        $this->config = new ExpressionTreeConfig(new LoggerDecorator(new IntLiteral(0)));
+        $this->config = ExpressionTreeConfig::decoratedBy(
+            static fn (Expression $node): Decorator => new LoggerDecorator($node, $logger),
+        );
     }
 
     public function testDecoratedComparatorSpaceshipResultIsUsableByArithmeticWithoutAnExplicitCast(): void

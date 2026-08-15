@@ -9,8 +9,9 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Exception\In
 use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Exception\NoMatchedCaseException;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\IfElseOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\SwitchCaseOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Decorator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
-use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\BooleanValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\NumberValue;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\StringValue;
@@ -112,7 +113,9 @@ final class ConditionalTest extends TestCase
     public function testIfWithADecoratorAlsoStaysAGenericExpressionJustLikeUndecorated(): void
     {
         RecordingExpression::reset();
-        $config = new ExpressionTreeConfig(new RecordingExpression(new IntLiteral(0)));
+        $config = ExpressionTreeConfig::decoratedBy(
+            static fn (Expression $node): Decorator => new RecordingExpression($node),
+        );
 
         $rate = Conditional::if(true, $config)->then(0.9)->else(1.0)->build();
 

@@ -15,8 +15,8 @@ trait DecoratesNodes
 {
     /**
      * $config->decoratorFactory builds one Decorator per node, receiving the node being wrapped.
-     * A user-supplied decorator only
-     * implements the generic `Decorator extends Expression` contract, so on its own it can
+     * A user-supplied decorator only implements the generic `Decorator extends Expression`
+     * contract, so on its own it can
      * silently drop whatever narrower interface the wrapped node already guaranteed (e.g.
      * SpaceshipOperator always implements IntegerValue). To avoid that, re-expose the decorated
      * result as whichever typed interface the *original, undecorated* node already implemented —

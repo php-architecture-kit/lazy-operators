@@ -23,12 +23,10 @@ use PHPUnit\Framework\TestCase;
  * route to any dependency besides the node it wraps.
  *
  * It now calls a `Closure(Expression): Decorator` instead, so the caller constructs the
- * decorator themselves, with whatever it needs, at the one moment the node is known.
- *
- * The last two tests still use the prototype form, unchanged from #8: it keeps working exactly
- * as it did, including its costs.
+ * decorator themselves, with whatever it needs, at the one moment the node is known. The
+ * prototype form is gone as of 1.6.0 (#11), so every test here goes through the factory.
  */
-final class DecoratorPrototypeConstructorTest extends TestCase
+final class DecoratorFactoryTest extends TestCase
 {
     protected function setUp(): void
     {
@@ -98,47 +96,27 @@ final class DecoratorPrototypeConstructorTest extends TestCase
     }
 
     /**
-     * BC, unchanged from #8. The prototype form — deprecated since 1.5.1, removal planned for
-     * 1.6.0 (#11) — still builds a fresh instance per node from the prototype's class, so it
-     * still constructs the class once more than there are nodes and still never evaluates the
-     * prototype itself. Deprecating it changed nothing at runtime: existing callers keep working,
-     * and keep paying for what the factory form no longer costs.
+     * The prototype form used to construct the decorator class once more than there were nodes —
+     * the extra one being the caller-written prototype, which was never evaluated. With the
+     * factory, construction count matches node count exactly: nothing is built that is not used.
      */
-    public function testPrototypeIsConstructedOnceMoreThanThereAreNodesAndIsNeverEvaluated(): void
+    public function testOneDecoratorIsBuiltPerNodeAndNothingSpurious(): void
     {
-        $config = new ExpressionTreeConfig(new ChannelDecorator(new IntLiteral(99)));
+        $config = ExpressionTreeConfig::decoratedBy(
+            static fn (Expression $node): Decorator => new ChannelDecorator($node, 'audit'),
+        );
 
-        self::assertSame(1, ChannelDecorator::$constructions, 'the caller-written prototype');
-        self::assertSame(0, ChannelDecorator::$invocations);
+        self::assertSame(0, ChannelDecorator::$constructions, 'configuring builds nothing');
 
+        // three nodes: IntLiteral(2), IntLiteral(3), AdditionOperator
         $expr = Arithmetic::of(2, $config)->add(3)->build();
 
-        self::assertSame(4, ChannelDecorator::$constructions, '1 prototype + 3 nodes');
+        self::assertSame(3, ChannelDecorator::$constructions);
         self::assertSame(0, ChannelDecorator::$invocations, 'building evaluates nothing');
 
         self::assertSame(5, $expr());
 
-        self::assertSame(4, ChannelDecorator::$constructions);
-        self::assertSame(3, ChannelDecorator::$invocations, 'the 3 nodes only, never the prototype');
-        self::assertNotContains(99, ChannelDecorator::$channels);
-    }
-
-    /**
-     * BC, unchanged from #8. The prototype form still cannot carry a dependency — the fresh
-     * per-node instances still get the constructor default. This is now a choice the caller makes
-     * by using the older, deprecated form, not the only behaviour available. The deprecation is
-     * documentation only: no notice is emitted, so this test needs no suppression.
-     */
-    public function testPrototypeFormStillDropsItsDependencyExactlyAsBefore(): void
-    {
-        $config = new ExpressionTreeConfig(new ChannelDecorator(new IntLiteral(0), 'audit'));
-
-        $expr = Arithmetic::of(2, $config)->add(3)->build();
-
-        self::assertSame(5, $expr());
-        self::assertSame(
-            [ChannelDecorator::DEFAULT_CHANNEL, ChannelDecorator::DEFAULT_CHANNEL, ChannelDecorator::DEFAULT_CHANNEL],
-            ChannelDecorator::$channels,
-        );
+        self::assertSame(3, ChannelDecorator::$constructions);
+        self::assertSame(3, ChannelDecorator::$invocations);
     }
 }

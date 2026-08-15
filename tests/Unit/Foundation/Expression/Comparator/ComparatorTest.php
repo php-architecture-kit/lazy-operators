@@ -7,9 +7,9 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation\Expression\Compara
 use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic\Arithmetic;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Comparator\Comparator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Comparator\SpaceshipOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Decorator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
-use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Type\IntegerValue;
 use PhpArchitecture\LazyOperators\Tests\Support\RecordingExpression;
 use PhpArchitecture\LazyOperators\Tests\Support\SpyExpression;
@@ -73,7 +73,9 @@ final class ComparatorTest extends TestCase
         // decorated, already was one) — otherwise a decorated Comparator result would stop being
         // usable by Arithmetic without a Cast, even though an undecorated one never was.
         RecordingExpression::reset();
-        $config = new ExpressionTreeConfig(new RecordingExpression(new IntLiteral(0)));
+        $config = ExpressionTreeConfig::decoratedBy(
+            static fn (Expression $node): Decorator => new RecordingExpression($node),
+        );
 
         $spaceship = Comparator::of(5, $config)->spaceship(3)->build();
 

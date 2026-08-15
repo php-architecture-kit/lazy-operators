@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpArchitecture\LazyOperators\Tests\Functional;
 
+use function count;
 use Monolog\Handler\TestHandler;
 use Monolog\Level;
 use Monolog\Logger;
@@ -15,15 +16,14 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Comparator\SpaceshipOper
 use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Conditional;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\IfElseOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\SwitchCaseOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Decorator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Logical\AndOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Logical\Logical;
-use PhpArchitecture\LazyOperators\Foundation\Expression\Static\FloatLiteral;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
-use PhpArchitecture\LazyOperators\Foundation\Expression\Static\StringLiteral;
 use PhpArchitecture\LazyOperators\Tests\Support\LoggerDecorator;
 use PHPUnit\Framework\TestCase;
-use function count;
 
 /**
  * "The most obvious decorator" one could plug in via ExpressionTreeConfig: log every evaluated
@@ -42,9 +42,10 @@ final class LoggerDecoratorTest extends TestCase
 
         $logger = new Logger('lazy-operators');
         $logger->pushHandler($this->handler);
-        LoggerDecorator::useLogger($logger);
 
-        $this->config = new ExpressionTreeConfig(new LoggerDecorator(new IntLiteral(0)));
+        $this->config = ExpressionTreeConfig::decoratedBy(
+            static fn (Expression $node): Decorator => new LoggerDecorator($node, $logger),
+        );
     }
 
     public function testArithmeticChainLogsEveryStageAtDebugLevelInEvaluationOrder(): void
@@ -140,18 +141,5 @@ final class LoggerDecoratorTest extends TestCase
 
         self::assertSame(5, $expr());
         self::assertCount(0, $this->handler->getRecords());
-    }
-
-    /**
-     * Sanity check that the literals used as decoration "prototypes" above (FloatLiteral,
-     * StringLiteral) round-trip through the same mechanism as IntLiteral.
-     */
-    public function testDecoratorPrototypeCanBeSeededWithAnyLiteralType(): void
-    {
-        $config = new ExpressionTreeConfig(new LoggerDecorator(new FloatLiteral(0.0)));
-        $expr = Comparator::of(new StringLiteral('x'), $config)->build();
-
-        self::assertSame('x', $expr());
-        self::assertCount(1, $this->handler->getRecords());
     }
 }

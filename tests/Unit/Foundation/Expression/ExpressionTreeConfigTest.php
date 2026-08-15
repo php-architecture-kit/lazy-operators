@@ -20,47 +20,32 @@ final class ExpressionTreeConfigTest extends TestCase
         RecordingExpression::reset();
     }
 
-    public function testDecoratorDefaultsToNull(): void
-    {
-        self::assertNull((new ExpressionTreeConfig())->decorator);
-    }
-
-    public function testDecoratorHoldsTheGivenPrototype(): void
-    {
-        $decorator = new RecordingExpression(new IntLiteral(0));
-
-        self::assertSame($decorator, (new ExpressionTreeConfig($decorator))->decorator);
-    }
-
     public function testDecoratorFactoryDefaultsToNull(): void
     {
         self::assertNull((new ExpressionTreeConfig())->decoratorFactory);
     }
 
-    public function testPrototypeIsNormalisedIntoAFactoryOverItsOwnClass(): void
+    public function testTheFactoryWrapsTheNodeItIsHanded(): void
     {
-        $config = new ExpressionTreeConfig(new RecordingExpression(new IntLiteral(0)));
+        $config = ExpressionTreeConfig::decoratedBy(
+            static fn (Expression $node): Decorator => new RecordingExpression($node),
+        );
 
         self::assertNotNull($config->decoratorFactory);
 
         $decorated = ($config->decoratorFactory)(new IntLiteral(7));
 
         self::assertInstanceOf(RecordingExpression::class, $decorated);
-
-        // The factory wrapped the node it was handed, not the prototype's own inner Expression:
-        // evaluating the result yields 7, and records it.
         self::assertSame(7, $decorated());
         self::assertSame([7], RecordingExpression::$log);
     }
 
-    public function testDecoratedByStoresTheFactoryAndLeavesThePrototypePropertyNull(): void
+    public function testDecoratedByStoresTheFactory(): void
     {
         $factory = static fn (Expression $node): Decorator => new RecordingExpression($node);
 
-        $config = ExpressionTreeConfig::decoratedBy($factory);
-
-        self::assertSame($factory, $config->decoratorFactory);
-        self::assertNull($config->decorator);
+        self::assertSame($factory, ExpressionTreeConfig::decoratedBy($factory)->decoratorFactory);
+        self::assertSame($factory, (new ExpressionTreeConfig($factory))->decoratorFactory);
     }
 
     public function testDecoratedByWithNullDisablesDecoration(): void
@@ -74,7 +59,9 @@ final class ExpressionTreeConfigTest extends TestCase
 
     public function testArithmeticDecoratesEveryNodeInEvaluationOrder(): void
     {
-        $config = new ExpressionTreeConfig(new RecordingExpression(new IntLiteral(0)));
+        $config = ExpressionTreeConfig::decoratedBy(
+            static fn (Expression $node): Decorator => new RecordingExpression($node),
+        );
 
         $expr = Arithmetic::of(2, $config)->add(3)->multiply(10)->build();
 
@@ -84,7 +71,9 @@ final class ExpressionTreeConfigTest extends TestCase
 
     public function testIfDecoratesConditionTakenBranchAndTopNode(): void
     {
-        $config = new ExpressionTreeConfig(new RecordingExpression(new IntLiteral(0)));
+        $config = ExpressionTreeConfig::decoratedBy(
+            static fn (Expression $node): Decorator => new RecordingExpression($node),
+        );
 
         $expr = Conditional::if(true, $config)->then('yes')->else('no')->build();
 
@@ -94,7 +83,9 @@ final class ExpressionTreeConfigTest extends TestCase
 
     public function testSwitchDecoratesSubjectEvaluatedCasesMatchedValueAndTopNode(): void
     {
-        $config = new ExpressionTreeConfig(new RecordingExpression(new IntLiteral(0)));
+        $config = ExpressionTreeConfig::decoratedBy(
+            static fn (Expression $node): Decorator => new RecordingExpression($node),
+        );
 
         $expr = Conditional::switch(2, $config)
             ->case(1, 'a')

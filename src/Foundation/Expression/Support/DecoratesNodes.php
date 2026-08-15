@@ -14,8 +14,8 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Type\StringValue;
 trait DecoratesNodes
 {
     /**
-     * $decorator is a prototype: its class is reinstantiated per node, so its constructor must
-     * accept a single Expression (the node being wrapped). A user-supplied decorator only
+     * $config->decoratorFactory builds one Decorator per node, receiving the node being wrapped.
+     * A user-supplied decorator only
      * implements the generic `Decorator extends Expression` contract, so on its own it can
      * silently drop whatever narrower interface the wrapped node already guaranteed (e.g.
      * SpaceshipOperator always implements IntegerValue). To avoid that, re-expose the decorated
@@ -28,11 +28,11 @@ trait DecoratesNodes
      */
     private static function decorate(Expression $node, ExpressionTreeConfig $config): Expression
     {
-        if ($config->decorator === null) {
+        if ($config->decoratorFactory === null) {
             return $node;
         }
 
-        $decorated = new ($config->decorator::class)($node);
+        $decorated = ($config->decoratorFactory)($node);
 
         return match (true) {
             $node instanceof IntegerValue && !$decorated instanceof IntegerValue => new DecoratedIntegerValue($decorated),

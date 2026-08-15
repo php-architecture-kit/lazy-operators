@@ -6,6 +6,8 @@ namespace PhpArchitecture\LazyOperators\Tests\Unit\Foundation;
 
 use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic\Arithmetic;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\Conditional;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Decorator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Expression\ExpressionTreeConfig;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Static\IntLiteral;
 use PhpArchitecture\LazyOperators\Tests\Support\RecordingExpression;
@@ -28,6 +30,43 @@ final class ExpressionTreeConfigTest extends TestCase
         $decorator = new RecordingExpression(new IntLiteral(0));
 
         self::assertSame($decorator, (new ExpressionTreeConfig($decorator))->decorator);
+    }
+
+    public function testDecoratorFactoryDefaultsToNull(): void
+    {
+        self::assertNull((new ExpressionTreeConfig())->decoratorFactory);
+    }
+
+    public function testPrototypeIsNormalisedIntoAFactoryOverItsOwnClass(): void
+    {
+        $config = new ExpressionTreeConfig(new RecordingExpression(new IntLiteral(0)));
+
+        self::assertNotNull($config->decoratorFactory);
+
+        $inner = new IntLiteral(7);
+        $decorated = ($config->decoratorFactory)($inner);
+
+        self::assertInstanceOf(RecordingExpression::class, $decorated);
+        self::assertSame($inner, $decorated->unwrap());
+    }
+
+    public function testDecoratedByStoresTheFactoryAndLeavesThePrototypePropertyNull(): void
+    {
+        $factory = static fn (Expression $node): Decorator => new RecordingExpression($node);
+
+        $config = ExpressionTreeConfig::decoratedBy($factory);
+
+        self::assertSame($factory, $config->decoratorFactory);
+        self::assertNull($config->decorator);
+    }
+
+    public function testDecoratedByWithNullDisablesDecoration(): void
+    {
+        $config = ExpressionTreeConfig::decoratedBy(null);
+
+        self::assertNull($config->decoratorFactory);
+        self::assertSame(5, Arithmetic::of(2, $config)->add(3)->build()());
+        self::assertSame([], RecordingExpression::$log);
     }
 
     public function testDecoratedNodeUnwrapsBackToTheOriginalInner(): void

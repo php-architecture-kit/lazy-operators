@@ -204,6 +204,9 @@ An invalid definition throws `InvalidExpressionDefinitionException`. Its `$path`
 offending node or argument (e.g. `$.arguments.left`) and its message says what is wrong, including
 PHP's own type error when a node is plugged into an argument of the wrong type.
 
+The complete format, with every argument kind, type rule and error, is specified in
+[BUILDER.md](BUILDER.md).
+
 ## Extensions
 
 `Foundation\Expression\Extension` holds anything beyond the core language: a full wrapper around a native

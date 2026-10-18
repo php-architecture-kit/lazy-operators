@@ -10,6 +10,7 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic\Exponentiatio
 use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic\ModuloOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic\MultiplicationOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Arithmetic\SubtractionOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Cast\ArrayCast;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Cast\BooleanCast;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Cast\FloatCast;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Cast\IntegerCast;
@@ -23,6 +24,7 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Comparison\LessThanOpera
 use PhpArchitecture\LazyOperators\Foundation\Expression\Comparison\LessThanOrEqualOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Comparison\NotEqualOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Comparison\NotIdenticalOperator;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\FailOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\IfElseOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\SwitchCaseOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Custom\CallbackOperator;
@@ -86,6 +88,32 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Trigonome
 use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Trigonometry\SinhFunction;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Trigonometry\TanFunction;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Trigonometry\TanhFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Cast\DateTimeCast;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Cast\IntervalCast;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Literal\DateTimeLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Literal\IntervalLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Literal\TimeLiteral;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Calendar\DateTimeModifyFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Calendar\DateTimeAddFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Calendar\DateTimeSubFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Calendar\DateTimeAtTimeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Calendar\StartOfFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Reading\DateTimeFormatFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Reading\DateTimePartFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Reading\DateTimeTimestampFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Reading\DateTimeDiffFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Reading\IntervalSecondsFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Reading\TimeOfDayBetweenFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Range\DateTimeRangeFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Range\RangeContainsFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Range\RangeOverlapsFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Range\RangeIntersectionFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Range\RangeStartFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Range\RangeEndFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Range\RangeAnyContainsFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Business\BusinessDayIsFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Business\BusinessDaysAddFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Temporal\Business\BusinessDaysBetweenFunction;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Logical\AndOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Logical\NotOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Logical\OrOperator;
@@ -118,6 +146,7 @@ final class ExpressionConstantsTest extends TestCase
         AdditionOperator::class,
         AllocationFunction::class,
         AndOperator::class,
+        ArrayCast::class,
         ArrayGetFunction::class,
         ArrayLiteral::class,
         AsinFunction::class,
@@ -147,6 +176,7 @@ final class ExpressionConstantsTest extends TestCase
         ExpFunction::class,
         Expm1Function::class,
         ExponentiationOperator::class,
+        FailOperator::class,
         FdivFunction::class,
         FloatCast::class,
         FloatLiteral::class,
@@ -202,6 +232,32 @@ final class ExpressionConstantsTest extends TestCase
         TanFunction::class,
         TanhFunction::class,
         XorOperator::class,
+        DateTimeCast::class,
+        IntervalCast::class,
+        DateTimeLiteral::class,
+        IntervalLiteral::class,
+        TimeLiteral::class,
+        DateTimeModifyFunction::class,
+        DateTimeAddFunction::class,
+        DateTimeSubFunction::class,
+        DateTimeAtTimeFunction::class,
+        StartOfFunction::class,
+        DateTimeFormatFunction::class,
+        DateTimePartFunction::class,
+        DateTimeTimestampFunction::class,
+        DateTimeDiffFunction::class,
+        IntervalSecondsFunction::class,
+        TimeOfDayBetweenFunction::class,
+        DateTimeRangeFunction::class,
+        RangeContainsFunction::class,
+        RangeOverlapsFunction::class,
+        RangeIntersectionFunction::class,
+        RangeStartFunction::class,
+        RangeEndFunction::class,
+        RangeAnyContainsFunction::class,
+        BusinessDayIsFunction::class,
+        BusinessDaysAddFunction::class,
+        BusinessDaysBetweenFunction::class,
     ];
 
     public function testEachClassDeclaresItsOwnConstants(): void

@@ -13,6 +13,7 @@ use PhpArchitecture\LazyOperators\Foundation\Expression\Conditional\SwitchCaseOp
 use PhpArchitecture\LazyOperators\Foundation\Expression\Custom\CallbackOperator;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Expression;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Allocation\AllocationFunction;
+use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Allocation\AllocationRemainderTarget;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\List\Aggregate\SumFunction;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\BcMath\Arithmetic\BcAddFunction;
 use PhpArchitecture\LazyOperators\Foundation\Expression\Extension\Math\Rounding\RoundFunction;
@@ -175,6 +176,7 @@ final class ExpressionRegistryTest extends TestCase
 
         self::assertInstanceOf(EnumArgument::class, $remainderTarget);
         self::assertSame(['First', 'Largest', 'Smallest', 'Last'], $remainderTarget->options);
+        self::assertSame(AllocationRemainderTarget::class, $remainderTarget->enumClass);
     }
 
     public function testEnumWithinAUnionTypeIsStillDetectedAsAnEnumArgument(): void
@@ -193,6 +195,7 @@ final class ExpressionRegistryTest extends TestCase
             array_map(static fn (RoundingMode $case): string => $case->name, RoundingMode::cases()),
             $mode->options,
         );
+        self::assertSame(RoundingMode::class, $mode->enumClass);
     }
 
     public function testClosureConstructorParameterProducesACallbackArgument(): void
